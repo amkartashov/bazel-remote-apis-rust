@@ -1,0 +1,1111 @@
+// The Remote Asset API provides a mapping from a URI and Qualifiers to
+// Digests.  
+//
+// Multiple URIs may be used to refer to the same content.  For example, the
+// same tarball may exist at multiple mirrors and thus be retrievable from
+// multiple URLs.  When URLs are used, these should refer to actual content as
+// Fetch service implementations may choose to fetch the content directly
+// from the origin.  For example, the HEAD of a git repository's active branch
+// can be referred to as:
+//
+//      uri: <https://github.com/bazelbuild/remote-apis.git>
+//
+// URNs may be used to strongly identify content, for instance by using the
+// uuid namespace identifier: urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6.
+// This is most applicable to named content that is Push'd, where the URN
+// serves as an agreed-upon key, but carries no other inherent meaning.
+//
+// Service implementations may choose to support only URLs, only URNs for
+// Push'd content, only other URIs for which the server and client agree upon
+// semantics of, or any mixture of the above.
+
+/// Qualifiers are used to disambiguate or sub-select content that shares a URI.
+/// This may include specifying a particular commit or branch, in the case of
+/// URIs referencing a repository; they could also be used to specify a
+/// particular subdirectory of a repository or tarball. Qualifiers may also be
+/// used to ensure content matches what the client expects, even when there is
+/// no ambiguity to be had - for example, a qualifier specifying a checksum
+/// value.
+///
+/// In cases where the semantics of the request are not immediately clear from
+/// the URL and/or qualifiers - e.g. dictated by URL scheme - it is recommended
+/// to use an additional qualifier to remove the ambiguity. The `resource_type`
+/// qualifier is recommended for this purpose.
+///
+/// Qualifiers may be supplied in any order.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Qualifier {
+    /// The "name" of the qualifier, for example "resource_type".
+    /// No separation is made between 'standard' and 'nonstandard'
+    /// qualifiers, in accordance with <https://tools.ietf.org/html/rfc6648,>
+    /// however implementers *SHOULD* take care to avoid ambiguity.
+    #[prost(string, tag="1")]
+    pub name: ::prost::alloc::string::String,
+    /// The "value" of the qualifier. Semantics will be dictated by the name.
+    #[prost(string, tag="2")]
+    pub value: ::prost::alloc::string::String,
+}
+/// A request message for
+/// \[Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FetchBlobRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted.
+    #[prost(string, tag="1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// The timeout for the underlying fetch, if content needs to be retrieved from
+    /// origin.
+    ///
+    /// If unset, the server *MAY* apply an implementation-defined timeout.
+    ///
+    /// If set, and the user-provided timeout exceeds the RPC deadline, the server
+    /// *SHOULD* keep the fetch going after the RPC completes, to be made
+    /// available for future Fetch calls. The server may also enforce (via clamping
+    /// and/or an INVALID_ARGUMENT error) implementation-defined minimum and
+    /// maximum timeout values.
+    ///
+    /// If this timeout is exceeded on an attempt to retrieve content from origin
+    /// the client will receive DEADLINE_EXCEEDED in \[FetchBlobResponse.status\].
+    #[prost(message, optional, tag="2")]
+    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    /// The oldest content the client is willing to accept, as measured from the
+    /// time it was Push'd or when the underlying retrieval from origin was 
+    /// started.
+    /// Upon retries of Fetch requests that cannot be completed within a single
+    /// RPC, clients *SHOULD* provide the same value for subsequent requests as the
+    /// original, to simplify combining the request with the previous attempt.
+    ///
+    /// If unset, the client *SHOULD* accept content of any age.
+    #[prost(message, optional, tag="3")]
+    pub oldest_content_accepted: ::core::option::Option<::prost_types::Timestamp>,
+    /// The URI(s) of the content to fetch. These may be resources that the server
+    /// can directly fetch from origin, in which case multiple URIs *SHOULD*
+    /// represent the same content available at different locations (such as an
+    /// origin and secondary mirrors). These may also be URIs for content known to
+    /// the server through other mechanisms, e.g. pushed via the \[Push][build.bazel.remote.asset.v1.Push\]
+    /// service.
+    ///
+    /// Clients *MUST* supply at least one URI. Servers *MAY* match any one of the
+    /// supplied URIs.
+    #[prost(string, repeated, tag="4")]
+    pub uris: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Qualifiers sub-specifying the content to fetch - see comments on
+    /// \[Qualifier][build.bazel.remote.asset.v1.Qualifier\].
+    /// The same qualifiers apply to all URIs.
+    ///
+    /// Specified qualifier names *MUST* be unique.
+    #[prost(message, repeated, tag="5")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+}
+/// A response message for
+/// \[Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FetchBlobResponse {
+    /// If the status has a code other than `OK`, it indicates that the operation
+    /// was unable to be completed for reasons outside the servers' control.
+    /// The possible fetch errors include:
+    /// * `DEADLINE_EXCEEDED`: The operation could not be completed within the
+    ///    specified timeout.
+    /// * `NOT_FOUND`: The requested asset was not found at the specified location.
+    /// * `PERMISSION_DENIED`: The request was rejected by a remote server, or
+    ///    requested an asset from a disallowed origin.
+    /// * `ABORTED`: The operation could not be completed, typically due to a
+    ///    failed consistency check.
+    #[prost(message, optional, tag="1")]
+    pub status: ::core::option::Option<super::super::super::super::super::google::rpc::Status>,
+    /// The uri from the request that resulted in a successful retrieval, or from
+    /// which the error indicated in `status` was obtained.
+    #[prost(string, tag="2")]
+    pub uri: ::prost::alloc::string::String,
+    /// Any qualifiers known to the server and of interest to clients.
+    #[prost(message, repeated, tag="3")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// A minimum timestamp the content is expected to be available through.
+    /// Servers *MAY* omit this field, if not known with confidence.
+    #[prost(message, optional, tag="4")]
+    pub expires_at: ::core::option::Option<::prost_types::Timestamp>,
+    /// The result of the fetch, if the status had code `OK`.
+    /// The digest of the file's contents, available for download through the CAS.
+    #[prost(message, optional, tag="5")]
+    pub blob_digest: ::core::option::Option<super::super::execution::v2::Digest>,
+}
+/// A request message for
+/// \[Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FetchDirectoryRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted.
+    #[prost(string, tag="1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// The timeout for the underlying fetch, if content needs to be retrieved from
+    /// origin. This value is allowed to exceed the RPC deadline, in which case the
+    /// server *SHOULD* keep the fetch going after the RPC completes, to be made
+    /// available for future Fetch calls.
+    ///
+    /// If this timeout is exceeded on an attempt to retrieve content from origin
+    /// the client will receive DEADLINE_EXCEEDED in \[FetchDirectoryResponse.status\].
+    #[prost(message, optional, tag="2")]
+    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    /// The oldest content the client is willing to accept, as measured from the
+    /// time it was Push'd or when the underlying retrieval from origin was
+    /// started.
+    /// Upon retries of Fetch requests that cannot be completed within a single
+    /// RPC, clients *SHOULD* provide the same value for subsequent requests as the
+    /// original, to simplify combining the request with the previous attempt.
+    ///
+    /// If unset, the client *SHOULD* accept content of any age.
+    #[prost(message, optional, tag="3")]
+    pub oldest_content_accepted: ::core::option::Option<::prost_types::Timestamp>,
+    /// The URI(s) of the content to fetch. These may be resources that the server
+    /// can directly fetch from origin, in which case multiple URIs *SHOULD*
+    /// represent the same content available at different locations (such as an
+    /// origin and secondary mirrors). These may also be URIs for content known to
+    /// the server through other mechanisms, e.g. pushed via the \[Push][build.bazel.remote.asset.v1.Push\]
+    /// service.
+    ///
+    /// Clients *MUST* supply at least one URI. Servers *MAY* match any one of the
+    /// supplied URIs.
+    #[prost(string, repeated, tag="4")]
+    pub uris: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Qualifiers sub-specifying the content to fetch - see comments on
+    /// \[Qualifier][build.bazel.remote.asset.v1.Qualifier\].
+    /// The same qualifiers apply to all URIs.
+    ///
+    /// Specified qualifier names *MUST* be unique.
+    #[prost(message, repeated, tag="5")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+}
+/// A response message for
+/// \[Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FetchDirectoryResponse {
+    /// If the status has a code other than `OK`, it indicates that the operation
+    /// was unable to be completed for reasons outside the servers' control.
+    /// The possible fetch errors include:
+    /// * `DEADLINE_EXCEEDED`: The operation could not be completed within the
+    ///    specified timeout.
+    /// * `NOT_FOUND`: The requested asset was not found at the specified location.
+    /// * `PERMISSION_DENIED`: The request was rejected by a remote server, or
+    ///    requested an asset from a disallowed origin.
+    /// * `ABORTED`: The operation could not be completed, typically due to a
+    ///    failed consistency check.
+    #[prost(message, optional, tag="1")]
+    pub status: ::core::option::Option<super::super::super::super::super::google::rpc::Status>,
+    /// The uri from the request that resulted in a successful retrieval, or from
+    /// which the error indicated in `status` was obtained.
+    #[prost(string, tag="2")]
+    pub uri: ::prost::alloc::string::String,
+    /// Any qualifiers known to the server and of interest to clients.
+    #[prost(message, repeated, tag="3")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// A minimum timestamp the content is expected to be available through.
+    /// Servers *MAY* omit this field, if not known with confidence.
+    #[prost(message, optional, tag="4")]
+    pub expires_at: ::core::option::Option<::prost_types::Timestamp>,
+    /// The result of the fetch, if the status had code `OK`.
+    /// the root digest of a directory tree, suitable for fetching via
+    /// \[ContentAddressableStorage.GetTree\].
+    #[prost(message, optional, tag="5")]
+    pub root_directory_digest: ::core::option::Option<super::super::execution::v2::Digest>,
+}
+/// A request message for
+/// \[Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PushBlobRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted.
+    #[prost(string, tag="1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// The URI(s) of the content to associate. If multiple URIs are specified, the
+    /// pushed content will be available to fetch by specifying any of them.
+    #[prost(string, repeated, tag="2")]
+    pub uris: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Qualifiers sub-specifying the content that is being pushed - see comments
+    /// on \[Qualifier][build.bazel.remote.asset.v1.Qualifier\].
+    /// The same qualifiers apply to all URIs.
+    #[prost(message, repeated, tag="3")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// A time after which this content should stop being returned via \[FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob\].
+    /// Servers *MAY* expire content early, e.g. due to storage pressure.
+    #[prost(message, optional, tag="4")]
+    pub expire_at: ::core::option::Option<::prost_types::Timestamp>,
+    /// The blob to associate.
+    #[prost(message, optional, tag="5")]
+    pub blob_digest: ::core::option::Option<super::super::execution::v2::Digest>,
+    /// Referenced blobs or directories that need to not expire before expiration
+    /// of this association, in addition to `blob_digest` itself.
+    /// These fields are hints - clients *MAY* omit them, and servers *SHOULD*
+    /// respect them, at the risk of increased incidents of Fetch responses
+    /// indirectly referencing unavailable blobs.
+    #[prost(message, repeated, tag="6")]
+    pub references_blobs: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+    #[prost(message, repeated, tag="7")]
+    pub references_directories: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+}
+/// A response message for
+/// \[Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PushBlobResponse {
+}
+/// A request message for
+/// \[Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PushDirectoryRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted.
+    #[prost(string, tag="1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// The URI(s) of the content to associate. If multiple URIs are specified, the
+    /// pushed content will be available to fetch by specifying any of them.
+    #[prost(string, repeated, tag="2")]
+    pub uris: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Qualifiers sub-specifying the content that is being pushed - see comments
+    /// on \[Qualifier][build.bazel.remote.asset.v1.Qualifier\].
+    /// The same qualifiers apply to all URIs.
+    #[prost(message, repeated, tag="3")]
+    pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// A time after which this content should stop being returned via
+    /// \[FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory\].
+    /// Servers *MAY* expire content early, e.g. due to storage pressure.
+    #[prost(message, optional, tag="4")]
+    pub expire_at: ::core::option::Option<::prost_types::Timestamp>,
+    /// Directory to associate
+    #[prost(message, optional, tag="5")]
+    pub root_directory_digest: ::core::option::Option<super::super::execution::v2::Digest>,
+    /// Referenced blobs or directories that need to not expire before expiration
+    /// of this association, in addition to `root_directory_digest` itself.
+    /// These fields are hints - clients *MAY* omit them, and servers *SHOULD*
+    /// respect them, at the risk of increased incidents of Fetch responses
+    /// indirectly referencing unavailable blobs.
+    #[prost(message, repeated, tag="6")]
+    pub references_blobs: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+    #[prost(message, repeated, tag="7")]
+    pub references_directories: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+}
+/// A response message for
+/// \[Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PushDirectoryResponse {
+}
+/// Generated client implementations.
+pub mod fetch_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    /// The Fetch service resolves or fetches assets referenced by URI and
+    /// Qualifiers, returning a Digest for the content in
+    /// [ContentAddressableStorage][build.bazel.remote.execution.v2.ContentAddressableStorage].
+    ///
+    /// As with other services in the Remote Execution API, any call may return an
+    /// error with a [RetryInfo][google.rpc.RetryInfo] error detail providing
+    /// information about when the client should retry the request; clients SHOULD
+    /// respect the information provided.
+    #[derive(Debug, Clone)]
+    pub struct FetchClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl FetchClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> FetchClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> FetchClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            FetchClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// Resolve or fetch referenced assets, making them available to the caller and
+        /// other consumers in the [ContentAddressableStorage][build.bazel.remote.execution.v2.ContentAddressableStorage].
+        ///
+        /// Servers *MAY* fetch content that they do not already have cached, for any
+        /// URLs they support.
+        ///
+        /// Servers *SHOULD* ensure that referenced files are present in the CAS at the
+        /// time of the response, and (if supported) that they will remain available
+        /// for a reasonable period of time. The lifetimes of the referenced blobs *SHOULD*
+        /// be increased if necessary and applicable.
+        /// In the event that a client receives a reference to content that is no
+        /// longer present, it *MAY* re-issue the request with
+        /// `oldest_content_accepted` set to a more recent timestamp than the original
+        /// attempt, to induce a re-fetch from origin.
+        ///
+        /// Servers *MAY* cache fetched content and reuse it for subsequent requests,
+        /// subject to `oldest_content_accepted`.
+        ///
+        /// Servers *MAY* support the complementary [Push][build.bazel.remote.asset.v1.Push]
+        /// API and allow content to be directly inserted for use in future fetch
+        /// responses.
+        ///
+        /// Servers *MUST* ensure Fetch'd content matches all the specified
+        /// qualifiers except in the case of previously Push'd resources, for which
+        /// the server *MAY* trust the pushing client to have set the qualifiers
+        /// correctly, without validation.
+        ///
+        /// Servers not implementing the complementary [Push][build.bazel.remote.asset.v1.Push]
+        /// API *MUST* reject requests containing qualifiers it does not support.
+        ///
+        /// Servers *MAY* transform assets as part of the fetch. For example a
+        /// tarball fetched by [FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory]
+        /// might be unpacked, or a Git repository
+        /// fetched by [FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob]
+        /// might be passed through `git-archive`.
+        ///
+        /// Errors handling the requested assets will be returned as gRPC Status errors
+        /// here; errors outside the server's control will be returned inline in the
+        /// `status` field of the response (see comment there for details).
+        /// The possible RPC errors include:
+        /// * `INVALID_ARGUMENT`: One or more arguments were invalid, such as a
+        ///   qualifier that is not supported by the server.
+        /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+        ///   perform the requested operation. The client may retry after a delay.
+        /// * `UNAVAILABLE`: Due to a transient condition the operation could not be
+        ///   completed. The client should retry.
+        /// * `INTERNAL`: An internal error occurred while performing the operation.
+        ///   The client should retry.
+        /// * `DEADLINE_EXCEEDED`: The fetch could not be completed within the given
+        ///   RPC deadline. The client should retry for at least as long as the value
+        ///   provided in `timeout` field of the request.
+        ///
+        /// In the case of unsupported qualifiers, the server *SHOULD* additionally
+        /// send a [BadRequest][google.rpc.BadRequest] error detail where, for each
+        /// unsupported qualifier, there is a `FieldViolation` with a `field` of
+        /// `qualifiers.name` and a `description` of `"{qualifier}" not supported`
+        /// indicating the name of the unsupported qualifier.
+        pub async fn fetch_blob(
+            &mut self,
+            request: impl tonic::IntoRequest<super::FetchBlobRequest>,
+        ) -> Result<tonic::Response<super::FetchBlobResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.asset.v1.Fetch/FetchBlob",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn fetch_directory(
+            &mut self,
+            request: impl tonic::IntoRequest<super::FetchDirectoryRequest>,
+        ) -> Result<tonic::Response<super::FetchDirectoryResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.asset.v1.Fetch/FetchDirectory",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}
+/// Generated client implementations.
+pub mod push_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    /// The Push service is complementary to the Fetch, and allows for
+    /// associating contents of URLs to be returned in future Fetch API calls.
+    ///
+    /// As with other services in the Remote Execution API, any call may return an
+    /// error with a [RetryInfo][google.rpc.RetryInfo] error detail providing
+    /// information about when the client should retry the request; clients SHOULD
+    /// respect the information provided.
+    #[derive(Debug, Clone)]
+    pub struct PushClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl PushClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> PushClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> PushClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            PushClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// These APIs associate the identifying information of a resource, as
+        /// indicated by URI and optionally Qualifiers, with content available in the
+        /// CAS. For example, associating a repository url and a commit id with a
+        /// Directory Digest.
+        ///
+        /// Servers *SHOULD* only allow trusted clients to associate content, and *MAY*
+        /// only allow certain URIs to be pushed.
+        ///
+        /// Clients *MUST* ensure associated content is available in CAS prior to
+        /// pushing.
+        ///
+        /// Clients *MUST* ensure the Qualifiers listed correctly match the contents,
+        /// and Servers *MAY* trust these values without validation.
+        /// Fetch servers *MAY* require exact match of all qualifiers when returning
+        /// content previously pushed, or allow fetching content with only a subset of
+        /// the qualifiers specified on Push.
+        ///
+        /// Clients can specify expiration information that the server *SHOULD*
+        /// respect. Subsequent requests can be used to alter the expiration time.
+        ///
+        /// A minimal compliant Fetch implementation may support only Push'd content
+        /// and return `NOT_FOUND` for any resource that was not pushed first.
+        /// Alternatively, a compliant implementation may choose to not support Push
+        /// and only return resources that can be Fetch'd from origin.
+        ///
+        /// Errors will be returned as gRPC Status errors.
+        /// The possible RPC errors include:
+        /// * `INVALID_ARGUMENT`: One or more arguments to the RPC were invalid.
+        /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+        ///   perform the requested operation. The client may retry after a delay.
+        /// * `UNAVAILABLE`: Due to a transient condition the operation could not be
+        ///   completed. The client should retry.
+        /// * `INTERNAL`: An internal error occurred while performing the operation.
+        ///   The client should retry.
+        pub async fn push_blob(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PushBlobRequest>,
+        ) -> Result<tonic::Response<super::PushBlobResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.asset.v1.Push/PushBlob",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn push_directory(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PushDirectoryRequest>,
+        ) -> Result<tonic::Response<super::PushDirectoryResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.asset.v1.Push/PushDirectory",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}
+/// Generated server implementations.
+pub mod fetch_server {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    ///Generated trait containing gRPC methods that should be implemented for use with FetchServer.
+    #[async_trait]
+    pub trait Fetch: Send + Sync + 'static {
+        /// Resolve or fetch referenced assets, making them available to the caller and
+        /// other consumers in the [ContentAddressableStorage][build.bazel.remote.execution.v2.ContentAddressableStorage].
+        ///
+        /// Servers *MAY* fetch content that they do not already have cached, for any
+        /// URLs they support.
+        ///
+        /// Servers *SHOULD* ensure that referenced files are present in the CAS at the
+        /// time of the response, and (if supported) that they will remain available
+        /// for a reasonable period of time. The lifetimes of the referenced blobs *SHOULD*
+        /// be increased if necessary and applicable.
+        /// In the event that a client receives a reference to content that is no
+        /// longer present, it *MAY* re-issue the request with
+        /// `oldest_content_accepted` set to a more recent timestamp than the original
+        /// attempt, to induce a re-fetch from origin.
+        ///
+        /// Servers *MAY* cache fetched content and reuse it for subsequent requests,
+        /// subject to `oldest_content_accepted`.
+        ///
+        /// Servers *MAY* support the complementary [Push][build.bazel.remote.asset.v1.Push]
+        /// API and allow content to be directly inserted for use in future fetch
+        /// responses.
+        ///
+        /// Servers *MUST* ensure Fetch'd content matches all the specified
+        /// qualifiers except in the case of previously Push'd resources, for which
+        /// the server *MAY* trust the pushing client to have set the qualifiers
+        /// correctly, without validation.
+        ///
+        /// Servers not implementing the complementary [Push][build.bazel.remote.asset.v1.Push]
+        /// API *MUST* reject requests containing qualifiers it does not support.
+        ///
+        /// Servers *MAY* transform assets as part of the fetch. For example a
+        /// tarball fetched by [FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory]
+        /// might be unpacked, or a Git repository
+        /// fetched by [FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob]
+        /// might be passed through `git-archive`.
+        ///
+        /// Errors handling the requested assets will be returned as gRPC Status errors
+        /// here; errors outside the server's control will be returned inline in the
+        /// `status` field of the response (see comment there for details).
+        /// The possible RPC errors include:
+        /// * `INVALID_ARGUMENT`: One or more arguments were invalid, such as a
+        ///   qualifier that is not supported by the server.
+        /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+        ///   perform the requested operation. The client may retry after a delay.
+        /// * `UNAVAILABLE`: Due to a transient condition the operation could not be
+        ///   completed. The client should retry.
+        /// * `INTERNAL`: An internal error occurred while performing the operation.
+        ///   The client should retry.
+        /// * `DEADLINE_EXCEEDED`: The fetch could not be completed within the given
+        ///   RPC deadline. The client should retry for at least as long as the value
+        ///   provided in `timeout` field of the request.
+        ///
+        /// In the case of unsupported qualifiers, the server *SHOULD* additionally
+        /// send a [BadRequest][google.rpc.BadRequest] error detail where, for each
+        /// unsupported qualifier, there is a `FieldViolation` with a `field` of
+        /// `qualifiers.name` and a `description` of `"{qualifier}" not supported`
+        /// indicating the name of the unsupported qualifier.
+        async fn fetch_blob(
+            &self,
+            request: tonic::Request<super::FetchBlobRequest>,
+        ) -> Result<tonic::Response<super::FetchBlobResponse>, tonic::Status>;
+        async fn fetch_directory(
+            &self,
+            request: tonic::Request<super::FetchDirectoryRequest>,
+        ) -> Result<tonic::Response<super::FetchDirectoryResponse>, tonic::Status>;
+    }
+    /// The Fetch service resolves or fetches assets referenced by URI and
+    /// Qualifiers, returning a Digest for the content in
+    /// [ContentAddressableStorage][build.bazel.remote.execution.v2.ContentAddressableStorage].
+    ///
+    /// As with other services in the Remote Execution API, any call may return an
+    /// error with a [RetryInfo][google.rpc.RetryInfo] error detail providing
+    /// information about when the client should retry the request; clients SHOULD
+    /// respect the information provided.
+    #[derive(Debug)]
+    pub struct FetchServer<T: Fetch> {
+        inner: _Inner<T>,
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
+    }
+    struct _Inner<T>(Arc<T>);
+    impl<T: Fetch> FetchServer<T> {
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
+        }
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            let inner = _Inner(inner);
+            Self {
+                inner,
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+            }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for FetchServer<T>
+    where
+        T: Fetch,
+        B: Body + Send + 'static,
+        B::Error: Into<StdError> + Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            let inner = self.inner.clone();
+            match req.uri().path() {
+                "/build.bazel.remote.asset.v1.Fetch/FetchBlob" => {
+                    #[allow(non_camel_case_types)]
+                    struct FetchBlobSvc<T: Fetch>(pub Arc<T>);
+                    impl<T: Fetch> tonic::server::UnaryService<super::FetchBlobRequest>
+                    for FetchBlobSvc<T> {
+                        type Response = super::FetchBlobResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::FetchBlobRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).fetch_blob(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = FetchBlobSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/build.bazel.remote.asset.v1.Fetch/FetchDirectory" => {
+                    #[allow(non_camel_case_types)]
+                    struct FetchDirectorySvc<T: Fetch>(pub Arc<T>);
+                    impl<
+                        T: Fetch,
+                    > tonic::server::UnaryService<super::FetchDirectoryRequest>
+                    for FetchDirectorySvc<T> {
+                        type Response = super::FetchDirectoryResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::FetchDirectoryRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).fetch_directory(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = FetchDirectorySvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
+            }
+        }
+    }
+    impl<T: Fetch> Clone for FetchServer<T> {
+        fn clone(&self) -> Self {
+            let inner = self.inner.clone();
+            Self {
+                inner,
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
+            }
+        }
+    }
+    impl<T: Fetch> Clone for _Inner<T> {
+        fn clone(&self) -> Self {
+            Self(self.0.clone())
+        }
+    }
+    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self.0)
+        }
+    }
+    impl<T: Fetch> tonic::server::NamedService for FetchServer<T> {
+        const NAME: &'static str = "build.bazel.remote.asset.v1.Fetch";
+    }
+}
+/// Generated server implementations.
+pub mod push_server {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    ///Generated trait containing gRPC methods that should be implemented for use with PushServer.
+    #[async_trait]
+    pub trait Push: Send + Sync + 'static {
+        /// These APIs associate the identifying information of a resource, as
+        /// indicated by URI and optionally Qualifiers, with content available in the
+        /// CAS. For example, associating a repository url and a commit id with a
+        /// Directory Digest.
+        ///
+        /// Servers *SHOULD* only allow trusted clients to associate content, and *MAY*
+        /// only allow certain URIs to be pushed.
+        ///
+        /// Clients *MUST* ensure associated content is available in CAS prior to
+        /// pushing.
+        ///
+        /// Clients *MUST* ensure the Qualifiers listed correctly match the contents,
+        /// and Servers *MAY* trust these values without validation.
+        /// Fetch servers *MAY* require exact match of all qualifiers when returning
+        /// content previously pushed, or allow fetching content with only a subset of
+        /// the qualifiers specified on Push.
+        ///
+        /// Clients can specify expiration information that the server *SHOULD*
+        /// respect. Subsequent requests can be used to alter the expiration time.
+        ///
+        /// A minimal compliant Fetch implementation may support only Push'd content
+        /// and return `NOT_FOUND` for any resource that was not pushed first.
+        /// Alternatively, a compliant implementation may choose to not support Push
+        /// and only return resources that can be Fetch'd from origin.
+        ///
+        /// Errors will be returned as gRPC Status errors.
+        /// The possible RPC errors include:
+        /// * `INVALID_ARGUMENT`: One or more arguments to the RPC were invalid.
+        /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+        ///   perform the requested operation. The client may retry after a delay.
+        /// * `UNAVAILABLE`: Due to a transient condition the operation could not be
+        ///   completed. The client should retry.
+        /// * `INTERNAL`: An internal error occurred while performing the operation.
+        ///   The client should retry.
+        async fn push_blob(
+            &self,
+            request: tonic::Request<super::PushBlobRequest>,
+        ) -> Result<tonic::Response<super::PushBlobResponse>, tonic::Status>;
+        async fn push_directory(
+            &self,
+            request: tonic::Request<super::PushDirectoryRequest>,
+        ) -> Result<tonic::Response<super::PushDirectoryResponse>, tonic::Status>;
+    }
+    /// The Push service is complementary to the Fetch, and allows for
+    /// associating contents of URLs to be returned in future Fetch API calls.
+    ///
+    /// As with other services in the Remote Execution API, any call may return an
+    /// error with a [RetryInfo][google.rpc.RetryInfo] error detail providing
+    /// information about when the client should retry the request; clients SHOULD
+    /// respect the information provided.
+    #[derive(Debug)]
+    pub struct PushServer<T: Push> {
+        inner: _Inner<T>,
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
+    }
+    struct _Inner<T>(Arc<T>);
+    impl<T: Push> PushServer<T> {
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
+        }
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            let inner = _Inner(inner);
+            Self {
+                inner,
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+            }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for PushServer<T>
+    where
+        T: Push,
+        B: Body + Send + 'static,
+        B::Error: Into<StdError> + Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            let inner = self.inner.clone();
+            match req.uri().path() {
+                "/build.bazel.remote.asset.v1.Push/PushBlob" => {
+                    #[allow(non_camel_case_types)]
+                    struct PushBlobSvc<T: Push>(pub Arc<T>);
+                    impl<T: Push> tonic::server::UnaryService<super::PushBlobRequest>
+                    for PushBlobSvc<T> {
+                        type Response = super::PushBlobResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PushBlobRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).push_blob(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = PushBlobSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/build.bazel.remote.asset.v1.Push/PushDirectory" => {
+                    #[allow(non_camel_case_types)]
+                    struct PushDirectorySvc<T: Push>(pub Arc<T>);
+                    impl<
+                        T: Push,
+                    > tonic::server::UnaryService<super::PushDirectoryRequest>
+                    for PushDirectorySvc<T> {
+                        type Response = super::PushDirectoryResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PushDirectoryRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).push_directory(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = PushDirectorySvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
+            }
+        }
+    }
+    impl<T: Push> Clone for PushServer<T> {
+        fn clone(&self) -> Self {
+            let inner = self.inner.clone();
+            Self {
+                inner,
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
+            }
+        }
+    }
+    impl<T: Push> Clone for _Inner<T> {
+        fn clone(&self) -> Self {
+            Self(self.0.clone())
+        }
+    }
+    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self.0)
+        }
+    }
+    impl<T: Push> tonic::server::NamedService for PushServer<T> {
+        const NAME: &'static str = "build.bazel.remote.asset.v1.Push";
+    }
+}
