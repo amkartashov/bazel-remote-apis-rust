@@ -5,7 +5,7 @@
 To use in your project, add into `[dependencies]`:
 
 ```toml
-bazel-remote-apis = { git = "https://github.com/amkartashov/bazel-remote-apis-rust", tag = "0.1.0" }
+bazel-remote-apis = { git = "https://github.com/amkartashov/bazel-remote-apis-rust", tag = "0.2.0" }
 ```
 
 ## Development
