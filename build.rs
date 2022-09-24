@@ -1,5 +1,7 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    #[cfg(feature = "codegen")]
     println!("cargo:rerun-if-changed=vendor");
+    #[cfg(feature = "codegen")]
     tonic_build::configure()
         .out_dir("src/generated")
         .compile(&[

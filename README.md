@@ -1,5 +1,15 @@
 # Bazel Remote Apis for Rust
 
+## Usage
+
+To use in your project, add into `[dependencies]`:
+
+```toml
+bazel-remote-apis = { git = "https://github.com/amkartashov/bazel-remote-apis-rust", tag = "0.1.0" }
+```
+
+## Development
+
 Protobuf files are vendored with [git-vendor](https://github.com/brettlangdon/git-vendor):
 
 ```bash
@@ -20,3 +30,11 @@ remote-apis@main:
 ```
 
 Build script is used to generate Rust source code from proto files into `src/generated`.
+
+To update vendored dependencies and generate code run:
+
+```bash
+git vendor update googleapis
+git vendor update bazel-remote-apis
+cargo build --features codegen
+```
