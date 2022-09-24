@@ -158,18 +158,18 @@ py_gapic_library(
     srcs = [":bigquery_proto"],
     grpc_service_config = "bigquery_grpc_service_config.json",
     opt_args = ["autogen-snippets=False"],
+    transport = "grpc",
 )
 
-# Uncomment once https://github.com/googleapis/gapic-generator-python/issues/1372 is fixed
-#py_test(
-#    name = "bigquery_py_gapic_test",
-#    srcs = [
-#        "bigquery_py_gapic_pytest.py",
-#        "bigquery_py_gapic_test.py",
-#    ],
-#    legacy_create_init = False,
-#    deps = [":bigquery_py_gapic"],
-#)
+py_test(
+    name = "bigquery_py_gapic_test",
+    srcs = [
+        "bigquery_py_gapic_pytest.py",
+        "bigquery_py_gapic_test.py",
+    ],
+    legacy_create_init = False,
+    deps = [":bigquery_py_gapic"],
+)
 
 py_gapic_assembly_pkg(
     name = "bigquery-v2-py",

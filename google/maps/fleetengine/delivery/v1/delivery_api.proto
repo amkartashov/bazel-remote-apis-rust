@@ -206,7 +206,7 @@ message CreateDeliveryVehicleRequest {
   //
   // * Must be a valid Unicode string.
   // * Limited to a maximum length of 64 characters.
-  // * Normalized according to Unicode Normalization Form C
+  // * Normalized according to [Unicode Normalization Form C]
   // (http://www.unicode.org/reports/tr15/).
   // * May not contain any of the following ASCII characters: '/', ':', '?',
   // ',', or '#'.
@@ -275,7 +275,12 @@ message ListDeliveryVehiclesRequest {
   //
   // Note that the only queries supported for `ListDeliveryVehicles` are
   // on vehicle attributes (for example, `attributes.<key> = <value>` or
-  // `attributes.<key1> = <value1> AND attributes.<key2> = <value2>`).
+  // `attributes.<key1> = <value1> AND attributes.<key2> = <value2>`). Also, all
+  // attributes are stored as strings, so the only supported comparisons against
+  // attributes are string comparisons. In order to compare against number or
+  // boolean values, the values must be explicitly quoted to be treated as
+  // strings (for example, `attributes.<key> = "10"` or
+  // `attributes.<key> = "true"`).
   string filter = 6 [(google.api.field_behavior) = OPTIONAL];
 
   // Optional. A filter that limits the search area to a rectangle defined by the
@@ -367,7 +372,7 @@ message CreateTaskRequest {
   //
   // * Must be a valid Unicode string.
   // * Limited to a maximum length of 64 characters.
-  // * Normalized according to Unicode Normalization Form C
+  // * Normalized according to [Unicode Normalization Form C]
   // (http://www.unicode.org/reports/tr15/).
   // * May not contain any of the following ASCII characters: '/', ':', '?',
   // ',', or '#'.
@@ -418,7 +423,7 @@ message SearchTasksRequest {
   //
   // * Must be a valid Unicode string.
   // * Limited to a maximum length of 64 characters.
-  // * Normalized according to Unicode Normalization Form C
+  // * Normalized according to [Unicode Normalization Form C]
   // (http://www.unicode.org/reports/tr15/).
   // * May not contain any of the following ASCII characters: '/', ':', '?',
   // ',', or '#'.

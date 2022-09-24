@@ -112,7 +112,7 @@ java_gapic_test(
 
 # Open Source Packages
 java_gapic_assembly_gradle_pkg(
-    name = "google-cloud-maps-routing-v2-java",
+    name = "google-maps-routing-v2-java",
     include_samples = True,
     transport = "grpc+rest",
     deps = [
@@ -171,7 +171,7 @@ go_test(
 
 # Open Source Packages
 go_gapic_assembly_pkg(
-    name = "gapi-cloud-maps-routing-v2-go",
+    name = "gapi-maps-routing-v2-go",
     deps = [
         ":routing_go_gapic",
         ":routing_go_gapic_srcjar-metadata.srcjar",
@@ -195,6 +195,7 @@ py_gapic_library(
     srcs = [":routing_proto"],
     grpc_service_config = "library_grpc_service_config.json",
     service_yaml = "routes_v2.yaml",
+    transport = "grpc",
     deps = [
         "//google/geo/type:viewport_py_proto",
     ],
@@ -253,7 +254,7 @@ php_gapic_library(
 
 # Open Source Packages
 php_gapic_assembly_pkg(
-    name = "google-cloud-maps-routing-v2-php",
+    name = "google-maps-routing-v2-php",
     deps = [
         ":routing_php_gapic",
         ":routing_php_grpc",
@@ -272,7 +273,7 @@ load(
 
 nodejs_gapic_library(
     name = "routing_nodejs_gapic",
-    package_name = "@google-cloud/routing",
+    package_name = "@googlemaps/routing",
     src = ":routing_proto_with_info",
     extra_protoc_parameters = ["metadata"],
     grpc_service_config = "library_grpc_service_config.json",
@@ -285,8 +286,8 @@ nodejs_gapic_assembly_pkg(
     name = "maps-routing-v2-nodejs",
     deps = [
         ":routing_nodejs_gapic",
-        "//google/geo/type:viewport_proto",
         ":routing_proto",
+        "//google/geo/type:viewport_proto",
     ],
 )
 
@@ -333,7 +334,7 @@ ruby_cloud_gapic_library(
 
 # Open Source Packages
 ruby_gapic_assembly_pkg(
-    name = "google-cloud-maps-routing-v2-ruby",
+    name = "google-maps-routing-v2-ruby",
     deps = [
         ":routing_ruby_gapic",
         ":routing_ruby_grpc",
@@ -377,7 +378,7 @@ csharp_gapic_library(
 
 # Open Source Packages
 csharp_gapic_assembly_pkg(
-    name = "google-cloud-maps-routing-v2-csharp",
+    name = "google-maps-routing-v2-csharp",
     deps = [
         ":routing_csharp_gapic",
         ":routing_csharp_grpc",
