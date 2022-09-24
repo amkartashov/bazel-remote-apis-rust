@@ -12,6 +12,7 @@ load("@com_google_googleapis_imports//:imports.bzl", "proto_library_with_info")
 proto_library(
     name = "instance_proto",
     srcs = [
+        "common.proto",
         "spanner_instance_admin.proto",
     ],
     deps = [
@@ -170,6 +171,7 @@ py_gapic_library(
         "python-gapic-namespace=google.cloud",
         "python-gapic-name=spanner_admin_instance",
     ],
+    transport = "grpc",
     deps = [
         "//google/iam/v1:iam_policy_py_proto",
     ],

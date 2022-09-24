@@ -111,9 +111,9 @@ go_register_toolchains(version = "1.16")
 # rules_gapic also depends on rules_go, so it must come after our own dependency on rules_go.
 # It must also come before gapic-generator-go so as to ensure that it does not bring in an old
 # version of rules_gapic.
-_rules_gapic_version = "0.15.0"
+_rules_gapic_version = "0.17.0"
 
-_rules_gapic_sha256 = "1da19934301ed71a1faa6a4dc19c9c1c01729fe31a58edcf520befc1002af22d"
+_rules_gapic_sha256 = "3fd8b13f0b801c5efc1bb24cf08c33ddc61793ba48818154058c2c533dfc11c5"
 
 http_archive(
     name = "rules_gapic",
@@ -138,7 +138,7 @@ http_archive(
     ],
 )
 
-_gapic_generator_go_version = "0.31.2"
+_gapic_generator_go_version = "0.32.1"
 
 http_archive(
     name = "com_googleapis_gapic_generator_go",
@@ -172,6 +172,20 @@ gazelle_dependencies()
 # Note, even though protobuf and gRPC are mostly written in C++, they are used to generate stuff
 # for most of the other languages as well, so they can be considered as the core cross-language
 # dependencies.
+
+# Import boringssl explicitly to override what gRPC imports as its dependency.
+# Boringssl build fails on gcc12 without this fix:
+# https://github.com/google/boringssl/commit/8462a367bb57e9524c3d8eca9c62733c63a63cf4,
+# which is present only in the newest version of boringssl, not the one imported
+# by gRPC. Remove this import once gRPC depends on a newer version.
+http_archive(
+    name = "boringssl",
+    sha256 = "b460f8673f3393e58ce506e9cdde7f2c3b2575b075f214cb819fb57d809f052b",
+    strip_prefix = "boringssl-bb41bc007079982da419c0ec3186e510cbcf09d0",
+    urls = [
+        "https://github.com/google/boringssl/archive/bb41bc007079982da419c0ec3186e510cbcf09d0.zip",
+    ],
+)
 
 _grpc_version = "1.47.0"
 
@@ -230,7 +244,7 @@ maven_install(
     ],
 )
 
-_gax_java_version = "2.18.4"
+_gax_java_version = "2.19.0"
 
 http_archive(
     name = "com_google_api_gax_java",
@@ -255,7 +269,7 @@ grpc_java_repositories()
 
 # Java microgenerator.
 # Must go AFTER java-gax, since both java gax and gapic-generator are written in java and may conflict.
-_gapic_generator_java_version = "2.8.3"
+_gapic_generator_java_version = "2.10.0"
 
 http_archive(
     name = "gapic_generator_java",
@@ -278,7 +292,7 @@ load("@rules_python//python:pip.bzl", "pip_install")
 
 pip_install()
 
-_gapic_generator_python_version = "1.2.0"
+_gapic_generator_python_version = "1.4.4"
 
 http_archive(
     name = "gapic_generator_python",
@@ -300,9 +314,9 @@ gapic_generator_register_toolchains()
 # TypeScript
 ##############################################################################
 
-_gapic_generator_typescript_version = "2.16.0"
+_gapic_generator_typescript_version = "2.18.0"
 
-_gapic_generator_typescript_sha256 = "30d5e90ebe04485c166e0d95cfc759322ba405ff0ab6ff900830648afd49d688"
+_gapic_generator_typescript_sha256 = "34f842a8bf587584c132c3f08b669ec880860762fa72066637326004626e7364"
 
 ### TypeScript generator
 http_archive(
@@ -374,9 +388,9 @@ http_archive(
     urls = ["https://github.com/googleapis/gax-dotnet/archive/refs/tags/%s.tar.gz" % _gax_dotnet_version],
 )
 
-_gapic_generator_csharp_version = "1.4.7"
+_gapic_generator_csharp_version = "1.4.8"
 
-_gapic_generator_csharp_sha256 = "cb75b2e12a56485c63c25f9de29d80a82710168a19b44f267a5739427eb7fc24"
+_gapic_generator_csharp_sha256 = "1c155829aabb32a1e94fb9c4fe70054d683b1142fe7853c01f3adc3d5b184a6e"
 
 http_archive(
     name = "gapic_generator_csharp",
@@ -415,9 +429,9 @@ gapic_generator_csharp_repositories_gax_v3(gapic_generator_suffix = "_gax_v3")
 # Ruby
 ##############################################################################
 
-_gapic_generator_ruby_version = "v0.15.2"
+_gapic_generator_ruby_version = "v0.16.0"
 
-_gapic_generator_ruby_sha256 = "0f858224e8f6a45533db33ef9aabd277f85f94b7edf61cb326267adf681b94ae"
+_gapic_generator_ruby_sha256 = "9590dfbb2163cfe22a72c3eecc4569532d2cc83b0af1e41583abda930cf7ec07"
 
 http_archive(
     name = "gapic_generator_ruby",

@@ -176,6 +176,7 @@ py_gapic_library(
     srcs = [":admin_proto"],
     grpc_service_config = "admin_grpc_service_config.json",
     service_yaml = "analyticsadmin_v1alpha.yaml",
+    transport = "grpc+rest",
     deps = [
     ],
 )

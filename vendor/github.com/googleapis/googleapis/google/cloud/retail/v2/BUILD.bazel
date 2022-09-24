@@ -215,6 +215,7 @@ py_gapic_library(
     name = "retail_py_gapic",
     srcs = [":retail_proto"],
     grpc_service_config = "retail_grpc_service_config.json",
+    transport = "grpc",
 )
 
 py_test(
@@ -296,6 +297,7 @@ nodejs_gapic_library(
     package = "google.cloud.retail.v2",
     service_yaml = "retail_v2.yaml",
     deps = [],
+    mixins = "google.longrunning.Operations",
 )
 
 nodejs_gapic_assembly_pkg(
