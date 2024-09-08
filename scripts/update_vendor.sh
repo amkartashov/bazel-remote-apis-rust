@@ -31,6 +31,7 @@ function update_bzl_re_api_repo() {
     git commit -m "${new_ver}: remote apis tags: ${remote_tags}"
   fi
   git tag ${new_ver}
+  cargo publish || true
 }
 
 bzl_re_api_repo_url=$(git vendor list ${bzl_re_api_repo_name} \
