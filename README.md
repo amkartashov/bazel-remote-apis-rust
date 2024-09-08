@@ -41,17 +41,21 @@ below.
 These tools use the Remote Execution API to distribute builds to workers.
 
 * [Bazel](https://bazel.build)
+* [Buck2](https://github.com/facebook/buck2)
 * [BuildStream](https://buildstream.build/)
 * [Goma Server](https://chromium.googlesource.com/infra/goma/server/)
+* [Justbuild](https://github.com/just-buildsystem/justbuild) (via `--compatible`)
 * [Pants](https://www.pantsbuild.org)
 * [Please](https://please.build)
 * [Recc](https://gitlab.com/bloomberg/recc)
+* [Reclient](https://github.com/bazelbuild/reclient)
+* [Siso](https://chromium.googlesource.com/infra/infra/+/refs/heads/main/go/src/infra/build/siso/)
 
 ### Servers
 These applications implement the Remote Execution API to serve build requests
-from the clients above. These are then distributed to workers; some of these
-workers implement the Remote Worker API.
+from the clients above.
 
+* [Aspect Build](https://www.aspect.build/) (commercial)
 * [bazel-remote](https://github.com/buchgr/bazel-remote) (open source, cache only)
 * [Buildbarn](https://github.com/buildbarn) (open source)
 * [BuildBuddy](https://www.buildbuddy.io/) (commercial & open source)
@@ -59,8 +63,28 @@ workers implement the Remote Worker API.
 * [BuildGrid](https://buildgrid.build/) (open source)
 * [EngFlow](https://www.engflow.com/) (commercial)
 * [Flare Build Execution](https://flare.build/products/flare-build-execution) (commercial)
-* [Remote Build Execution (Alpha)](https://blog.bazel.build/2018/10/05/remote-build-execution.html) (commercial)
+* [Justbuild](https://github.com/just-buildsystem/justbuild/blob/master/doc/tutorial/just-execute.org) (via `--compatible`, open source)
+* [Kajiya](https://chromium.googlesource.com/infra/infra/+/refs/heads/main/go/src/infra/build/kajiya/) (open source)
+* [NativeLink](https://github.com/TraceMachina/nativelink) (open source)
 * [Scoot](https://github.com/twitter/scoot) (open source)
+
+### Workers
+Servers generally distribute work to a fleet of workers.
+The [Remote Worker API](https://docs.google.com/document/d/1s_AzRRD2mdyktKUj2HWBn99rMg_3tcPvdjx3MPbFidU)
+defines a generic protocol for worker and server communication, although, 
+this API is considered too heavyweight for most use-cases. Because of that, 
+many implementations have designed their own protocols. Links to these APIs
+are provided as a reference below.
+*Adhering to any one of these protocols is not a requirement.*
+
+* [Buildfarm Operation Queues](https://bazelbuild.github.io/bazel-buildfarm/docs/architecture/queues/)
+  * Uses sets of queues for managing different payload requirements.
+* [Buildbarn Remote Worker](https://github.com/buildbarn/bb-remote-execution/blob/master/pkg/proto/remoteworker/remoteworker.proto)
+  * Uses a custom protocol for workers to connect to a scheduler and receive instructions.
+* [BuildGrid Bots](https://buildgrid.build/developer/data_model.html#rwapi)
+  * A server implementation of the Remote Workers API.
+* [Buildbox Worker](https://gitlab.com/BuildGrid/buildbox/buildbox-worker)
+  * A worker implementation of the Remote Workers API.
 
 ## API Community
 
