@@ -71,10 +71,7 @@ bzl_re_api_repo_next_commits=$(git --git-dir=${bzl_re_api_repo_log_dir}/.git log
 for c in ${bzl_re_api_repo_next_commits}; do
   if [[ -v bzl_re_api_repo_commit_tags[${c}] ]]; then
     update_bzl_re_api_repo $c ${bzl_re_api_repo_commit_tags[${c}]}
-    echo cargo set-version --bump minor
-    echo cargo read-manifest | jq -r '.version'
   fi
 done
 
-echo Need to update to ${bzl_re_api_repo_ref}
 update_bzl_re_api_repo ${bzl_re_api_repo_ref} ${bzl_re_api_repo_commit_tags[${bzl_re_api_repo_last_commit}]:-}
