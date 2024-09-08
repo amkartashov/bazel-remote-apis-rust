@@ -1,0 +1,28 @@
+name: update vendored proto files
+
+on:
+  # run each day
+  schedule:
+    - cron:  '30 5 * * *'
+  # manual run
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - run: scripts/update_vendor.sh
+      - run: |
+          # git push
+          # git push --tags
+          git log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short
