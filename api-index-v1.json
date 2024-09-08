@@ -19958,6 +19958,11 @@
           "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
           "methods": [
             {
+              "shortName": "AcknowledgeViolation",
+              "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.AcknowledgeViolation",
+              "mode": "UNARY"
+            },
+            {
               "shortName": "CreateWorkload",
               "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.CreateWorkload",
               "mode": "UNARY",
@@ -19980,6 +19985,11 @@
               ]
             },
             {
+              "shortName": "GetViolation",
+              "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.GetViolation",
+              "mode": "UNARY"
+            },
+            {
               "shortName": "GetWorkload",
               "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.GetWorkload",
               "mode": "UNARY",
@@ -19991,6 +20001,11 @@
               ]
             },
             {
+              "shortName": "ListViolations",
+              "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.ListViolations",
+              "mode": "UNARY"
+            },
+            {
               "shortName": "ListWorkloads",
               "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.ListWorkloads",
               "mode": "UNARY",
@@ -19998,6 +20013,17 @@
                 {
                   "httpMethod": "GET",
                   "path": "/v1/{parent=organizations/*/locations/*}/workloads"
+                }
+              ]
+            },
+            {
+              "shortName": "RestrictAllowedResources",
+              "fullName": "google.cloud.assuredworkloads.v1.AssuredWorkloadsService.RestrictAllowedResources",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{name=organizations/*/locations/*/workloads/*}:restrictAllowedResources"
                 }
               ]
             },
@@ -20017,7 +20043,8 @@
       ],
       "configFile": "assuredworkloads_v1.yaml",
       "serviceConfigApiNames": [
-        "google.cloud.assuredworkloads.v1.AssuredWorkloadsService"
+        "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
+        "google.longrunning.Operations"
       ]
     },
     {
@@ -25141,38 +25168,39 @@
       "description": "<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>",
       "importDirectories": [
         "google/api",
+        "google/cloud/certificatemanager/v1",
         "google/longrunning",
         "google/protobuf"
       ],
       "options": {
         "csharp_namespace": {
           "valueCounts": {
-            "Google.Cloud.CertificateManager.V1": 1
+            "Google.Cloud.CertificateManager.V1": 2
           }
         },
         "go_package": {
           "valueCounts": {
-            "google.golang.org/genproto/googleapis/cloud/certificatemanager/v1;certificatemanager": 1
+            "google.golang.org/genproto/googleapis/cloud/certificatemanager/v1;certificatemanager": 2
           }
         },
         "java_multiple_files": {
           "valueCounts": {
-            "true": 1
+            "true": 2
           }
         },
         "java_package": {
           "valueCounts": {
-            "com.google.cloud.certificatemanager.v1": 1
+            "com.google.cloud.certificatemanager.v1": 2
           }
         },
         "php_namespace": {
           "valueCounts": {
-            "Google\\Cloud\\CertificateManager\\V1": 1
+            "Google\\Cloud\\CertificateManager\\V1": 2
           }
         },
         "ruby_package": {
           "valueCounts": {
-            "Google::Cloud::CertificateManager::V1": 1
+            "Google::Cloud::CertificateManager::V1": 2
           }
         }
       },
@@ -25189,6 +25217,17 @@
                 {
                   "httpMethod": "POST",
                   "path": "/v1/{parent=projects/*/locations/*}/certificates"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateCertificateIssuanceConfig",
+              "fullName": "google.cloud.certificatemanager.v1.CertificateManager.CreateCertificateIssuanceConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*/locations/*}/certificateIssuanceConfigs"
                 }
               ]
             },
@@ -25237,6 +25276,17 @@
               ]
             },
             {
+              "shortName": "DeleteCertificateIssuanceConfig",
+              "fullName": "google.cloud.certificatemanager.v1.CertificateManager.DeleteCertificateIssuanceConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1/{name=projects/*/locations/*/certificateIssuanceConfigs/*}"
+                }
+              ]
+            },
+            {
               "shortName": "DeleteCertificateMap",
               "fullName": "google.cloud.certificatemanager.v1.CertificateManager.DeleteCertificateMap",
               "mode": "UNARY",
@@ -25281,6 +25331,17 @@
               ]
             },
             {
+              "shortName": "GetCertificateIssuanceConfig",
+              "fullName": "google.cloud.certificatemanager.v1.CertificateManager.GetCertificateIssuanceConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/locations/*/certificateIssuanceConfigs/*}"
+                }
+              ]
+            },
+            {
               "shortName": "GetCertificateMap",
               "fullName": "google.cloud.certificatemanager.v1.CertificateManager.GetCertificateMap",
               "mode": "UNARY",
@@ -25310,6 +25371,17 @@
                 {
                   "httpMethod": "GET",
                   "path": "/v1/{name=projects/*/locations/*/dnsAuthorizations/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListCertificateIssuanceConfigs",
+              "fullName": "google.cloud.certificatemanager.v1.CertificateManager.ListCertificateIssuanceConfigs",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*/locations/*}/certificateIssuanceConfigs"
                 }
               ]
             },
@@ -25429,21 +25501,60 @@
       "options": {
         "go_package": {
           "valueCounts": {
-            "google.golang.org/genproto/googleapis/cloud/channel/v1;channel": 10
+            "google.golang.org/genproto/googleapis/cloud/channel/v1;channel": 11
           }
         },
         "java_multiple_files": {
           "valueCounts": {
-            "true": 10
+            "true": 11
           }
         },
         "java_package": {
           "valueCounts": {
-            "com.google.cloud.channel.v1": 10
+            "com.google.cloud.channel.v1": 11
           }
         }
       },
       "services": [
+        {
+          "shortName": "CloudChannelReportsService",
+          "fullName": "google.cloud.channel.v1.CloudChannelReportsService",
+          "methods": [
+            {
+              "shortName": "FetchReportResults",
+              "fullName": "google.cloud.channel.v1.CloudChannelReportsService.FetchReportResults",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{report_job=accounts/*/reportJobs/*}:fetchReportResults"
+                }
+              ]
+            },
+            {
+              "shortName": "ListReports",
+              "fullName": "google.cloud.channel.v1.CloudChannelReportsService.ListReports",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=accounts/*}/reports"
+                }
+              ]
+            },
+            {
+              "shortName": "RunReportJob",
+              "fullName": "google.cloud.channel.v1.CloudChannelReportsService.RunReportJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{name=accounts/*/reports/*}:run"
+                }
+              ]
+            }
+          ]
+        },
         {
           "shortName": "CloudChannelService",
           "fullName": "google.cloud.channel.v1.CloudChannelService",
@@ -25972,6 +26083,7 @@
       ],
       "configFile": "cloudchannel_v1.yaml",
       "serviceConfigApiNames": [
+        "google.cloud.channel.v1.CloudChannelReportsService",
         "google.cloud.channel.v1.CloudChannelService",
         "google.longrunning.Operations"
       ]
@@ -35376,17 +35488,6 @@
               ]
             },
             {
-              "shortName": "ProcessAsyncRuleSets",
-              "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.ProcessAsyncRuleSets",
-              "mode": "UNARY",
-              "bindings": [
-                {
-                  "httpMethod": "POST",
-                  "path": "/v1/{location=projects/*/locations/*}:processAsyncRuleSets"
-                }
-              ]
-            },
-            {
               "shortName": "UpdateRuleSet",
               "fullName": "google.cloud.contentwarehouse.v1.RuleSetService.UpdateRuleSet",
               "mode": "UNARY",
@@ -40268,17 +40369,17 @@
       "options": {
         "go_package": {
           "valueCounts": {
-            "google.golang.org/genproto/googleapis/cloud/deploy/v1;deploy": 7
+            "google.golang.org/genproto/googleapis/cloud/deploy/v1;deploy": 8
           }
         },
         "java_multiple_files": {
           "valueCounts": {
-            "true": 7
+            "true": 8
           }
         },
         "java_package": {
           "valueCounts": {
-            "com.google.cloud.deploy.v1": 7
+            "com.google.cloud.deploy.v1": 8
           }
         }
       },
@@ -40287,6 +40388,17 @@
           "shortName": "CloudDeploy",
           "fullName": "google.cloud.deploy.v1.CloudDeploy",
           "methods": [
+            {
+              "shortName": "AbandonRelease",
+              "fullName": "google.cloud.deploy.v1.CloudDeploy.AbandonRelease",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{name=projects/*/locations/*/deliveryPipelines/*/releases/*}:abandon"
+                }
+              ]
+            },
             {
               "shortName": "ApproveRollout",
               "fullName": "google.cloud.deploy.v1.CloudDeploy.ApproveRollout",
@@ -40387,6 +40499,17 @@
               ]
             },
             {
+              "shortName": "GetJobRun",
+              "fullName": "google.cloud.deploy.v1.CloudDeploy.GetJobRun",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/locations/*/deliveryPipelines/*/releases/*/rollouts/*/jobRuns/*}"
+                }
+              ]
+            },
+            {
               "shortName": "GetRelease",
               "fullName": "google.cloud.deploy.v1.CloudDeploy.GetRelease",
               "mode": "UNARY",
@@ -40431,6 +40554,17 @@
               ]
             },
             {
+              "shortName": "ListJobRuns",
+              "fullName": "google.cloud.deploy.v1.CloudDeploy.ListJobRuns",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*/locations/*/deliveryPipelines/*/releases/*/rollouts/*}/jobRuns"
+                }
+              ]
+            },
+            {
               "shortName": "ListReleases",
               "fullName": "google.cloud.deploy.v1.CloudDeploy.ListReleases",
               "mode": "UNARY",
@@ -40464,6 +40598,17 @@
               ]
             },
             {
+              "shortName": "RetryJob",
+              "fullName": "google.cloud.deploy.v1.CloudDeploy.RetryJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{rollout=projects/*/locations/*/deliveryPipelines/*/releases/*/rollouts/*}:retryJob"
+                }
+              ]
+            },
+            {
               "shortName": "UpdateDeliveryPipeline",
               "fullName": "google.cloud.deploy.v1.CloudDeploy.UpdateDeliveryPipeline",
               "mode": "UNARY",
@@ -40490,7 +40635,10 @@
       ],
       "configFile": "clouddeploy_v1.yaml",
       "serviceConfigApiNames": [
-        "google.cloud.deploy.v1.CloudDeploy"
+        "google.cloud.deploy.v1.CloudDeploy",
+        "google.cloud.location.Locations",
+        "google.iam.v1.IAMPolicy",
+        "google.longrunning.Operations"
       ]
     },
     {
@@ -45430,6 +45578,21 @@
                   "path": "/v2beta1/{parent=projects/*/locations/*/conversations/*}/messages"
                 }
               ]
+            },
+            {
+              "shortName": "SuggestConversationSummary",
+              "fullName": "google.cloud.dialogflow.v2beta1.Conversations.SuggestConversationSummary",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v2beta1/{conversation=projects/*/conversations/*}/suggestions:suggestConversationSummary"
+                },
+                {
+                  "httpMethod": "POST",
+                  "path": "/v2beta1/{conversation=projects/*/locations/*/conversations/*}/suggestions:suggestConversationSummary"
+                }
+              ]
             }
           ]
         },
@@ -48143,6 +48306,106 @@
       "serviceConfigApiNames": [
         "google.cloud.edgecontainer.v1.EdgeContainer",
         "google.cloud.location.Locations",
+        "google.longrunning.Operations"
+      ]
+    },
+    {
+      "id": "google.cloud.enterpriseknowledgegraph.v1",
+      "directory": "google/cloud/enterpriseknowledgegraph/v1",
+      "version": "v1",
+      "majorVersion": "v1",
+      "hostName": "enterpriseknowledgegraph.googleapis.com",
+      "title": "Enterprise Knowledge Graph API",
+      "description": "<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>",
+      "importDirectories": [
+        "google/api",
+        "google/cloud/enterpriseknowledgegraph/v1",
+        "google/protobuf",
+        "google/rpc"
+      ],
+      "options": {
+        "go_package": {
+          "valueCounts": {
+            "google.golang.org/genproto/googleapis/cloud/enterpriseknowledgegraph/v1;enterpriseknowledgegraph": 3
+          }
+        },
+        "java_multiple_files": {
+          "valueCounts": {
+            "true": 3
+          }
+        },
+        "java_package": {
+          "valueCounts": {
+            "com.google.cloud.enterpriseknowledgegraph.v1": 3
+          }
+        }
+      },
+      "services": [
+        {
+          "shortName": "EnterpriseKnowledgeGraphService",
+          "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService",
+          "methods": [
+            {
+              "shortName": "CancelEntityReconciliationJob",
+              "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService.CancelEntityReconciliationJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{name=projects/*/locations/*/entityReconciliationJobs/*}:cancel"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateEntityReconciliationJob",
+              "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService.CreateEntityReconciliationJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*/locations/*}/entityReconciliationJobs"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteEntityReconciliationJob",
+              "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService.DeleteEntityReconciliationJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1/{name=projects/*/locations/*/entityReconciliationJobs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetEntityReconciliationJob",
+              "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService.GetEntityReconciliationJob",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/locations/*/entityReconciliationJobs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListEntityReconciliationJobs",
+              "fullName": "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService.ListEntityReconciliationJobs",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*/locations/*}/entityReconciliationJobs"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "configFile": "enterpriseknowledgegraph_v1.yaml",
+      "serviceConfigApiNames": [
+        "google.cloud.enterpriseknowledgegraph.v1.EnterpriseKnowledgeGraphService",
         "google.longrunning.Operations"
       ]
     },
@@ -53403,6 +53666,7 @@
       "serviceConfigApiNames": [
         "google.cloud.kms.v1.EkmService",
         "google.cloud.kms.v1.KeyManagementService",
+        "google.cloud.location.Locations",
         "google.iam.v1.IAMPolicy"
       ]
     },
@@ -60289,6 +60553,17 @@
               ]
             },
             {
+              "shortName": "RetrieveLegacySecretKey",
+              "fullName": "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService.RetrieveLegacySecretKey",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{key=projects/*/keys/*}:retrieveLegacySecretKey"
+                }
+              ]
+            },
+            {
               "shortName": "SearchRelatedAccountGroupMemberships",
               "fullName": "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService.SearchRelatedAccountGroupMemberships",
               "mode": "UNARY",
@@ -64687,8 +64962,10 @@
       ],
       "configFile": "run_v2.yaml",
       "serviceConfigApiNames": [
+        "google.cloud.location.Locations",
         "google.cloud.run.v2.Revisions",
-        "google.cloud.run.v2.Services"
+        "google.cloud.run.v2.Services",
+        "google.longrunning.Operations"
       ]
     },
     {
@@ -66672,6 +66949,14 @@
                 {
                   "httpMethod": "POST",
                   "path": "/v1/{parent=organizations/*}/notificationConfigs"
+                },
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=folders/*}/notificationConfigs"
+                },
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*}/notificationConfigs"
                 }
               ]
             },
@@ -66732,6 +67017,14 @@
                 {
                   "httpMethod": "DELETE",
                   "path": "/v1/{name=organizations/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1/{name=folders/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1/{name=projects/*/notificationConfigs/*}"
                 }
               ]
             },
@@ -66792,6 +67085,14 @@
                 {
                   "httpMethod": "GET",
                   "path": "/v1/{name=organizations/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=folders/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/notificationConfigs/*}"
                 }
               ]
             },
@@ -66939,6 +67240,14 @@
                 {
                   "httpMethod": "GET",
                   "path": "/v1/{parent=organizations/*}/notificationConfigs"
+                },
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=folders/*}/notificationConfigs"
+                },
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*}/notificationConfigs"
                 }
               ]
             },
@@ -67116,6 +67425,14 @@
                 {
                   "httpMethod": "PATCH",
                   "path": "/v1/{notification_config.name=organizations/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1/{notification_config.name=folders/*/notificationConfigs/*}"
+                },
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1/{notification_config.name=projects/*/notificationConfigs/*}"
                 }
               ]
             },
@@ -70472,6 +70789,144 @@
       ]
     },
     {
+      "id": "google.cloud.storageinsights.v1",
+      "directory": "google/cloud/storageinsights/v1",
+      "version": "v1",
+      "majorVersion": "v1",
+      "hostName": "storageinsights.googleapis.com",
+      "title": "Storage Insights API",
+      "description": "<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>",
+      "importDirectories": [
+        "google/api",
+        "google/protobuf",
+        "google/rpc",
+        "google/type"
+      ],
+      "options": {
+        "csharp_namespace": {
+          "valueCounts": {
+            "Google.Cloud.StorageInsights.V1": 1
+          }
+        },
+        "go_package": {
+          "valueCounts": {
+            "google.golang.org/genproto/googleapis/cloud/storageinsights/v1;storageinsights": 1
+          }
+        },
+        "java_multiple_files": {
+          "valueCounts": {
+            "true": 1
+          }
+        },
+        "java_package": {
+          "valueCounts": {
+            "com.google.cloud.storageinsights.v1": 1
+          }
+        },
+        "php_namespace": {
+          "valueCounts": {
+            "Google\\Cloud\\StorageInsights\\V1": 1
+          }
+        },
+        "ruby_package": {
+          "valueCounts": {
+            "Google::Cloud::StorageInsights::V1": 1
+          }
+        }
+      },
+      "services": [
+        {
+          "shortName": "StorageInsights",
+          "fullName": "google.cloud.storageinsights.v1.StorageInsights",
+          "methods": [
+            {
+              "shortName": "CreateReportConfig",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.CreateReportConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*/locations/*}/reportConfigs"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteReportConfig",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.DeleteReportConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1/{name=projects/*/locations/*/reportConfigs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetReportConfig",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/locations/*/reportConfigs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetReportDetail",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.GetReportDetail",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{name=projects/*/locations/*/reportConfigs/*/reportDetails/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListReportConfigs",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportConfigs",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*/locations/*}/reportConfigs"
+                }
+              ]
+            },
+            {
+              "shortName": "ListReportDetails",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.ListReportDetails",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1/{parent=projects/*/locations/*/reportConfigs/*}/reportDetails"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateReportConfig",
+              "fullName": "google.cloud.storageinsights.v1.StorageInsights.UpdateReportConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1/{report_config.name=projects/*/locations/*/reportConfigs/*}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "configFile": "storageinsights_v1.yaml",
+      "serviceConfigApiNames": [
+        "google.cloud.location.Locations",
+        "google.cloud.storageinsights.v1.StorageInsights",
+        "google.longrunning.Operations"
+      ]
+    },
+    {
       "id": "google.cloud.talent.v4",
       "directory": "google/cloud/talent/v4",
       "version": "v4",
@@ -72171,6 +72626,21 @@
                 {
                   "httpMethod": "POST",
                   "path": "/v1/{dataset=projects/*/datasets/*}:evaluateSlice"
+                }
+              ]
+            },
+            {
+              "shortName": "EvaluateTimeseries",
+              "fullName": "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController.EvaluateTimeseries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*/locations/*}/datasets:evaluateTimeseries"
+                },
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/{parent=projects/*}/datasets:evaluateTimeseries"
                 }
               ]
             },
@@ -74813,6 +75283,1042 @@
       "serviceConfigApiNames": [
         "google.cloud.vision.v1p4beta1.ImageAnnotator",
         "google.cloud.vision.v1p4beta1.ProductSearch"
+      ]
+    },
+    {
+      "id": "google.cloud.visionai.v1alpha1",
+      "directory": "google/cloud/visionai/v1alpha1",
+      "version": "v1alpha1",
+      "majorVersion": "v1",
+      "hostName": "visionai.googleapis.com",
+      "title": "Vision AI API",
+      "description": "<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>",
+      "importDirectories": [
+        "google/api",
+        "google/cloud/visionai/v1alpha1",
+        "google/longrunning",
+        "google/protobuf",
+        "google/rpc",
+        "google/type"
+      ],
+      "options": {
+        "csharp_namespace": {
+          "valueCounts": {
+            "Google.Cloud.VisionAI.V1Alpha1": 11
+          }
+        },
+        "go_package": {
+          "valueCounts": {
+            "google.golang.org/genproto/googleapis/cloud/visionai/v1alpha1;visionai": 11
+          }
+        },
+        "java_multiple_files": {
+          "valueCounts": {
+            "true": 11
+          }
+        },
+        "java_package": {
+          "valueCounts": {
+            "com.google.cloud.visionai.v1alpha1": 11
+          }
+        },
+        "php_namespace": {
+          "valueCounts": {
+            "Google\\Cloud\\VisionAI\\V1alpha1": 11
+          }
+        },
+        "ruby_package": {
+          "valueCounts": {
+            "Google::Cloud::VisionAI::V1alpha1": 11
+          }
+        }
+      },
+      "services": [
+        {
+          "shortName": "AppPlatform",
+          "fullName": "google.cloud.visionai.v1alpha1.AppPlatform",
+          "methods": [
+            {
+              "shortName": "AddApplicationStreamInput",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.AddApplicationStreamInput",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:addStreamInput"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.CreateApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/applications"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateApplicationInstances",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.CreateApplicationInstances",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:createApplicationInstances"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateDraft",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.CreateDraft",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/applications/*}/drafts"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateProcessor",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.CreateProcessor",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/processors"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.DeleteApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteApplicationInstances",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.DeleteApplicationInstances",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:deleteApplicationInstances"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteDraft",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.DeleteDraft",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*/drafts/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteProcessor",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.DeleteProcessor",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/processors/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeployApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.DeployApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:deploy"
+                }
+              ]
+            },
+            {
+              "shortName": "GetApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.GetApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetDraft",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.GetDraft",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*/drafts/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetInstance",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.GetInstance",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*/instances/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetProcessor",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.GetProcessor",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/processors/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListApplications",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.ListApplications",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/applications"
+                }
+              ]
+            },
+            {
+              "shortName": "ListDrafts",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.ListDrafts",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/applications/*}/drafts"
+                }
+              ]
+            },
+            {
+              "shortName": "ListInstances",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.ListInstances",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/applications/*}/instances"
+                }
+              ]
+            },
+            {
+              "shortName": "ListPrebuiltProcessors",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.ListPrebuiltProcessors",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/processors:prebuilt"
+                }
+              ]
+            },
+            {
+              "shortName": "ListProcessors",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.ListProcessors",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/processors"
+                }
+              ]
+            },
+            {
+              "shortName": "RemoveApplicationStreamInput",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.RemoveApplicationStreamInput",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:removeStreamInput"
+                }
+              ]
+            },
+            {
+              "shortName": "UndeployApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UndeployApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:undeploy"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateApplication",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UpdateApplication",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{application.name=projects/*/locations/*/applications/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateApplicationInstances",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UpdateApplicationInstances",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:updateApplicationInstances"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateApplicationStreamInput",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UpdateApplicationStreamInput",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/applications/*}:updateStreamInput"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateDraft",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UpdateDraft",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{draft.name=projects/*/locations/*/applications/*/drafts/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateProcessor",
+              "fullName": "google.cloud.visionai.v1alpha1.AppPlatform.UpdateProcessor",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{processor.name=projects/*/locations/*/processors/*}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "shortName": "LiveVideoAnalytics",
+          "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics",
+          "methods": [
+            {
+              "shortName": "CreateAnalysis",
+              "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics.CreateAnalysis",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/analyses"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteAnalysis",
+              "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics.DeleteAnalysis",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/analyses/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetAnalysis",
+              "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics.GetAnalysis",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/analyses/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListAnalyses",
+              "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics.ListAnalyses",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/analyses"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateAnalysis",
+              "fullName": "google.cloud.visionai.v1alpha1.LiveVideoAnalytics.UpdateAnalysis",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{analysis.name=projects/*/locations/*/clusters/*/analyses/*}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "shortName": "StreamingService",
+          "fullName": "google.cloud.visionai.v1alpha1.StreamingService",
+          "methods": [
+            {
+              "shortName": "AcquireLease",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.AcquireLease",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{series=projects/*/locations/*/clusters/*/series/*}:acquireLease"
+                }
+              ]
+            },
+            {
+              "shortName": "ReceiveEvents",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.ReceiveEvents",
+              "mode": "BIDIRECTIONAL_STREAMING"
+            },
+            {
+              "shortName": "ReceivePackets",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.ReceivePackets",
+              "mode": "BIDIRECTIONAL_STREAMING"
+            },
+            {
+              "shortName": "ReleaseLease",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.ReleaseLease",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{series=projects/*/locations/*/clusters/*/series/*}:releaseLease"
+                }
+              ]
+            },
+            {
+              "shortName": "RenewLease",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.RenewLease",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{series=projects/*/locations/*/clusters/*/series/*}:renewLease"
+                }
+              ]
+            },
+            {
+              "shortName": "SendPackets",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamingService.SendPackets",
+              "mode": "BIDIRECTIONAL_STREAMING"
+            }
+          ]
+        },
+        {
+          "shortName": "StreamsService",
+          "fullName": "google.cloud.visionai.v1alpha1.StreamsService",
+          "methods": [
+            {
+              "shortName": "CreateCluster",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.CreateCluster",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/clusters"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateEvent",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.CreateEvent",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/events"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateSeries",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.CreateSeries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/series"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateStream",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.CreateStream",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/streams"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteCluster",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.DeleteCluster",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteEvent",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.DeleteEvent",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/events/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteSeries",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.DeleteSeries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/series/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteStream",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.DeleteStream",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/streams/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GenerateStreamHlsToken",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.GenerateStreamHlsToken",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{stream=projects/*/locations/*/clusters/*/streams/*}:generateStreamHlsToken"
+                }
+              ]
+            },
+            {
+              "shortName": "GetCluster",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.GetCluster",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetEvent",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.GetEvent",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/events/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetSeries",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.GetSeries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/series/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetStream",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.GetStream",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/clusters/*/streams/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "ListClusters",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.ListClusters",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/clusters"
+                }
+              ]
+            },
+            {
+              "shortName": "ListEvents",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.ListEvents",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/events"
+                }
+              ]
+            },
+            {
+              "shortName": "ListSeries",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.ListSeries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/series"
+                }
+              ]
+            },
+            {
+              "shortName": "ListStreams",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.ListStreams",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/streams"
+                }
+              ]
+            },
+            {
+              "shortName": "MaterializeChannel",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.MaterializeChannel",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/clusters/*}/channels"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateCluster",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.UpdateCluster",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{cluster.name=projects/*/locations/*/clusters/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateEvent",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.UpdateEvent",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{event.name=projects/*/locations/*/clusters/*/events/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateSeries",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.UpdateSeries",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{series.name=projects/*/locations/*/clusters/*/series/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateStream",
+              "fullName": "google.cloud.visionai.v1alpha1.StreamsService.UpdateStream",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{stream.name=projects/*/locations/*/clusters/*/streams/*}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "shortName": "Warehouse",
+          "fullName": "google.cloud.visionai.v1alpha1.Warehouse",
+          "methods": [
+            {
+              "shortName": "ClipAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ClipAsset",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*}:clip"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateAnnotation",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.CreateAnnotation",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*/assets/*}/annotations"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.CreateAsset",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/assets"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateCorpus",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.CreateCorpus",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/corpora"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateDataSchema",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.CreateDataSchema",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/dataSchemas"
+                }
+              ]
+            },
+            {
+              "shortName": "CreateSearchConfig",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.CreateSearchConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/searchConfigs"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteAnnotation",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.DeleteAnnotation",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*/annotations/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.DeleteAsset",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteCorpus",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.DeleteCorpus",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteDataSchema",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.DeleteDataSchema",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/dataSchemas/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "DeleteSearchConfig",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.DeleteSearchConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "DELETE",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/searchConfigs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GenerateHlsUri",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GenerateHlsUri",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*}:generateHlsUri"
+                }
+              ]
+            },
+            {
+              "shortName": "GetAnnotation",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GetAnnotation",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*/annotations/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GetAsset",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/assets/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetCorpus",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GetCorpus",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetDataSchema",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GetDataSchema",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/dataSchemas/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "GetSearchConfig",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.GetSearchConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{name=projects/*/locations/*/corpora/*/searchConfigs/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "IngestAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.IngestAsset",
+              "mode": "BIDIRECTIONAL_STREAMING"
+            },
+            {
+              "shortName": "ListAnnotations",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ListAnnotations",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*/assets/*}/annotations"
+                }
+              ]
+            },
+            {
+              "shortName": "ListAssets",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ListAssets",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/assets"
+                }
+              ]
+            },
+            {
+              "shortName": "ListCorpora",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ListCorpora",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*}/corpora"
+                }
+              ]
+            },
+            {
+              "shortName": "ListDataSchemas",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ListDataSchemas",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/dataSchemas"
+                }
+              ]
+            },
+            {
+              "shortName": "ListSearchConfigs",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.ListSearchConfigs",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "GET",
+                  "path": "/v1alpha1/{parent=projects/*/locations/*/corpora/*}/searchConfigs"
+                }
+              ]
+            },
+            {
+              "shortName": "SearchAssets",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.SearchAssets",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1alpha1/{corpus=projects/*/locations/*/corpora/*}:searchAssets"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateAnnotation",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.UpdateAnnotation",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{annotation.name=projects/*/locations/*/corpora/*/assets/*/annotations/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateAsset",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.UpdateAsset",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{asset.name=projects/*/locations/*/corpora/*/assets/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateCorpus",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.UpdateCorpus",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{corpus.name=projects/*/locations/*/corpora/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateDataSchema",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.UpdateDataSchema",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{data_schema.name=projects/*/locations/*/corpora/*/dataSchemas/*}"
+                }
+              ]
+            },
+            {
+              "shortName": "UpdateSearchConfig",
+              "fullName": "google.cloud.visionai.v1alpha1.Warehouse.UpdateSearchConfig",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "PATCH",
+                  "path": "/v1alpha1/{search_config.name=projects/*/locations/*/corpora/*/searchConfigs/*}"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "configFile": "visionai_v1alpha1.yaml",
+      "serviceConfigApiNames": [
+        "google.cloud.location.Locations",
+        "google.cloud.visionai.v1alpha1.AppPlatform",
+        "google.cloud.visionai.v1alpha1.LiveVideoAnalytics",
+        "google.cloud.visionai.v1alpha1.StreamingService",
+        "google.cloud.visionai.v1alpha1.StreamsService",
+        "google.cloud.visionai.v1alpha1.Warehouse",
+        "google.iam.v1.IAMPolicy",
+        "google.longrunning.Operations"
       ]
     },
     {
@@ -78198,32 +79704,32 @@
       "options": {
         "csharp_namespace": {
           "valueCounts": {
-            "Google.Cloud.Datastore.V1": 3
+            "Google.Cloud.Datastore.V1": 4
           }
         },
         "go_package": {
           "valueCounts": {
-            "google.golang.org/genproto/googleapis/datastore/v1;datastore": 3
+            "google.golang.org/genproto/googleapis/datastore/v1;datastore": 4
           }
         },
         "java_multiple_files": {
           "valueCounts": {
-            "true": 3
+            "true": 4
           }
         },
         "java_package": {
           "valueCounts": {
-            "com.google.datastore.v1": 3
+            "com.google.datastore.v1": 4
           }
         },
         "php_namespace": {
           "valueCounts": {
-            "Google\\Cloud\\Datastore\\V1": 3
+            "Google\\Cloud\\Datastore\\V1": 4
           }
         },
         "ruby_package": {
           "valueCounts": {
-            "Google::Cloud::Datastore::V1": 3
+            "Google::Cloud::Datastore::V1": 4
           }
         }
       },
@@ -78295,6 +79801,17 @@
                 {
                   "httpMethod": "POST",
                   "path": "/v1/projects/{project_id}:rollback"
+                }
+              ]
+            },
+            {
+              "shortName": "RunAggregationQuery",
+              "fullName": "google.datastore.v1.Datastore.RunAggregationQuery",
+              "mode": "UNARY",
+              "bindings": [
+                {
+                  "httpMethod": "POST",
+                  "path": "/v1/projects/{project_id}:runAggregationQuery"
                 }
               ]
             },
