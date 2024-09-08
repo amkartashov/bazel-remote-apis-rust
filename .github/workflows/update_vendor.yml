@@ -21,7 +21,9 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-      - run: scripts/update_vendor.sh
+      - run: |
+          set -xv
+          bash scripts/update_vendor.sh
       - run: |
           # git push
           # git push --tags
