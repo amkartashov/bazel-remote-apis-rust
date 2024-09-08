@@ -1,15 +1,17 @@
-name: Build
+name: Release
 
 on:
   push:
-    branches: '**'
+    tags: '**'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build
+      - run: cargo publish
+      - name: Release
+        uses: softprops/action-gh-release@v1
