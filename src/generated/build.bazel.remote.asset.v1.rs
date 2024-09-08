@@ -79,6 +79,14 @@ pub struct FetchBlobRequest {
     /// Specified qualifier names *MUST* be unique.
     #[prost(message, repeated, tag = "5")]
     pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// The digest function the server must use to compute the digest.
+    ///
+    /// If unset, the server SHOULD default to SHA256.
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "6"
+    )]
+    pub digest_function: i32,
 }
 /// A response message for
 /// [Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
@@ -94,6 +102,8 @@ pub struct FetchBlobResponse {
     ///    requested an asset from a disallowed origin.
     /// * `ABORTED`: The operation could not be completed, typically due to a
     ///    failed consistency check.
+    /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+    ///    perform the requested operation. The client may retry after a delay.
     #[prost(message, optional, tag = "1")]
     pub status: ::core::option::Option<
         super::super::super::super::super::google::rpc::Status,
@@ -113,6 +123,18 @@ pub struct FetchBlobResponse {
     /// The digest of the file's contents, available for download through the CAS.
     #[prost(message, optional, tag = "5")]
     pub blob_digest: ::core::option::Option<super::super::execution::v2::Digest>,
+    /// This field SHOULD be set to the digest function that was used by the server
+    /// to compute \[FetchBlobResponse.blob_digest\].
+    /// Clients could use this to determine whether the server honors
+    /// \[FetchBlobRequest.digest_function\] that was set in the request.
+    ///
+    /// If unset, clients SHOULD default to use SHA256 regardless of the requested
+    /// \[FetchBlobRequest.digest_function\].
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "6"
+    )]
+    pub digest_function: i32,
 }
 /// A request message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
@@ -162,6 +184,14 @@ pub struct FetchDirectoryRequest {
     /// Specified qualifier names *MUST* be unique.
     #[prost(message, repeated, tag = "5")]
     pub qualifiers: ::prost::alloc::vec::Vec<Qualifier>,
+    /// The digest function the server must use to compute the digest.
+    ///
+    /// If unset, the server SHOULD default to SHA256.
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "6"
+    )]
+    pub digest_function: i32,
 }
 /// A response message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
@@ -177,6 +207,8 @@ pub struct FetchDirectoryResponse {
     ///    requested an asset from a disallowed origin.
     /// * `ABORTED`: The operation could not be completed, typically due to a
     ///    failed consistency check.
+    /// * `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to
+    ///    perform the requested operation. The client may retry after a delay.
     #[prost(message, optional, tag = "1")]
     pub status: ::core::option::Option<
         super::super::super::super::super::google::rpc::Status,
@@ -199,6 +231,18 @@ pub struct FetchDirectoryResponse {
     pub root_directory_digest: ::core::option::Option<
         super::super::execution::v2::Digest,
     >,
+    /// This field SHOULD be set to the digest function that was used by the server
+    /// to compute \[FetchBlobResponse.root_directory_digest\].
+    /// Clients could use this to determine whether the server honors
+    /// \[FetchDirectoryRequest.digest_function\] that was set in the request.
+    ///
+    /// If unset, clients SHOULD default to use SHA256 regardless of the requested
+    /// \[FetchDirectoryRequest.digest_function\].
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "6"
+    )]
+    pub digest_function: i32,
 }
 /// A request message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
@@ -238,6 +282,18 @@ pub struct PushBlobRequest {
     pub references_directories: ::prost::alloc::vec::Vec<
         super::super::execution::v2::Digest,
     >,
+    /// The digest function that was used to compute the blob digest.
+    ///
+    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
+    /// that case the server SHOULD infer the digest function using the
+    /// length of the action digest hash and the digest functions announced
+    /// in the server's capabilities.
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "8"
+    )]
+    pub digest_function: i32,
 }
 /// A response message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
@@ -284,6 +340,18 @@ pub struct PushDirectoryRequest {
     pub references_directories: ::prost::alloc::vec::Vec<
         super::super::execution::v2::Digest,
     >,
+    /// The digest function that was used to compute blob digests.
+    ///
+    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
+    /// that case the server SHOULD infer the digest function using the
+    /// length of the action digest hash and the digest functions announced
+    /// in the server's capabilities.
+    #[prost(
+        enumeration = "super::super::execution::v2::digest_function::Value",
+        tag = "8"
+    )]
+    pub digest_function: i32,
 }
 /// A response message for
 /// [Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory].

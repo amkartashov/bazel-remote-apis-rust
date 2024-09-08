@@ -51,7 +51,7 @@ pub mod log_stream_service_client {
     /// The Log Stream API manages LogStream resources which are used to stream
     /// writes and reads of an ordered sequence of bytes of unknown eventual length.
     ///
-    /// Note that this is an API Interface and not an API Service, per the definitons
+    /// Note that this is an API Interface and not an API Service, per the definitions
     /// at: https://cloud.google.com/apis/design/glossary
     ///
     /// Log Stream API supports the reading of unfinalized LogStreams either by
@@ -246,7 +246,7 @@ pub mod log_stream_service_server {
     /// The Log Stream API manages LogStream resources which are used to stream
     /// writes and reads of an ordered sequence of bytes of unknown eventual length.
     ///
-    /// Note that this is an API Interface and not an API Service, per the definitons
+    /// Note that this is an API Interface and not an API Service, per the definitions
     /// at: https://cloud.google.com/apis/design/glossary
     ///
     /// Log Stream API supports the reading of unfinalized LogStreams either by
