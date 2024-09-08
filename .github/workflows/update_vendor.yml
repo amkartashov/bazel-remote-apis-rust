@@ -24,6 +24,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           cargo install cargo-edit
+          sudo apt-get install protobuf-compiler
       - env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: scripts/update_vendor.sh

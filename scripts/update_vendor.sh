@@ -22,16 +22,18 @@ function update_bzl_re_api_repo() {
 
   git vendor update ${ggl_api_repo_name} ${googleapis_commit}
 
+  cargo build --features codegen
+
   cargo set-version --bump minor
   new_ver=$(cargo read-manifest | jq -r '.version')
-  git add Cargo.lock Cargo.toml
+  git add Cargo.lock Cargo.toml src
   if [[ -z ${remote_tags} ]]; then
     git commit -m "${new_ver}"
   else
     git commit -m "${new_ver}: remote apis tags: ${remote_tags}"
   fi
   git tag ${new_ver}
-  cargo publish || true
+  cargo publish
 }
 
 bzl_re_api_repo_url=$(git vendor list ${bzl_re_api_repo_name} \

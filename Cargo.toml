@@ -1,6 +1,6 @@
 [package]
 name = "bazel-remote-apis"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 publish = true
 description = "Rust bindings for Bazel Remote APIs"
