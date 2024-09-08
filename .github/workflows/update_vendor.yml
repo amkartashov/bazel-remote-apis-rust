@@ -23,6 +23,7 @@ jobs:
           git config user.email github-actions@github.com
       - run: |
           set -xv
+          ls -l scripts/update_vendor.sh
           bash scripts/update_vendor.sh
       - run: |
           # git push
