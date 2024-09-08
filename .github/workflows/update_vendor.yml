@@ -1,4 +1,4 @@
-name: update vendored proto files
+name: Update vendored repos
 
 on:
   # run each day
@@ -23,6 +23,7 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          cargo install cargo-edit
       - run: scripts/update_vendor.sh
       - run: |
           # git push
