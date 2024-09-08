@@ -60,9 +60,9 @@ rules_pkg_dependencies()
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "c29d8b4b79389463c546f98b15aa4391d4ed7ec459340c47bffe15db63eb9126",
-    strip_prefix = "protobuf-3.21.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.21.3.tar.gz"],
+    sha256 = "ce2fbea3c78147a41b2a922485d283137845303e5e1b6cbd7ece94b96ade7031",
+    strip_prefix = "protobuf-3.21.7",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.21.7.tar.gz"],
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -244,7 +244,7 @@ maven_install(
     ],
 )
 
-_gax_java_version = "2.19.0"
+_gax_java_version = "2.19.4"
 
 http_archive(
     name = "com_google_api_gax_java",
@@ -269,7 +269,7 @@ grpc_java_repositories()
 
 # Java microgenerator.
 # Must go AFTER java-gax, since both java gax and gapic-generator are written in java and may conflict.
-_gapic_generator_java_version = "2.10.0"
+_gapic_generator_java_version = "2.10.1"
 
 http_archive(
     name = "gapic_generator_java",
@@ -314,9 +314,9 @@ gapic_generator_register_toolchains()
 # TypeScript
 ##############################################################################
 
-_gapic_generator_typescript_version = "2.18.0"
+_gapic_generator_typescript_version = "2.18.2"
 
-_gapic_generator_typescript_sha256 = "34f842a8bf587584c132c3f08b669ec880860762fa72066637326004626e7364"
+_gapic_generator_typescript_sha256 = "45dfd7f059f45f83352a2d9438c1ed021817d9c894220cbd9578b1580194b937"
 
 ### TypeScript generator
 http_archive(
@@ -429,9 +429,9 @@ gapic_generator_csharp_repositories_gax_v3(gapic_generator_suffix = "_gax_v3")
 # Ruby
 ##############################################################################
 
-_gapic_generator_ruby_version = "v0.16.0"
+_gapic_generator_ruby_version = "v0.16.1"
 
-_gapic_generator_ruby_sha256 = "9590dfbb2163cfe22a72c3eecc4569532d2cc83b0af1e41583abda930cf7ec07"
+_gapic_generator_ruby_sha256 = "b99c5a7cdbbdc0c7dc4314c5327f164e3a0c7ff3eb896096a3fa86098cba8fd6"
 
 http_archive(
     name = "gapic_generator_ruby",
