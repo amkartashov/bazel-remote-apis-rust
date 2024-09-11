@@ -18,7 +18,7 @@ pub struct Http {
     #[prost(bool, tag = "2")]
     pub fully_decode_reserved_expansion: bool,
 }
-/// # gRPC Transcoding
+/// gRPC Transcoding
 ///
 /// gRPC Transcoding is a feature for mapping between a gRPC method and one or
 /// more HTTP REST endpoints. It allows developers to build a single API service
@@ -59,9 +59,8 @@ pub struct Http {
 ///
 /// This enables an HTTP REST to gRPC mapping as below:
 ///
-/// HTTP | gRPC
-/// -----|-----
-/// `GET /v1/messages/123456`  | `GetMessage(name: "messages/123456")`
+/// - HTTP: `GET /v1/messages/123456`
+/// - gRPC: `GetMessage(name: "messages/123456")`
 ///
 /// Any fields in the request message which are not bound by the path template
 /// automatically become HTTP query parameters if there is no HTTP request body.
@@ -85,11 +84,9 @@ pub struct Http {
 ///
 /// This enables a HTTP JSON to RPC mapping as below:
 ///
-/// HTTP | gRPC
-/// -----|-----
-/// `GET /v1/messages/123456?revision=2&sub.subfield=foo` |
-/// `GetMessage(message_id: "123456" revision: 2 sub: SubMessage(subfield:
-/// "foo"))`
+/// - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+/// - gRPC: `GetMessage(message_id: "123456" revision: 2 sub:
+/// SubMessage(subfield: "foo"))`
 ///
 /// Note that fields which are mapped to URL query parameters must have a
 /// primitive type or a repeated primitive type or a non-repeated message type.
@@ -119,10 +116,8 @@ pub struct Http {
 /// representation of the JSON in the request body is determined by
 /// protos JSON encoding:
 ///
-/// HTTP | gRPC
-/// -----|-----
-/// `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
-/// "123456" message { text: "Hi!" })`
+/// - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
+/// - gRPC: `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
 ///
 /// The special name `*` can be used in the body mapping to define that
 /// every field not bound by the path template should be mapped to the
@@ -145,10 +140,8 @@ pub struct Http {
 ///
 /// The following HTTP JSON to RPC mapping is enabled:
 ///
-/// HTTP | gRPC
-/// -----|-----
-/// `PATCH /v1/messages/123456 { "text": "Hi!" }` | `UpdateMessage(message_id:
-/// "123456" text: "Hi!")`
+/// - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
+/// - gRPC: `UpdateMessage(message_id: "123456" text: "Hi!")`
 ///
 /// Note that when using `*` in the body mapping, it is not possible to
 /// have HTTP parameters, as all fields not bound by the path end in
@@ -176,29 +169,32 @@ pub struct Http {
 ///
 /// This enables the following two alternative HTTP JSON to RPC mappings:
 ///
-/// HTTP | gRPC
-/// -----|-----
-/// `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
-/// `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me" message_id:
-/// "123456")`
+/// - HTTP: `GET /v1/messages/123456`
+/// - gRPC: `GetMessage(message_id: "123456")`
 ///
-/// ## Rules for HTTP mapping
+/// - HTTP: `GET /v1/users/me/messages/123456`
+/// - gRPC: `GetMessage(user_id: "me" message_id: "123456")`
+///
+/// Rules for HTTP mapping
 ///
 /// 1. Leaf request fields (recursive expansion nested messages in the request
 ///     message) are classified into three categories:
 ///     - Fields referred by the path template. They are passed via the URL path.
-///     - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They are passed via the HTTP
+///     - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They
+///     are passed via the HTTP
 ///       request body.
 ///     - All other fields are passed via the URL query parameters, and the
 ///       parameter name is the field path in the request message. A repeated
 ///       field can be represented as multiple query parameters under the same
 ///       name.
-///   2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL query parameter, all fields
+///   2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL
+///   query parameter, all fields
 ///      are passed via URL path and HTTP request body.
-///   3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP request body, all
+///   3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP
+///   request body, all
 ///      fields are passed via URL path and URL query parameters.
 ///
-/// ### Path template syntax
+/// Path template syntax
 ///
 ///      Template = "/" Segments \[ Verb \] ;
 ///      Segments = Segment { "/" Segment } ;
@@ -237,7 +233,7 @@ pub struct Http {
 /// Document](<https://developers.google.com/discovery/v1/reference/apis>) as
 /// `{+var}`.
 ///
-/// ## Using gRPC API Service Configuration
+/// Using gRPC API Service Configuration
 ///
 /// gRPC API Service Configuration (service config) is a configuration language
 /// for configuring a gRPC service to become a user-facing product. The
@@ -252,15 +248,14 @@ pub struct Http {
 /// specified in the service config will override any matching transcoding
 /// configuration in the proto.
 ///
-/// Example:
+/// The following example selects a gRPC method and applies an `HttpRule` to it:
 ///
 ///      http:
 ///        rules:
-///          # Selects a gRPC method and applies HttpRule to it.
 ///          - selector: example.v1.Messaging.GetMessage
 ///            get: /v1/messages/{message_id}/{sub.subfield}
 ///
-/// ## Special notes
+/// Special notes
 ///
 /// When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the
 /// proto to JSON conversion must follow the [proto3
@@ -291,7 +286,8 @@ pub struct Http {
 pub struct HttpRule {
     /// Selects a method to which this rule applies.
     ///
-    /// Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+    /// Refer to [selector][google.api.DocumentationRule.selector] for syntax
+    /// details.
     #[prost(string, tag = "1")]
     pub selector: ::prost::alloc::string::String,
     /// The name of the request field whose value is mapped to the HTTP request
@@ -361,4 +357,492 @@ pub struct CustomHttpPattern {
     /// The path matched by this custom verb.
     #[prost(string, tag = "2")]
     pub path: ::prost::alloc::string::String,
+}
+/// The launch stage as defined by [Google Cloud Platform
+/// Launch Stages](<https://cloud.google.com/terms/launch-stages>).
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum LaunchStage {
+    /// Do not use this default value.
+    Unspecified = 0,
+    /// The feature is not yet implemented. Users can not use it.
+    Unimplemented = 6,
+    /// Prelaunch features are hidden from users and are only visible internally.
+    Prelaunch = 7,
+    /// Early Access features are limited to a closed group of testers. To use
+    /// these features, you must sign up in advance and sign a Trusted Tester
+    /// agreement (which includes confidentiality provisions). These features may
+    /// be unstable, changed in backward-incompatible ways, and are not
+    /// guaranteed to be released.
+    EarlyAccess = 1,
+    /// Alpha is a limited availability test for releases before they are cleared
+    /// for widespread use. By Alpha, all significant design issues are resolved
+    /// and we are in the process of verifying functionality. Alpha customers
+    /// need to apply for access, agree to applicable terms, and have their
+    /// projects allowlisted. Alpha releases don't have to be feature complete,
+    /// no SLAs are provided, and there are no technical support obligations, but
+    /// they will be far enough along that customers can actually use them in
+    /// test environments or for limited-use tests -- just like they would in
+    /// normal production cases.
+    Alpha = 2,
+    /// Beta is the point at which we are ready to open a release for any
+    /// customer to use. There are no SLA or technical support obligations in a
+    /// Beta release. Products will be complete from a feature perspective, but
+    /// may have some open outstanding issues. Beta releases are suitable for
+    /// limited production use cases.
+    Beta = 3,
+    /// GA features are open to all developers and are considered stable and
+    /// fully qualified for production use.
+    Ga = 4,
+    /// Deprecated features are scheduled to be shut down and removed. For more
+    /// information, see the "Deprecation Policy" section of our [Terms of
+    /// Service](<https://cloud.google.com/terms/>)
+    /// and the [Google Cloud Platform Subject to the Deprecation
+    /// Policy](<https://cloud.google.com/terms/deprecation>) documentation.
+    Deprecated = 5,
+}
+impl LaunchStage {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            LaunchStage::Unspecified => "LAUNCH_STAGE_UNSPECIFIED",
+            LaunchStage::Unimplemented => "UNIMPLEMENTED",
+            LaunchStage::Prelaunch => "PRELAUNCH",
+            LaunchStage::EarlyAccess => "EARLY_ACCESS",
+            LaunchStage::Alpha => "ALPHA",
+            LaunchStage::Beta => "BETA",
+            LaunchStage::Ga => "GA",
+            LaunchStage::Deprecated => "DEPRECATED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "LAUNCH_STAGE_UNSPECIFIED" => Some(Self::Unspecified),
+            "UNIMPLEMENTED" => Some(Self::Unimplemented),
+            "PRELAUNCH" => Some(Self::Prelaunch),
+            "EARLY_ACCESS" => Some(Self::EarlyAccess),
+            "ALPHA" => Some(Self::Alpha),
+            "BETA" => Some(Self::Beta),
+            "GA" => Some(Self::Ga),
+            "DEPRECATED" => Some(Self::Deprecated),
+            _ => None,
+        }
+    }
+}
+/// Required information for every language.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CommonLanguageSettings {
+    /// Link to automatically generated reference documentation.  Example:
+    /// <https://cloud.google.com/nodejs/docs/reference/asset/latest>
+    #[deprecated]
+    #[prost(string, tag = "1")]
+    pub reference_docs_uri: ::prost::alloc::string::String,
+    /// The destination where API teams want this client library to be published.
+    #[prost(enumeration = "ClientLibraryDestination", repeated, tag = "2")]
+    pub destinations: ::prost::alloc::vec::Vec<i32>,
+}
+/// Details about how and where to publish client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ClientLibrarySettings {
+    /// Version of the API to apply these settings to. This is the full protobuf
+    /// package for the API, ending in the version element.
+    /// Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
+    #[prost(string, tag = "1")]
+    pub version: ::prost::alloc::string::String,
+    /// Launch stage of this version of the API.
+    #[prost(enumeration = "LaunchStage", tag = "2")]
+    pub launch_stage: i32,
+    /// When using transport=rest, the client request will encode enums as
+    /// numbers rather than strings.
+    #[prost(bool, tag = "3")]
+    pub rest_numeric_enums: bool,
+    /// Settings for legacy Java features, supported in the Service YAML.
+    #[prost(message, optional, tag = "21")]
+    pub java_settings: ::core::option::Option<JavaSettings>,
+    /// Settings for C++ client libraries.
+    #[prost(message, optional, tag = "22")]
+    pub cpp_settings: ::core::option::Option<CppSettings>,
+    /// Settings for PHP client libraries.
+    #[prost(message, optional, tag = "23")]
+    pub php_settings: ::core::option::Option<PhpSettings>,
+    /// Settings for Python client libraries.
+    #[prost(message, optional, tag = "24")]
+    pub python_settings: ::core::option::Option<PythonSettings>,
+    /// Settings for Node client libraries.
+    #[prost(message, optional, tag = "25")]
+    pub node_settings: ::core::option::Option<NodeSettings>,
+    /// Settings for .NET client libraries.
+    #[prost(message, optional, tag = "26")]
+    pub dotnet_settings: ::core::option::Option<DotnetSettings>,
+    /// Settings for Ruby client libraries.
+    #[prost(message, optional, tag = "27")]
+    pub ruby_settings: ::core::option::Option<RubySettings>,
+    /// Settings for Go client libraries.
+    #[prost(message, optional, tag = "28")]
+    pub go_settings: ::core::option::Option<GoSettings>,
+}
+/// This message configures the settings for publishing [Google Cloud Client
+/// libraries](<https://cloud.google.com/apis/docs/cloud-client-libraries>)
+/// generated from the service config.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Publishing {
+    /// A list of API method settings, e.g. the behavior for methods that use the
+    /// long-running operation pattern.
+    #[prost(message, repeated, tag = "2")]
+    pub method_settings: ::prost::alloc::vec::Vec<MethodSettings>,
+    /// Link to a *public* URI where users can report issues.  Example:
+    /// <https://issuetracker.google.com/issues/new?component=190865&template=1161103>
+    #[prost(string, tag = "101")]
+    pub new_issue_uri: ::prost::alloc::string::String,
+    /// Link to product home page.  Example:
+    /// <https://cloud.google.com/asset-inventory/docs/overview>
+    #[prost(string, tag = "102")]
+    pub documentation_uri: ::prost::alloc::string::String,
+    /// Used as a tracking tag when collecting data about the APIs developer
+    /// relations artifacts like docs, packages delivered to package managers,
+    /// etc.  Example: "speech".
+    #[prost(string, tag = "103")]
+    pub api_short_name: ::prost::alloc::string::String,
+    /// GitHub label to apply to issues and pull requests opened for this API.
+    #[prost(string, tag = "104")]
+    pub github_label: ::prost::alloc::string::String,
+    /// GitHub teams to be added to CODEOWNERS in the directory in GitHub
+    /// containing source code for the client libraries for this API.
+    #[prost(string, repeated, tag = "105")]
+    pub codeowner_github_teams: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// A prefix used in sample code when demarking regions to be included in
+    /// documentation.
+    #[prost(string, tag = "106")]
+    pub doc_tag_prefix: ::prost::alloc::string::String,
+    /// For whom the client library is being published.
+    #[prost(enumeration = "ClientLibraryOrganization", tag = "107")]
+    pub organization: i32,
+    /// Client library settings.  If the same version string appears multiple
+    /// times in this list, then the last one wins.  Settings from earlier
+    /// settings with the same version string are discarded.
+    #[prost(message, repeated, tag = "109")]
+    pub library_settings: ::prost::alloc::vec::Vec<ClientLibrarySettings>,
+    /// Optional link to proto reference documentation.  Example:
+    /// <https://cloud.google.com/pubsub/lite/docs/reference/rpc>
+    #[prost(string, tag = "110")]
+    pub proto_reference_documentation_uri: ::prost::alloc::string::String,
+    /// Optional link to REST reference documentation.  Example:
+    /// <https://cloud.google.com/pubsub/lite/docs/reference/rest>
+    #[prost(string, tag = "111")]
+    pub rest_reference_documentation_uri: ::prost::alloc::string::String,
+}
+/// Settings for Java client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct JavaSettings {
+    /// The package name to use in Java. Clobbers the java_package option
+    /// set in the protobuf. This should be used **only** by APIs
+    /// who have already set the language_settings.java.package_name" field
+    /// in gapic.yaml. API teams should use the protobuf java_package option
+    /// where possible.
+    ///
+    /// Example of a YAML configuration::
+    ///
+    ///   publishing:
+    ///     java_settings:
+    ///       library_package: com.google.cloud.pubsub.v1
+    #[prost(string, tag = "1")]
+    pub library_package: ::prost::alloc::string::String,
+    /// Configure the Java class name to use instead of the service's for its
+    /// corresponding generated GAPIC client. Keys are fully-qualified
+    /// service names as they appear in the protobuf (including the full
+    /// the language_settings.java.interface_names" field in gapic.yaml. API
+    /// teams should otherwise use the service name as it appears in the
+    /// protobuf.
+    ///
+    /// Example of a YAML configuration::
+    ///
+    ///   publishing:
+    ///     java_settings:
+    ///       service_class_names:
+    ///         - google.pubsub.v1.Publisher: TopicAdmin
+    ///         - google.pubsub.v1.Subscriber: SubscriptionAdmin
+    #[prost(map = "string, string", tag = "2")]
+    pub service_class_names: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Some settings.
+    #[prost(message, optional, tag = "3")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Settings for C++ client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CppSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Settings for Php client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PhpSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Settings for Python client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PythonSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+    /// Experimental features to be included during client library generation.
+    #[prost(message, optional, tag = "2")]
+    pub experimental_features: ::core::option::Option<
+        python_settings::ExperimentalFeatures,
+    >,
+}
+/// Nested message and enum types in `PythonSettings`.
+pub mod python_settings {
+    /// Experimental features to be included during client library generation.
+    /// These fields will be deprecated once the feature graduates and is enabled
+    /// by default.
+    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    pub struct ExperimentalFeatures {
+        /// Enables generation of asynchronous REST clients if `rest` transport is
+        /// enabled. By default, asynchronous REST clients will not be generated.
+        /// This feature will be enabled by default 1 month after launching the
+        /// feature in preview packages.
+        #[prost(bool, tag = "1")]
+        pub rest_async_io_enabled: bool,
+    }
+}
+/// Settings for Node client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NodeSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Settings for Dotnet client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DotnetSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+    /// Map from original service names to renamed versions.
+    /// This is used when the default generated types
+    /// would cause a naming conflict. (Neither name is
+    /// fully-qualified.)
+    /// Example: Subscriber to SubscriberServiceApi.
+    #[prost(map = "string, string", tag = "2")]
+    pub renamed_services: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Map from full resource types to the effective short name
+    /// for the resource. This is used when otherwise resource
+    /// named from different services would cause naming collisions.
+    /// Example entry:
+    /// "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+    #[prost(map = "string, string", tag = "3")]
+    pub renamed_resources: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// List of full resource types to ignore during generation.
+    /// This is typically used for API-specific Location resources,
+    /// which should be handled by the generator as if they were actually
+    /// the common Location resources.
+    /// Example entry: "documentai.googleapis.com/Location"
+    #[prost(string, repeated, tag = "4")]
+    pub ignored_resources: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Namespaces which must be aliased in snippets due to
+    /// a known (but non-generator-predictable) naming collision
+    #[prost(string, repeated, tag = "5")]
+    pub forced_namespace_aliases: ::prost::alloc::vec::Vec<
+        ::prost::alloc::string::String,
+    >,
+    /// Method signatures (in the form "service.method(signature)")
+    /// which are provided separately, so shouldn't be generated.
+    /// Snippets *calling* these methods are still generated, however.
+    #[prost(string, repeated, tag = "6")]
+    pub handwritten_signatures: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+/// Settings for Ruby client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RubySettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Settings for Go client libraries.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GoSettings {
+    /// Some settings.
+    #[prost(message, optional, tag = "1")]
+    pub common: ::core::option::Option<CommonLanguageSettings>,
+}
+/// Describes the generator configuration for a method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MethodSettings {
+    /// The fully qualified name of the method, for which the options below apply.
+    /// This is used to find the method to apply the options.
+    ///
+    /// Example:
+    ///
+    ///     publishing:
+    ///       method_settings:
+    ///       - selector: google.storage.control.v2.StorageControl.CreateFolder
+    ///         # method settings for CreateFolder...
+    #[prost(string, tag = "1")]
+    pub selector: ::prost::alloc::string::String,
+    /// Describes settings to use for long-running operations when generating
+    /// API methods for RPCs. Complements RPCs that use the annotations in
+    /// google/longrunning/operations.proto.
+    ///
+    /// Example of a YAML configuration::
+    ///
+    ///     publishing:
+    ///       method_settings:
+    ///       - selector: google.cloud.speech.v2.Speech.BatchRecognize
+    ///         long_running:
+    ///           initial_poll_delay: 60s # 1 minute
+    ///           poll_delay_multiplier: 1.5
+    ///           max_poll_delay: 360s # 6 minutes
+    ///           total_poll_timeout: 54000s # 90 minutes
+    #[prost(message, optional, tag = "2")]
+    pub long_running: ::core::option::Option<method_settings::LongRunning>,
+    /// List of top-level fields of the request message, that should be
+    /// automatically populated by the client libraries based on their
+    /// (google.api.field_info).format. Currently supported format: UUID4.
+    ///
+    /// Example of a YAML configuration:
+    ///
+    ///     publishing:
+    ///       method_settings:
+    ///       - selector: google.example.v1.ExampleService.CreateExample
+    ///         auto_populated_fields:
+    ///         - request_id
+    #[prost(string, repeated, tag = "3")]
+    pub auto_populated_fields: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+/// Nested message and enum types in `MethodSettings`.
+pub mod method_settings {
+    /// Describes settings to use when generating API methods that use the
+    /// long-running operation pattern.
+    /// All default values below are from those used in the client library
+    /// generators (e.g.
+    /// [Java](<https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java>)).
+    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    pub struct LongRunning {
+        /// Initial delay after which the first poll request will be made.
+        /// Default value: 5 seconds.
+        #[prost(message, optional, tag = "1")]
+        pub initial_poll_delay: ::core::option::Option<::prost_types::Duration>,
+        /// Multiplier to gradually increase delay between subsequent polls until it
+        /// reaches max_poll_delay.
+        /// Default value: 1.5.
+        #[prost(float, tag = "2")]
+        pub poll_delay_multiplier: f32,
+        /// Maximum time between two subsequent poll requests.
+        /// Default value: 45 seconds.
+        #[prost(message, optional, tag = "3")]
+        pub max_poll_delay: ::core::option::Option<::prost_types::Duration>,
+        /// Total polling timeout.
+        /// Default value: 5 minutes.
+        #[prost(message, optional, tag = "4")]
+        pub total_poll_timeout: ::core::option::Option<::prost_types::Duration>,
+    }
+}
+/// The organization for which the client libraries are being published.
+/// Affects the url where generated docs are published, etc.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum ClientLibraryOrganization {
+    /// Not useful.
+    Unspecified = 0,
+    /// Google Cloud Platform Org.
+    Cloud = 1,
+    /// Ads (Advertising) Org.
+    Ads = 2,
+    /// Photos Org.
+    Photos = 3,
+    /// Street View Org.
+    StreetView = 4,
+    /// Shopping Org.
+    Shopping = 5,
+    /// Geo Org.
+    Geo = 6,
+    /// Generative AI - <https://developers.generativeai.google>
+    GenerativeAi = 7,
+}
+impl ClientLibraryOrganization {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ClientLibraryOrganization::Unspecified => {
+                "CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED"
+            }
+            ClientLibraryOrganization::Cloud => "CLOUD",
+            ClientLibraryOrganization::Ads => "ADS",
+            ClientLibraryOrganization::Photos => "PHOTOS",
+            ClientLibraryOrganization::StreetView => "STREET_VIEW",
+            ClientLibraryOrganization::Shopping => "SHOPPING",
+            ClientLibraryOrganization::Geo => "GEO",
+            ClientLibraryOrganization::GenerativeAi => "GENERATIVE_AI",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "CLIENT_LIBRARY_ORGANIZATION_UNSPECIFIED" => Some(Self::Unspecified),
+            "CLOUD" => Some(Self::Cloud),
+            "ADS" => Some(Self::Ads),
+            "PHOTOS" => Some(Self::Photos),
+            "STREET_VIEW" => Some(Self::StreetView),
+            "SHOPPING" => Some(Self::Shopping),
+            "GEO" => Some(Self::Geo),
+            "GENERATIVE_AI" => Some(Self::GenerativeAi),
+            _ => None,
+        }
+    }
+}
+/// To where should client libraries be published?
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum ClientLibraryDestination {
+    /// Client libraries will neither be generated nor published to package
+    /// managers.
+    Unspecified = 0,
+    /// Generate the client library in a repo under github.com/googleapis,
+    /// but don't publish it to package managers.
+    Github = 10,
+    /// Publish the library to package managers like nuget.org and npmjs.com.
+    PackageManager = 20,
+}
+impl ClientLibraryDestination {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ClientLibraryDestination::Unspecified => {
+                "CLIENT_LIBRARY_DESTINATION_UNSPECIFIED"
+            }
+            ClientLibraryDestination::Github => "GITHUB",
+            ClientLibraryDestination::PackageManager => "PACKAGE_MANAGER",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "CLIENT_LIBRARY_DESTINATION_UNSPECIFIED" => Some(Self::Unspecified),
+            "GITHUB" => Some(Self::Github),
+            "PACKAGE_MANAGER" => Some(Self::PackageManager),
+            _ => None,
+        }
+    }
 }
