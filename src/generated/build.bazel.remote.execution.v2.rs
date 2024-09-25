@@ -1187,6 +1187,15 @@ pub struct ExecuteOperationMetadata {
     /// execution.
     #[prost(message, optional, tag = "5")]
     pub partial_execution_metadata: ::core::option::Option<ExecutedActionMetadata>,
+    /// The digest function that was used to compute the action digest.
+    ///
+    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
+    /// that case the server SHOULD infer the digest function using the
+    /// length of the action digest hash and the digest functions announced
+    /// in the server's capabilities.
+    #[prost(enumeration = "digest_function::Value", tag = "6")]
+    pub digest_function: i32,
 }
 /// A request message for
 /// [WaitExecution][build.bazel.remote.execution.v2.Execution.WaitExecution].
