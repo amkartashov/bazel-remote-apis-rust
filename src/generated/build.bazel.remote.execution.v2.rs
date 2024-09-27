@@ -1189,11 +1189,11 @@ pub struct ExecuteOperationMetadata {
     pub partial_execution_metadata: ::core::option::Option<ExecutedActionMetadata>,
     /// The digest function that was used to compute the action digest.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
-    /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
-    /// that case the server SHOULD infer the digest function using the
-    /// length of the action digest hash and the digest functions announced
-    /// in the server's capabilities.
+    /// If the digest function used is one of BLAKE3, MD5, MURMUR3, SHA1,
+    /// SHA256, SHA256TREE, SHA384, SHA512, or VSO, the server MAY leave
+    /// this field unset. In that case the client SHOULD infer the digest
+    /// function using the length of the action digest hash and the digest
+    /// functions announced in the server's capabilities.
     #[prost(enumeration = "digest_function::Value", tag = "6")]
     pub digest_function: i32,
 }
