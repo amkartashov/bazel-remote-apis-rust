@@ -1162,7 +1162,7 @@ pub mod execution_stage {
 /// Metadata about an ongoing
 /// [execution][build.bazel.remote.execution.v2.Execution.Execute], which
 /// will be contained in the [metadata
-/// field][google.longrunning.Operation.response] of the
+/// field][google.longrunning.Operation.metadata] of the
 /// [Operation][google.longrunning.Operation].
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExecuteOperationMetadata {
