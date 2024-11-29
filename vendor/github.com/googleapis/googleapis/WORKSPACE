@@ -215,7 +215,7 @@ http_archive(
     urls = ["https://github.com/googleapis/rules_gapic/archive/v%s.tar.gz" % _rules_gapic_version],
 )
 
-_gapic_generator_go_version = "0.47.0"
+_gapic_generator_go_version = "0.48.1"
 
 http_archive(
     name = "com_googleapis_gapic_generator_go",
@@ -255,7 +255,7 @@ rules_gapic_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-_gapic_generator_java_version = "2.45.0"
+_gapic_generator_java_version = "2.50.0"
 
 http_archive(
     name = "gapic_generator_java",
@@ -281,7 +281,7 @@ load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_rep
 
 com_google_api_gax_java_repositories()
 
-load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS", "grpc_java_repositories")
+load("@io_grpc_grpc_java//:repositories.bzl", "IO_GRPC_GRPC_JAVA_ARTIFACTS", "grpc_java_repositories")
 
 grpc_java_repositories()
 
@@ -297,7 +297,6 @@ maven_install(
     #Update this False for local development
     fail_on_missing_checksum = True,
     generate_compat_repositories = True,
-    override_targets = IO_GRPC_GRPC_JAVA_OVERRIDE_TARGETS,
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2/",
@@ -406,7 +405,7 @@ pnpm_repository(name = "pnpm")
 ##############################################################################
 
 # PHP micro-generator
-_gapic_generator_php_version = "1.16.1"
+_gapic_generator_php_version = "1.17.0"
 
 http_archive(
     name = "gapic_generator_php",
