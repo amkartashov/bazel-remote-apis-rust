@@ -24,6 +24,11 @@ function update_bzl_re_api_repo() {
 
   cargo build --features codegen
 
+  if [[ -z $(git diff --name-only -- src/) ]]; then
+    echo No changes in generated code, not publishing
+    return
+  fi
+
   cargo set-version --bump minor
   new_ver=$(cargo read-manifest | jq -r '.version')
   git add Cargo.lock Cargo.toml src
@@ -36,10 +41,14 @@ function update_bzl_re_api_repo() {
   cargo publish
 }
 
+# bzl_re_api_repo_url=https://github.com/bazelbuild/remote-apis.git
 bzl_re_api_repo_url=$(git vendor list ${bzl_re_api_repo_name} \
   | grep repo: | awk '{print $2}')
+# bzl_re_api_repo_ref=main
 bzl_re_api_repo_ref=$(git vendor list ${bzl_re_api_repo_name} \
   | grep ref: | awk '{print $2}')
+# bzl_re_api_repo_added_in_commit=123adbc...
+# this is commit in bazel-remote-apis-rust
 bzl_re_api_repo_added_in_commit=$(git vendor list ${bzl_re_api_repo_name} \
   | grep commit: | awk '{print $2}')
 
