@@ -1,6 +1,6 @@
 [package]
 name = "bazel-remote-apis"
-version = "0.11.0"
+version = "0.12.0"
 edition = "2021"
 publish = true
 description = "Rust bindings for Bazel Remote APIs"
@@ -9,12 +9,13 @@ homepage = "https://github.com/amkartashov/bazel-remote-apis-rust"
 repository = "https://github.com/amkartashov/bazel-remote-apis-rust.git"
 
 [features]
-codegen = []
+codegen = [ "dep:tonic-build" ]
 
 [dependencies]
 tonic = "0.12.3"
 prost = "0.13.4"
 prost-types = "0.13.4"
+serde = { version = "1.0.217", features = ["derive"], optional = true }
 
 [build-dependencies]
-tonic-build = "0.12.3"
+tonic-build = { version = "0.12.3", optional = true }

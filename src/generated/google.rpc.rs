@@ -6,6 +6,7 @@
 ///
 /// You can find out more about this error model and how to work with it in the
 /// [API Design Guide](<https://cloud.google.com/apis/design/errors>).
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Status {
     /// The status code, which should be an enum value of
@@ -21,5 +22,5 @@ pub struct Status {
     /// A list of messages that carry the error details.  There is a common set of
     /// message types for APIs to use.
     #[prost(message, repeated, tag = "3")]
-    pub details: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub details: ::prost::alloc::vec::Vec<super::protobuf::Any>,
 }

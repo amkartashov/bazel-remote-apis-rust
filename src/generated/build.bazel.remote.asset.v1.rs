@@ -13,6 +13,7 @@
 /// qualifier is recommended for this purpose.
 ///
 /// Qualifiers may be supplied in any order.
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Qualifier {
     /// The "name" of the qualifier, for example "resource_type".
@@ -27,6 +28,7 @@ pub struct Qualifier {
 }
 /// A request message for
 /// [Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchBlobRequest {
     /// The instance of the execution system to operate against. A server may
@@ -50,7 +52,9 @@ pub struct FetchBlobRequest {
     /// If this timeout is exceeded on an attempt to retrieve content from origin
     /// the client will receive DEADLINE_EXCEEDED in \[FetchBlobResponse.status\].
     #[prost(message, optional, tag = "2")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    pub timeout: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
     /// The oldest content the client is willing to accept, as measured from the
     /// time it was Push'd or when the underlying retrieval from origin was
     /// started.
@@ -60,7 +64,9 @@ pub struct FetchBlobRequest {
     ///
     /// If unset, the client *SHOULD* accept content of any age.
     #[prost(message, optional, tag = "3")]
-    pub oldest_content_accepted: ::core::option::Option<::prost_types::Timestamp>,
+    pub oldest_content_accepted: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The URI(s) of the content to fetch. These may be resources that the server
     /// can directly fetch from origin, in which case multiple URIs *SHOULD*
     /// represent the same content available at different locations (such as an
@@ -90,6 +96,7 @@ pub struct FetchBlobRequest {
 }
 /// A response message for
 /// [Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchBlobResponse {
     /// If the status has a code other than `OK`, it indicates that the operation
@@ -118,7 +125,9 @@ pub struct FetchBlobResponse {
     /// A minimum timestamp the content is expected to be available through.
     /// Servers *MAY* omit this field, if not known with confidence.
     #[prost(message, optional, tag = "4")]
-    pub expires_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub expires_at: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The result of the fetch, if the status had code `OK`.
     /// The digest of the file's contents, available for download through the CAS.
     #[prost(message, optional, tag = "5")]
@@ -138,6 +147,7 @@ pub struct FetchBlobResponse {
 }
 /// A request message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchDirectoryRequest {
     /// The instance of the execution system to operate against. A server may
@@ -155,7 +165,9 @@ pub struct FetchDirectoryRequest {
     /// If this timeout is exceeded on an attempt to retrieve content from origin
     /// the client will receive DEADLINE_EXCEEDED in \[FetchDirectoryResponse.status\].
     #[prost(message, optional, tag = "2")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    pub timeout: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
     /// The oldest content the client is willing to accept, as measured from the
     /// time it was Push'd or when the underlying retrieval from origin was
     /// started.
@@ -165,7 +177,9 @@ pub struct FetchDirectoryRequest {
     ///
     /// If unset, the client *SHOULD* accept content of any age.
     #[prost(message, optional, tag = "3")]
-    pub oldest_content_accepted: ::core::option::Option<::prost_types::Timestamp>,
+    pub oldest_content_accepted: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The URI(s) of the content to fetch. These may be resources that the server
     /// can directly fetch from origin, in which case multiple URIs *SHOULD*
     /// represent the same content available at different locations (such as an
@@ -195,6 +209,7 @@ pub struct FetchDirectoryRequest {
 }
 /// A response message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchDirectoryResponse {
     /// If the status has a code other than `OK`, it indicates that the operation
@@ -223,7 +238,9 @@ pub struct FetchDirectoryResponse {
     /// A minimum timestamp the content is expected to be available through.
     /// Servers *MAY* omit this field, if not known with confidence.
     #[prost(message, optional, tag = "4")]
-    pub expires_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub expires_at: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The result of the fetch, if the status had code `OK`.
     /// the root digest of a directory tree, suitable for fetching via
     /// \[ContentAddressableStorage.GetTree\].
@@ -246,6 +263,7 @@ pub struct FetchDirectoryResponse {
 }
 /// A request message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PushBlobRequest {
     /// The instance of the execution system to operate against. A server may
@@ -267,7 +285,9 @@ pub struct PushBlobRequest {
     /// A time after which this content should stop being returned via [FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
     /// Servers *MAY* expire content early, e.g. due to storage pressure.
     #[prost(message, optional, tag = "4")]
-    pub expire_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub expire_at: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The blob to associate.
     #[prost(message, optional, tag = "5")]
     pub blob_digest: ::core::option::Option<super::super::execution::v2::Digest>,
@@ -297,10 +317,12 @@ pub struct PushBlobRequest {
 }
 /// A response message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PushBlobResponse {}
 /// A request message for
 /// [Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PushDirectoryRequest {
     /// The instance of the execution system to operate against. A server may
@@ -323,7 +345,9 @@ pub struct PushDirectoryRequest {
     /// [FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
     /// Servers *MAY* expire content early, e.g. due to storage pressure.
     #[prost(message, optional, tag = "4")]
-    pub expire_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub expire_at: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// Directory to associate
     #[prost(message, optional, tag = "5")]
     pub root_directory_digest: ::core::option::Option<
@@ -355,6 +379,7 @@ pub struct PushDirectoryRequest {
 }
 /// A response message for
 /// [Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory].
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PushDirectoryResponse {}
 /// Generated client implementations.
