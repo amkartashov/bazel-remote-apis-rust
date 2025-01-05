@@ -295,9 +295,9 @@ pub mod command {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                OutputDirectoryFormat::TreeOnly => "TREE_ONLY",
-                OutputDirectoryFormat::DirectoryOnly => "DIRECTORY_ONLY",
-                OutputDirectoryFormat::TreeAndDirectory => "TREE_AND_DIRECTORY",
+                Self::TreeOnly => "TREE_ONLY",
+                Self::DirectoryOnly => "DIRECTORY_ONLY",
+                Self::TreeAndDirectory => "TREE_AND_DIRECTORY",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1139,11 +1139,11 @@ pub mod execution_stage {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Value::Unknown => "UNKNOWN",
-                Value::CacheCheck => "CACHE_CHECK",
-                Value::Queued => "QUEUED",
-                Value::Executing => "EXECUTING",
-                Value::Completed => "COMPLETED",
+                Self::Unknown => "UNKNOWN",
+                Self::CacheCheck => "CACHE_CHECK",
+                Self::Queued => "QUEUED",
+                Self::Executing => "EXECUTING",
+                Self::Completed => "COMPLETED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1631,16 +1631,16 @@ pub mod digest_function {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Value::Unknown => "UNKNOWN",
-                Value::Sha256 => "SHA256",
-                Value::Sha1 => "SHA1",
-                Value::Md5 => "MD5",
-                Value::Vso => "VSO",
-                Value::Sha384 => "SHA384",
-                Value::Sha512 => "SHA512",
-                Value::Murmur3 => "MURMUR3",
-                Value::Sha256tree => "SHA256TREE",
-                Value::Blake3 => "BLAKE3",
+                Self::Unknown => "UNKNOWN",
+                Self::Sha256 => "SHA256",
+                Self::Sha1 => "SHA1",
+                Self::Md5 => "MD5",
+                Self::Vso => "VSO",
+                Self::Sha384 => "SHA384",
+                Self::Sha512 => "SHA512",
+                Self::Murmur3 => "MURMUR3",
+                Self::Sha256tree => "SHA256TREE",
+                Self::Blake3 => "BLAKE3",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1727,9 +1727,9 @@ pub mod symlink_absolute_path_strategy {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Value::Unknown => "UNKNOWN",
-                Value::Disallowed => "DISALLOWED",
-                Value::Allowed => "ALLOWED",
+                Self::Unknown => "UNKNOWN",
+                Self::Disallowed => "DISALLOWED",
+                Self::Allowed => "ALLOWED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1783,10 +1783,10 @@ pub mod compressor {
         /// (if the ProtoBuf definition does not change) and safe for programmatic use.
         pub fn as_str_name(&self) -> &'static str {
             match self {
-                Value::Identity => "IDENTITY",
-                Value::Zstd => "ZSTD",
-                Value::Deflate => "DEFLATE",
-                Value::Brotli => "BROTLI",
+                Self::Identity => "IDENTITY",
+                Self::Zstd => "ZSTD",
+                Self::Deflate => "DEFLATE",
+                Self::Brotli => "BROTLI",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1931,7 +1931,13 @@ pub struct RequestMetadata {
 }
 /// Generated client implementations.
 pub mod execution_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// The Remote Execution API is used to execute an
@@ -2110,8 +2116,7 @@ pub mod execution_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2158,8 +2163,7 @@ pub mod execution_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2181,7 +2185,13 @@ pub mod execution_client {
 }
 /// Generated client implementations.
 pub mod action_cache_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// The action cache API is used to query whether a given action has already been
@@ -2300,8 +2310,7 @@ pub mod action_cache_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2346,8 +2355,7 @@ pub mod action_cache_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2369,7 +2377,13 @@ pub mod action_cache_client {
 }
 /// Generated client implementations.
 pub mod content_addressable_storage_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// The CAS (content-addressable storage) is used to store the inputs to and
@@ -2617,8 +2631,7 @@ pub mod content_addressable_storage_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2671,8 +2684,7 @@ pub mod content_addressable_storage_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2721,8 +2733,7 @@ pub mod content_addressable_storage_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2774,8 +2785,7 @@ pub mod content_addressable_storage_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2797,7 +2807,13 @@ pub mod content_addressable_storage_client {
 }
 /// Generated client implementations.
 pub mod capabilities_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// The Capabilities service may be used by remote execution clients to query
@@ -2907,8 +2923,7 @@ pub mod capabilities_client {
                 .ready()
                 .await
                 .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
+                    tonic::Status::unknown(
                         format!("Service was not ready: {}", e.into()),
                     )
                 })?;
@@ -2930,7 +2945,13 @@ pub mod capabilities_client {
 }
 /// Generated server implementations.
 pub mod execution_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with ExecutionServer.
     #[async_trait]
@@ -3230,17 +3251,19 @@ pub mod execution_server {
                 }
                 _ => {
                     Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
                     })
                 }
             }
@@ -3266,7 +3289,13 @@ pub mod execution_server {
 }
 /// Generated server implementations.
 pub mod action_cache_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with ActionCacheServer.
     #[async_trait]
@@ -3496,17 +3525,19 @@ pub mod action_cache_server {
                 }
                 _ => {
                     Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
                     })
                 }
             }
@@ -3532,7 +3563,13 @@ pub mod action_cache_server {
 }
 /// Generated server implementations.
 pub mod content_addressable_storage_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with ContentAddressableStorageServer.
     #[async_trait]
@@ -4061,17 +4098,19 @@ pub mod content_addressable_storage_server {
                 }
                 _ => {
                     Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
                     })
                 }
             }
@@ -4097,7 +4136,13 @@ pub mod content_addressable_storage_server {
 }
 /// Generated server implementations.
 pub mod capabilities_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with CapabilitiesServer.
     #[async_trait]
@@ -4249,17 +4294,19 @@ pub mod capabilities_server {
                 }
                 _ => {
                     Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
+                        let mut response = http::Response::new(empty_body());
+                        let headers = response.headers_mut();
+                        headers
+                            .insert(
+                                tonic::Status::GRPC_STATUS,
+                                (tonic::Code::Unimplemented as i32).into(),
+                            );
+                        headers
+                            .insert(
+                                http::header::CONTENT_TYPE,
+                                tonic::metadata::GRPC_CONTENT_TYPE,
+                            );
+                        Ok(response)
                     })
                 }
             }
