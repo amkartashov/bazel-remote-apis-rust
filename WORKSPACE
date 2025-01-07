@@ -215,7 +215,7 @@ http_archive(
     urls = ["https://github.com/googleapis/rules_gapic/archive/v%s.tar.gz" % _rules_gapic_version],
 )
 
-_gapic_generator_go_version = "0.48.1"
+_gapic_generator_go_version = "0.50.0"
 
 http_archive(
     name = "com_googleapis_gapic_generator_go",
@@ -232,7 +232,7 @@ com_googleapis_gapic_generator_go_repositories()
 # dependencies of gapic-generator-go.
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(version = "1.19.13")
+go_register_toolchains(version = "1.21.13")
 
 go_rules_dependencies()
 
@@ -255,7 +255,7 @@ rules_gapic_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-_gapic_generator_java_version = "2.50.0"
+_gapic_generator_java_version = "2.51.0"
 
 http_archive(
     name = "gapic_generator_java",
@@ -314,9 +314,9 @@ load("@rules_gapic//python:py_gapic_repositories.bzl", "py_gapic_repositories")
 
 py_gapic_repositories()
 
-_gapic_generator_python_version = "1.20.2"
+_gapic_generator_python_version = "1.21.0"
 
-_gapic_generator_python_sha256 = "151c399872a325026dbf21d40a416f477db3156cb14fe64dba398c16c662e64a"
+_gapic_generator_python_sha256 = "3d699e92bf6b6b30da8be030900cfbe293b7d0bfa2a26c580ee790f51ae593df"
 
 http_archive(
     name = "gapic_generator_python",
@@ -405,7 +405,7 @@ pnpm_repository(name = "pnpm")
 ##############################################################################
 
 # PHP micro-generator
-_gapic_generator_php_version = "1.17.0"
+_gapic_generator_php_version = "1.18.0"
 
 http_archive(
     name = "gapic_generator_php",
@@ -457,9 +457,9 @@ gapic_generator_csharp_repositories()
 # Ruby
 ##############################################################################
 
-_gapic_generator_ruby_version = "v0.37.0"
+_gapic_generator_ruby_version = "v0.38.3"
 
-_gapic_generator_ruby_sha256 = "86bb0b0b80269818376dbe13385cbb16577c1fe0d9a2e572fc87f73261a2e4f5"
+_gapic_generator_ruby_sha256 = "08cc9302b45229ff4acef29a6ca7cdb6a433db353c5ecf94ae1ab194c5c59a2b"
 
 http_archive(
     name = "gapic_generator_ruby",
@@ -476,7 +476,7 @@ gapic_generator_ruby_repositories()
 # Discovery
 ##############################################################################
 
-_disco_to_proto3_converter_version = "2091fbeb555cd7151df82b4b1b42f36cbddc1775"
+_disco_to_proto3_converter_version = "285877db097dded2d988e9882240c83c7f9c3df4"
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",
