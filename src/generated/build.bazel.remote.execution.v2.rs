@@ -1739,7 +1739,7 @@ pub struct ActionCacheUpdateCapabilities {
 }
 /// Allowed values for priority in
 /// [ResultsCachePolicy][build.bazel.remoteexecution.v2.ResultsCachePolicy] and
-/// [ExecutionPolicy][build.bazel.remoteexecution.v2.ResultsCachePolicy]
+/// [ExecutionPolicy][build.bazel.remoteexecution.v2.ExecutionPolicy]
 /// Used for querying both cache and execution valid priority ranges.
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -2412,7 +2412,7 @@ pub mod action_cache_client {
         ///
         /// In order to allow the server to perform access control based on the type of
         /// action, and to assist with client debugging, the client MUST first upload
-        /// the [Action][build.bazel.remote.execution.v2.Execution] that produced the
+        /// the [Action][build.bazel.remote.execution.v2.Action] that produced the
         /// result, along with its
         /// [Command][build.bazel.remote.execution.v2.Command], into the
         /// `ContentAddressableStorage`.
@@ -3400,7 +3400,7 @@ pub mod action_cache_server {
         ///
         /// In order to allow the server to perform access control based on the type of
         /// action, and to assist with client debugging, the client MUST first upload
-        /// the [Action][build.bazel.remote.execution.v2.Execution] that produced the
+        /// the [Action][build.bazel.remote.execution.v2.Action] that produced the
         /// result, along with its
         /// [Command][build.bazel.remote.execution.v2.Command], into the
         /// `ContentAddressableStorage`.
