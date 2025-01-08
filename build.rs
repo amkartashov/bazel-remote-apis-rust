@@ -1,8 +1,9 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    #[cfg(feature = "codegen")]
-    println!("cargo:rerun-if-changed=vendor");
+    println!("cargo:rerun-if-changed=build.rs");
     #[cfg(feature = "codegen")]
     {
+        let out_dir = std::path::Path::new("src/generated");
+        let out_dir_json = std::path::Path::new("src/generated_json");
         let protos = &[
             "vendor/github.com/bazelbuild/remote-apis/build/bazel/remote/execution/v2/remote_execution.proto",
             "vendor/github.com/bazelbuild/remote-apis/build/bazel/remote/asset/v1/remote_asset.proto",
@@ -15,15 +16,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "vendor/github.com/googleapis/googleapis",
         ];
 
-        let builder = tonic_build::configure().out_dir("src/generated");
-        let type_attr =
-            "#[cfg_attr(feature = \"serde\", derive(serde::Deserialize, serde::Serialize))]";
+        for proto_file in protos {
+            println!("cargo:rerun-if-changed={}", proto_file);
+        }
 
-        let builder = builder
+        tonic_build::configure()
+            .out_dir(out_dir)
+            .compile_protos(protos, includes)?;
+
+        let descriptor_path = out_dir_json.join("proto_descriptor.bin");
+        tonic_build::configure()
+            .out_dir(out_dir_json)
+            .file_descriptor_set_path(&descriptor_path)
             .compile_well_known_types(true)
-            .type_attribute(".", type_attr);
+            .extern_path(".google.protobuf", "::pbjson_types")
+            .compile_protos(protos, includes)?;
 
-        builder.compile_protos(protos, includes)?;
+        let descriptor_set = std::fs::read(descriptor_path)?;
+        pbjson_build::Builder::new()
+            .register_descriptors(&descriptor_set)?
+            .out_dir(out_dir_json)
+            .build(&["."])?;
     }
     Ok(())
 }

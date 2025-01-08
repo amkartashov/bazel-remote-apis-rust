@@ -759,7 +759,7 @@ pub mod method_settings {
         /// Initial delay after which the first poll request will be made.
         /// Default value: 5 seconds.
         #[prost(message, optional, tag = "1")]
-        pub initial_poll_delay: ::core::option::Option<::prost_types::Duration>,
+        pub initial_poll_delay: ::core::option::Option<::pbjson_types::Duration>,
         /// Multiplier to gradually increase delay between subsequent polls until it
         /// reaches max_poll_delay.
         /// Default value: 1.5.
@@ -768,11 +768,11 @@ pub mod method_settings {
         /// Maximum time between two subsequent poll requests.
         /// Default value: 45 seconds.
         #[prost(message, optional, tag = "3")]
-        pub max_poll_delay: ::core::option::Option<::prost_types::Duration>,
+        pub max_poll_delay: ::core::option::Option<::pbjson_types::Duration>,
         /// Total polling timeout.
         /// Default value: 5 minutes.
         #[prost(message, optional, tag = "4")]
-        pub total_poll_timeout: ::core::option::Option<::prost_types::Duration>,
+        pub total_poll_timeout: ::core::option::Option<::pbjson_types::Duration>,
     }
 }
 /// This message is used to configure the generation of a subset of the RPCs in

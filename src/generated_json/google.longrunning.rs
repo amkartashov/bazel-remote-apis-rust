@@ -13,7 +13,7 @@ pub struct Operation {
     /// Some services might not provide such metadata.  Any method that returns a
     /// long-running operation should document the metadata type, if any.
     #[prost(message, optional, tag = "2")]
-    pub metadata: ::core::option::Option<::prost_types::Any>,
+    pub metadata: ::core::option::Option<::pbjson_types::Any>,
     /// If the value is `false`, it means the operation is still in progress.
     /// If `true`, the operation is completed, and either `error` or `response` is
     /// available.
@@ -46,7 +46,7 @@ pub mod operation {
         /// is `TakeSnapshot()`, the inferred response type is
         /// `TakeSnapshotResponse`.
         #[prost(message, tag = "5")]
-        Response(::prost_types::Any),
+        Response(::pbjson_types::Any),
     }
 }
 /// The request message for
@@ -112,7 +112,7 @@ pub struct WaitOperationRequest {
     /// will be at most the time permitted by the underlying HTTP/RPC protocol.
     /// If RPC context deadline is also specified, the shorter one will be used.
     #[prost(message, optional, tag = "2")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    pub timeout: ::core::option::Option<::pbjson_types::Duration>,
 }
 /// A message representing the message types used by a long-running operation.
 ///
@@ -307,7 +307,7 @@ pub mod operations_client {
         pub async fn delete_operation(
             &mut self,
             request: impl tonic::IntoRequest<super::DeleteOperationRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<::pbjson_types::Empty>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -341,7 +341,7 @@ pub mod operations_client {
         pub async fn cancel_operation(
             &mut self,
             request: impl tonic::IntoRequest<super::CancelOperationRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<::pbjson_types::Empty>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -431,7 +431,7 @@ pub mod operations_server {
         async fn delete_operation(
             &self,
             request: tonic::Request<super::DeleteOperationRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<::pbjson_types::Empty>, tonic::Status>;
         /// Starts asynchronous cancellation on a long-running operation.  The server
         /// makes a best effort to cancel the operation, but success is not
         /// guaranteed.  If the server doesn't support this method, it returns
@@ -446,7 +446,7 @@ pub mod operations_server {
         async fn cancel_operation(
             &self,
             request: tonic::Request<super::CancelOperationRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<::pbjson_types::Empty>, tonic::Status>;
         /// Waits until the specified long-running operation is done or reaches at most
         /// a specified timeout, returning the latest state.  If the operation is
         /// already done, the latest state is immediately returned.  If the timeout
@@ -643,7 +643,7 @@ pub mod operations_server {
                         T: Operations,
                     > tonic::server::UnaryService<super::DeleteOperationRequest>
                     for DeleteOperationSvc<T> {
-                        type Response = ();
+                        type Response = ::pbjson_types::Empty;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -688,7 +688,7 @@ pub mod operations_server {
                         T: Operations,
                     > tonic::server::UnaryService<super::CancelOperationRequest>
                     for CancelOperationSvc<T> {
-                        type Response = ();
+                        type Response = ::pbjson_types::Empty;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
