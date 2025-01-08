@@ -4,42 +4,42 @@ pub mod build {
         pub mod remote {
             pub mod execution {
                 pub mod v2 {
-                    #[cfg(not(feature = "json"))]
+                    #[cfg(not(feature = "serde"))]
                     include!("generated/build.bazel.remote.execution.v2.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.execution.v2.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.execution.v2.serde.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.execution.v2.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.execution.v2.serde.rs");
                 }
             }
             pub mod asset {
                 pub mod v1 {
-                    #[cfg(not(feature = "json"))]
+                    #[cfg(not(feature = "serde"))]
                     include!("generated/build.bazel.remote.asset.v1.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.asset.v1.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.asset.v1.serde.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.asset.v1.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.asset.v1.serde.rs");
                 }
             }
             pub mod logstream {
                 pub mod v1 {
-                    #[cfg(not(feature = "json"))]
+                    #[cfg(not(feature = "serde"))]
                     include!("generated/build.bazel.remote.logstream.v1.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.logstream.v1.rs");
-                    #[cfg(feature = "json")]
-                    include!("generated_json/build.bazel.remote.logstream.v1.serde.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.logstream.v1.rs");
+                    #[cfg(feature = "serde")]
+                    include!("generated_serde/build.bazel.remote.logstream.v1.serde.rs");
                 }
             }
         }
         pub mod semver {
-            #[cfg(not(feature = "json"))]
+            #[cfg(not(feature = "serde"))]
             include!("generated/build.bazel.semver.rs");
-            #[cfg(feature = "json")]
-            include!("generated_json/build.bazel.semver.rs");
-            #[cfg(feature = "json")]
-            include!("generated_json/build.bazel.semver.serde.rs");
+            #[cfg(feature = "serde")]
+            include!("generated_serde/build.bazel.semver.rs");
+            #[cfg(feature = "serde")]
+            include!("generated_serde/build.bazel.semver.serde.rs");
         }
     }
 }
@@ -47,41 +47,41 @@ pub mod build {
 #[cfg(not(doctest))]
 pub mod google {
     pub mod api {
-        #[cfg(not(feature = "json"))]
+        #[cfg(not(feature = "serde"))]
         include!("generated/google.api.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.api.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.api.serde.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.api.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.api.serde.rs");
     }
     pub mod bytestream {
-        #[cfg(not(feature = "json"))]
+        #[cfg(not(feature = "serde"))]
         include!("generated/google.bytestream.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.bytestream.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.bytestream.serde.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.bytestream.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.bytestream.serde.rs");
     }
     pub mod longrunning {
-        #[cfg(not(feature = "json"))]
+        #[cfg(not(feature = "serde"))]
         include!("generated/google.longrunning.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.longrunning.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.longrunning.serde.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.longrunning.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.longrunning.serde.rs");
     }
     pub mod rpc {
-        #[cfg(not(feature = "json"))]
+        #[cfg(not(feature = "serde"))]
         include!("generated/google.rpc.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.rpc.rs");
-        #[cfg(feature = "json")]
-        include!("generated_json/google.rpc.serde.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.rpc.rs");
+        #[cfg(feature = "serde")]
+        include!("generated_serde/google.rpc.serde.rs");
     }
 }
 
 #[cfg(test)]
-#[cfg(feature = "json")]
+#[cfg(feature = "serde")]
 mod json_tests {
     use build::bazel::remote::execution::v2::NodeProperties;
 
