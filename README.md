@@ -2,11 +2,14 @@
 
 ## Usage
 
-To use in your project, add into `[dependencies]`:
+To use in your project, add into `Cargo.toml`:
 
 ```toml
-bazel-remote-apis = "0.12.0"
+[dependencies]
+bazel-remote-apis = "0.14.0"
 ```
+
+Feature `serde` adds implementation of `serde::Serialize` and `serde::Deserialize` traits for protobuf types.
 
 ## Development
 

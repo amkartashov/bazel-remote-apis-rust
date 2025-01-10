@@ -1,3 +1,12 @@
+//! `bazel-remote-apis` provides client and service stubs
+//! and protobuf types for
+//! [Bazel Remote APIs](https://github.com/bazelbuild/remote-apis) definitions, so one can implement it with `tonic`.
+//!
+//! # Feature flags
+//!
+//! - `serde`: Adds implementation of `serde::Serialize` and `serde::Deserialize` traits for protobuf types.
+//!
+
 #[cfg(not(doctest))]
 pub mod build {
     pub mod bazel {

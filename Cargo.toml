@@ -12,6 +12,9 @@ repository = "https://github.com/amkartashov/bazel-remote-apis-rust.git"
 serde = ["dep:pbjson", "dep:pbjson-types", "dep:serde"]
 codegen = [ "dep:tonic-build", "dep:pbjson-build" ]
 
+[package.metadata.docs.rs]
+features = [ "serde" ]
+
 [dependencies]
 tonic = "0.12.3"
 prost = "0.13.4"
