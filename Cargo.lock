@@ -159,7 +159,6 @@ dependencies = [
  "pbjson-build",
  "pbjson-types",
  "prost",
- "prost-types",
  "serde",
  "serde_json",
  "tonic",

@@ -61,7 +61,9 @@ pub struct Action {
     /// timeout will result in a cache miss and the execution timeout will fail
     /// immediately, rather than whenever the cache entry gets evicted.
     #[prost(message, optional, tag = "6")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    pub timeout: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
     /// If true, then the `Action`'s result cannot be cached, and in-flight
     /// requests for the same `Action` may not be merged.
     #[prost(bool, tag = "7")]
@@ -476,10 +478,14 @@ pub struct NodeProperties {
     pub properties: ::prost::alloc::vec::Vec<NodeProperty>,
     /// The file's last modification timestamp.
     #[prost(message, optional, tag = "2")]
-    pub mtime: ::core::option::Option<::prost_types::Timestamp>,
+    pub mtime: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// The UNIX file mode, e.g., 0755.
     #[prost(message, optional, tag = "3")]
-    pub unix_mode: ::core::option::Option<u32>,
+    pub unix_mode: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::UInt32Value,
+    >,
 }
 /// A `FileNode` represents a single file and associated metadata.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -580,27 +586,39 @@ pub struct ExecutedActionMetadata {
     pub worker: ::prost::alloc::string::String,
     /// When was the action added to the queue.
     #[prost(message, optional, tag = "2")]
-    pub queued_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub queued_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker received the action.
     #[prost(message, optional, tag = "3")]
-    pub worker_start_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub worker_start_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker completed the action, including all stages.
     #[prost(message, optional, tag = "4")]
-    pub worker_completed_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub worker_completed_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker started fetching action inputs.
     #[prost(message, optional, tag = "5")]
-    pub input_fetch_start_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub input_fetch_start_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker finished fetching action inputs.
     #[prost(message, optional, tag = "6")]
     pub input_fetch_completed_timestamp: ::core::option::Option<
-        ::prost_types::Timestamp,
+        super::super::super::super::super::google::protobuf::Timestamp,
     >,
     /// When the worker started executing the action command.
     #[prost(message, optional, tag = "7")]
-    pub execution_start_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub execution_start_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker completed executing the action command.
     #[prost(message, optional, tag = "8")]
-    pub execution_completed_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub execution_completed_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// New in v2.3: the amount of time the worker spent executing the action
     /// command, potentially computed using a worker-specific virtual clock.
     ///
@@ -619,20 +637,26 @@ pub struct ExecutedActionMetadata {
     /// relationship between the virtual execution duration and the values of
     /// `execution_start_timestamp` and `execution_completed_timestamp`.
     #[prost(message, optional, tag = "12")]
-    pub virtual_execution_duration: ::core::option::Option<::prost_types::Duration>,
+    pub virtual_execution_duration: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Duration,
+    >,
     /// When the worker started uploading action outputs.
     #[prost(message, optional, tag = "9")]
-    pub output_upload_start_timestamp: ::core::option::Option<::prost_types::Timestamp>,
+    pub output_upload_start_timestamp: ::core::option::Option<
+        super::super::super::super::super::google::protobuf::Timestamp,
+    >,
     /// When the worker finished uploading action outputs.
     #[prost(message, optional, tag = "10")]
     pub output_upload_completed_timestamp: ::core::option::Option<
-        ::prost_types::Timestamp,
+        super::super::super::super::super::google::protobuf::Timestamp,
     >,
     /// Details that are specific to the kind of worker used. For example,
     /// on POSIX-like systems this could contain a message with
     /// getrusage(2) statistics.
     #[prost(message, repeated, tag = "11")]
-    pub auxiliary_metadata: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub auxiliary_metadata: ::prost::alloc::vec::Vec<
+        super::super::super::super::super::google::protobuf::Any,
+    >,
 }
 /// An ActionResult represents the result of an
 /// [Action][build.bazel.remote.execution.v2.Action] being run.
