@@ -13,7 +13,6 @@
 /// qualifier is recommended for this purpose.
 ///
 /// Qualifiers may be supplied in any order.
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Qualifier {
     /// The "name" of the qualifier, for example "resource_type".
@@ -28,7 +27,6 @@ pub struct Qualifier {
 }
 /// A request message for
 /// [Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchBlobRequest {
     /// The instance of the execution system to operate against. A server may
@@ -96,7 +94,6 @@ pub struct FetchBlobRequest {
 }
 /// A response message for
 /// [Fetch.FetchBlob][build.bazel.remote.asset.v1.Fetch.FetchBlob].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchBlobResponse {
     /// If the status has a code other than `OK`, it indicates that the operation
@@ -147,7 +144,6 @@ pub struct FetchBlobResponse {
 }
 /// A request message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchDirectoryRequest {
     /// The instance of the execution system to operate against. A server may
@@ -209,7 +205,6 @@ pub struct FetchDirectoryRequest {
 }
 /// A response message for
 /// [Fetch.FetchDirectory][build.bazel.remote.asset.v1.Fetch.FetchDirectory].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FetchDirectoryResponse {
     /// If the status has a code other than `OK`, it indicates that the operation
@@ -263,7 +258,6 @@ pub struct FetchDirectoryResponse {
 }
 /// A request message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PushBlobRequest {
     /// The instance of the execution system to operate against. A server may
@@ -317,12 +311,10 @@ pub struct PushBlobRequest {
 }
 /// A response message for
 /// [Push.PushBlob][build.bazel.remote.asset.v1.Push.PushBlob].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PushBlobResponse {}
 /// A request message for
 /// [Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PushDirectoryRequest {
     /// The instance of the execution system to operate against. A server may
@@ -379,7 +371,6 @@ pub struct PushDirectoryRequest {
 }
 /// A response message for
 /// [Push.PushDirectory][build.bazel.remote.asset.v1.Push.PushDirectory].
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct PushDirectoryResponse {}
 /// Generated client implementations.
