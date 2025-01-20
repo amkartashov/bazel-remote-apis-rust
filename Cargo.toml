@@ -23,7 +23,7 @@ pbjson = { version = "0.7", optional = true }
 pbjson-types = { version = "0.7", optional = true }
 
 [dev-dependencies]
-serde_json = "1.0.135"
+serde_json = "1.0.137"
 
 [build-dependencies]
 tonic-build = { version = "0.12.3", optional = true }
