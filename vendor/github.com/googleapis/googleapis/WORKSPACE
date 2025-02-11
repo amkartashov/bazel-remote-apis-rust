@@ -215,7 +215,7 @@ http_archive(
     urls = ["https://github.com/googleapis/rules_gapic/archive/v%s.tar.gz" % _rules_gapic_version],
 )
 
-_gapic_generator_go_version = "0.50.0"
+_gapic_generator_go_version = "0.51.1"
 
 http_archive(
     name = "com_googleapis_gapic_generator_go",
@@ -232,7 +232,7 @@ com_googleapis_gapic_generator_go_repositories()
 # dependencies of gapic-generator-go.
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(version = "1.21.13")
+go_register_toolchains(version = "1.22.11")
 
 go_rules_dependencies()
 
@@ -255,7 +255,7 @@ rules_gapic_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-_gapic_generator_java_version = "2.51.0"
+_gapic_generator_java_version = "2.52.0"
 
 http_archive(
     name = "gapic_generator_java",
@@ -314,9 +314,9 @@ load("@rules_gapic//python:py_gapic_repositories.bzl", "py_gapic_repositories")
 
 py_gapic_repositories()
 
-_gapic_generator_python_version = "1.21.0"
+_gapic_generator_python_version = "1.22.0"
 
-_gapic_generator_python_sha256 = "3d699e92bf6b6b30da8be030900cfbe293b7d0bfa2a26c580ee790f51ae593df"
+_gapic_generator_python_sha256 = "b2713f25834534029aeb2c6b829ea3efccc5216cf368376c040e28d7cae60322"
 
 http_archive(
     name = "gapic_generator_python",
@@ -353,9 +353,9 @@ gapic_generator_register_toolchains()
 # TypeScript
 ##############################################################################
 
-_gapic_generator_typescript_version = "4.6.1"
+_gapic_generator_typescript_version = "4.7.2"
 
-_gapic_generator_typescript_sha256 = "80a3fb3ab55f581ca020b89550ea5c7d3b269e1cae4935605cf9e9d13eb26b3f"
+_gapic_generator_typescript_sha256 = "9f62efa0d407df8dc5cb11467afcc6787d6f80e822bbcfbfb42b0ed147da1461"
 
 ### TypeScript generator
 http_archive(
@@ -405,7 +405,7 @@ pnpm_repository(name = "pnpm")
 ##############################################################################
 
 # PHP micro-generator
-_gapic_generator_php_version = "1.18.0"
+_gapic_generator_php_version = "1.18.2"
 
 http_archive(
     name = "gapic_generator_php",
@@ -438,9 +438,9 @@ http_archive(
     urls = ["https://github.com/googleapis/gax-dotnet/archive/refs/tags/%s.tar.gz" % _gax_dotnet_version],
 )
 
-_gapic_generator_csharp_version = "1.4.32"
+_gapic_generator_csharp_version = "1.4.33"
 
-_gapic_generator_csharp_sha256 = "b29078c87d6c0e15ba34ece8365ec5fda90c66e9c7f5ab51fa14a067f3685012"
+_gapic_generator_csharp_sha256 = "f4c790c7541c7a52f2995d78185d2dbea75d48c9c93e77f78e9d867781bc9f5e"
 
 http_archive(
     name = "gapic_generator_csharp",
@@ -457,9 +457,9 @@ gapic_generator_csharp_repositories()
 # Ruby
 ##############################################################################
 
-_gapic_generator_ruby_version = "v0.38.3"
+_gapic_generator_ruby_version = "v0.42.1"
 
-_gapic_generator_ruby_sha256 = "08cc9302b45229ff4acef29a6ca7cdb6a433db353c5ecf94ae1ab194c5c59a2b"
+_gapic_generator_ruby_sha256 = "278b9ed55942df631fd444ce570dfd35c8d3712a25d9717bbe99afc531d6d4e8"
 
 http_archive(
     name = "gapic_generator_ruby",
@@ -476,7 +476,7 @@ gapic_generator_ruby_repositories()
 # Discovery
 ##############################################################################
 
-_disco_to_proto3_converter_version = "285877db097dded2d988e9882240c83c7f9c3df4"
+_disco_to_proto3_converter_version = "7c26f921d6ae7dac9bd5abc4cfe9e3f8313a4f4c"
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",

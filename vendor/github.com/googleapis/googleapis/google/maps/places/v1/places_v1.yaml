@@ -12,6 +12,12 @@ documentation:
     retrieval endpoints for a Place.
   overview: '<!--#include file="/geo/platform/places/g3doc/overview.md"-->'
 
+authentication:
+  rules:
+  - selector: "*"
+    oauth:
+      canonical_scopes: https://www.googleapis.com/auth/cloud-platform
+
 publishing:
   new_issue_uri: https://issuetracker.google.com/issues/new?component=188872&template=1815671
   documentation_uri: https://developers.google.com/maps/documentation/places/web-service/
@@ -21,15 +27,11 @@ publishing:
   organization: GEO
   library_settings:
   - version: google.maps.places.v1
-    launch_stage: GA
+    launch_stage: BETA
     java_settings:
       common:
         destinations:
         - PACKAGE_MANAGER
-    cpp_settings:
-      common: {}
-    php_settings:
-      common: {}
     python_settings:
       common:
         destinations:
@@ -42,8 +44,6 @@ publishing:
       common:
         destinations:
         - PACKAGE_MANAGER
-    ruby_settings:
-      common: {}
     go_settings:
       common:
         destinations:
