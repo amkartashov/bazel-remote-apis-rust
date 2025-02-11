@@ -2466,12 +2466,18 @@ impl serde::Serialize for python_settings::ExperimentalFeatures {
         if self.protobuf_pythonic_types_enabled {
             len += 1;
         }
+        if self.unversioned_package_disabled {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.api.PythonSettings.ExperimentalFeatures", len)?;
         if self.rest_async_io_enabled {
             struct_ser.serialize_field("restAsyncIoEnabled", &self.rest_async_io_enabled)?;
         }
         if self.protobuf_pythonic_types_enabled {
             struct_ser.serialize_field("protobufPythonicTypesEnabled", &self.protobuf_pythonic_types_enabled)?;
+        }
+        if self.unversioned_package_disabled {
+            struct_ser.serialize_field("unversionedPackageDisabled", &self.unversioned_package_disabled)?;
         }
         struct_ser.end()
     }
@@ -2487,12 +2493,15 @@ impl<'de> serde::Deserialize<'de> for python_settings::ExperimentalFeatures {
             "restAsyncIoEnabled",
             "protobuf_pythonic_types_enabled",
             "protobufPythonicTypesEnabled",
+            "unversioned_package_disabled",
+            "unversionedPackageDisabled",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             RestAsyncIoEnabled,
             ProtobufPythonicTypesEnabled,
+            UnversionedPackageDisabled,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -2516,6 +2525,7 @@ impl<'de> serde::Deserialize<'de> for python_settings::ExperimentalFeatures {
                         match value {
                             "restAsyncIoEnabled" | "rest_async_io_enabled" => Ok(GeneratedField::RestAsyncIoEnabled),
                             "protobufPythonicTypesEnabled" | "protobuf_pythonic_types_enabled" => Ok(GeneratedField::ProtobufPythonicTypesEnabled),
+                            "unversionedPackageDisabled" | "unversioned_package_disabled" => Ok(GeneratedField::UnversionedPackageDisabled),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2537,6 +2547,7 @@ impl<'de> serde::Deserialize<'de> for python_settings::ExperimentalFeatures {
             {
                 let mut rest_async_io_enabled__ = None;
                 let mut protobuf_pythonic_types_enabled__ = None;
+                let mut unversioned_package_disabled__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::RestAsyncIoEnabled => {
@@ -2551,11 +2562,18 @@ impl<'de> serde::Deserialize<'de> for python_settings::ExperimentalFeatures {
                             }
                             protobuf_pythonic_types_enabled__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UnversionedPackageDisabled => {
+                            if unversioned_package_disabled__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unversionedPackageDisabled"));
+                            }
+                            unversioned_package_disabled__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(python_settings::ExperimentalFeatures {
                     rest_async_io_enabled: rest_async_io_enabled__.unwrap_or_default(),
                     protobuf_pythonic_types_enabled: protobuf_pythonic_types_enabled__.unwrap_or_default(),
+                    unversioned_package_disabled: unversioned_package_disabled__.unwrap_or_default(),
                 })
             }
         }
@@ -2664,9 +2682,15 @@ impl serde::Serialize for SelectiveGapicGeneration {
         if !self.methods.is_empty() {
             len += 1;
         }
+        if self.generate_omitted_as_internal {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.api.SelectiveGapicGeneration", len)?;
         if !self.methods.is_empty() {
             struct_ser.serialize_field("methods", &self.methods)?;
+        }
+        if self.generate_omitted_as_internal {
+            struct_ser.serialize_field("generateOmittedAsInternal", &self.generate_omitted_as_internal)?;
         }
         struct_ser.end()
     }
@@ -2679,11 +2703,14 @@ impl<'de> serde::Deserialize<'de> for SelectiveGapicGeneration {
     {
         const FIELDS: &[&str] = &[
             "methods",
+            "generate_omitted_as_internal",
+            "generateOmittedAsInternal",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Methods,
+            GenerateOmittedAsInternal,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -2706,6 +2733,7 @@ impl<'de> serde::Deserialize<'de> for SelectiveGapicGeneration {
                     {
                         match value {
                             "methods" => Ok(GeneratedField::Methods),
+                            "generateOmittedAsInternal" | "generate_omitted_as_internal" => Ok(GeneratedField::GenerateOmittedAsInternal),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2726,6 +2754,7 @@ impl<'de> serde::Deserialize<'de> for SelectiveGapicGeneration {
                     V: serde::de::MapAccess<'de>,
             {
                 let mut methods__ = None;
+                let mut generate_omitted_as_internal__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Methods => {
@@ -2734,10 +2763,17 @@ impl<'de> serde::Deserialize<'de> for SelectiveGapicGeneration {
                             }
                             methods__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::GenerateOmittedAsInternal => {
+                            if generate_omitted_as_internal__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("generateOmittedAsInternal"));
+                            }
+                            generate_omitted_as_internal__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(SelectiveGapicGeneration {
                     methods: methods__.unwrap_or_default(),
+                    generate_omitted_as_internal: generate_omitted_as_internal__.unwrap_or_default(),
                 })
             }
         }
