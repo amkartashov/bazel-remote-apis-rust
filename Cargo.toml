@@ -18,7 +18,7 @@ features = [ "serde" ]
 [dependencies]
 tonic = "0.12.3"
 prost = "0.13.4"
-serde = { version = "1.0.217", optional = true }
+serde = { version = "1.0.218", optional = true }
 pbjson = { version = "0.7", optional = true }
 pbjson-types = { version = "0.7", optional = true }
 
