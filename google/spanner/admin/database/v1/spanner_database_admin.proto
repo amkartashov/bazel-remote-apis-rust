@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,6 +41,10 @@ option ruby_package = "Google::Cloud::Spanner::Admin::Database::V1";
 option (google.api.resource_definition) = {
   type: "spanner.googleapis.com/Instance"
   pattern: "projects/{project}/instances/{instance}"
+};
+option (google.api.resource_definition) = {
+  type: "spanner.googleapis.com/InstancePartition"
+  pattern: "projects/{project}/instances/{instance}/instancePartitions/{instance_partition}"
 };
 
 // Cloud Spanner Database Admin API
