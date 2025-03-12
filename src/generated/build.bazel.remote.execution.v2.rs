@@ -2540,6 +2540,15 @@ pub mod content_addressable_storage_client {
     /// each of the compression formats that the server supports, as well as in
     /// uncompressed form.
     ///
+    /// Additionally, ByteStream requests MAY come with an additional plain text header
+    /// that indicates the `resource_name` of the blob being sent.  The header, if
+    /// present, MUST follow the following convention:
+    /// * name: `build.bazel.remote.execution.v2.resource-name`.
+    /// * contents: the plain text resource_name of the request message.
+    /// If set, the contents of the header MUST match the `resource_name` of the request
+    /// message.  Servers MAY use this header to assist in routing requests to the
+    /// appropriate backend.
+    ///
     /// The lifetime of entries in the CAS is implementation specific, but it SHOULD
     /// be long enough to allow for newly-added and recently looked-up entries to be
     /// used in subsequent calls (e.g. to
@@ -3835,6 +3844,15 @@ pub mod content_addressable_storage_server {
     /// Servers MUST be able to provide data for all recently advertised blobs in
     /// each of the compression formats that the server supports, as well as in
     /// uncompressed form.
+    ///
+    /// Additionally, ByteStream requests MAY come with an additional plain text header
+    /// that indicates the `resource_name` of the blob being sent.  The header, if
+    /// present, MUST follow the following convention:
+    /// * name: `build.bazel.remote.execution.v2.resource-name`.
+    /// * contents: the plain text resource_name of the request message.
+    /// If set, the contents of the header MUST match the `resource_name` of the request
+    /// message.  Servers MAY use this header to assist in routing requests to the
+    /// appropriate backend.
     ///
     /// The lifetime of entries in the CAS is implementation specific, but it SHOULD
     /// be long enough to allow for newly-added and recently looked-up entries to be
