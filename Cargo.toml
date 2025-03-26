@@ -1,6 +1,6 @@
 [package]
 name = "bazel-remote-apis"
-version = "0.16.0"
+version = "0.17.0"
 edition = "2021"
 publish = true
 description = "Rust bindings for Bazel Remote APIs"
@@ -16,7 +16,7 @@ codegen = [ "dep:tonic-build", "dep:pbjson-build" ]
 features = [ "serde" ]
 
 [dependencies]
-tonic = "0.12.3"
+tonic = "0.13.0"
 prost = "0.13.4"
 serde = { version = "1.0.217", optional = true }
 pbjson = { version = "0.7", optional = true }
@@ -26,5 +26,5 @@ pbjson-types = { version = "0.7", optional = true }
 serde_json = "1.0.135"
 
 [build-dependencies]
-tonic-build = { version = "0.12.3", optional = true }
+tonic-build = { version = "0.13.0", optional = true }
 pbjson-build = { version = "0.7", optional = true }

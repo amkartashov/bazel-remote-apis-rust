@@ -3,3 +3,5 @@
 /bazel-out
 /bazel-bazel-remote-apis-rust
 /bazel-testlogs
+/.vscode
+
