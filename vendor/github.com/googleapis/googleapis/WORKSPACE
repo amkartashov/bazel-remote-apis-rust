@@ -255,7 +255,7 @@ rules_gapic_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-_gapic_generator_java_version = "2.54.0"
+_gapic_generator_java_version = "2.55.1"
 
 http_archive(
     name = "gapic_generator_java",
@@ -314,9 +314,9 @@ load("@rules_gapic//python:py_gapic_repositories.bzl", "py_gapic_repositories")
 
 py_gapic_repositories()
 
-_gapic_generator_python_version = "1.23.5"
+_gapic_generator_python_version = "1.23.6"
 
-_gapic_generator_python_sha256 = "4fd497ea01a8811b311e23c2a2544731f2808bdfabe2fdd3d43cba29a7062a8d"
+_gapic_generator_python_sha256 = "920596891917f95ecd81783f4a6569fc57892ff39b9b7da7e01844b3f2c9b00d"
 
 http_archive(
     name = "gapic_generator_python",
@@ -353,9 +353,9 @@ gapic_generator_register_toolchains()
 # TypeScript
 ##############################################################################
 
-_gapic_generator_typescript_version = "4.8.1"
+_gapic_generator_typescript_version = "4.8.2"
 
-_gapic_generator_typescript_sha256 = "a09fb926aa30398a0a75d9026e06a8686fabbdb8e64cc3a8fbbb0ab19147ffd6"
+_gapic_generator_typescript_sha256 = "ff609ae012007dd103136d44185125cef87bd9ea0792643e465b402a2e21dbbf"
 
 ### TypeScript generator
 http_archive(
@@ -476,7 +476,7 @@ gapic_generator_ruby_repositories()
 # Discovery
 ##############################################################################
 
-_disco_to_proto3_converter_version = "7c26f921d6ae7dac9bd5abc4cfe9e3f8313a4f4c"
+_disco_to_proto3_converter_version = "ebc9e9e267bfbc9a1173dd5f212a2dd03bf7b9d5"
 
 http_archive(
     name = "com_google_disco_to_proto3_converter",
