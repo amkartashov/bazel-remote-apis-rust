@@ -1433,6 +1433,9 @@ impl serde::Serialize for CacheCapabilities {
         if !self.supported_batch_update_compressors.is_empty() {
             len += 1;
         }
+        if self.max_cas_blob_size_bytes != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.CacheCapabilities", len)?;
         if !self.digest_functions.is_empty() {
             let v = self.digest_functions.iter().cloned().map(|v| {
@@ -1471,6 +1474,11 @@ impl serde::Serialize for CacheCapabilities {
                 }).collect::<std::result::Result<Vec<_>, _>>()?;
             struct_ser.serialize_field("supportedBatchUpdateCompressors", &v)?;
         }
+        if self.max_cas_blob_size_bytes != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field("maxCasBlobSizeBytes", ToString::to_string(&self.max_cas_blob_size_bytes).as_str())?;
+        }
         struct_ser.end()
     }
 }
@@ -1495,6 +1503,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             "supportedCompressors",
             "supported_batch_update_compressors",
             "supportedBatchUpdateCompressors",
+            "max_cas_blob_size_bytes",
+            "maxCasBlobSizeBytes",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1506,6 +1516,7 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             SymlinkAbsolutePathStrategy,
             SupportedCompressors,
             SupportedBatchUpdateCompressors,
+            MaxCasBlobSizeBytes,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1534,6 +1545,7 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                             "symlinkAbsolutePathStrategy" | "symlink_absolute_path_strategy" => Ok(GeneratedField::SymlinkAbsolutePathStrategy),
                             "supportedCompressors" | "supported_compressors" => Ok(GeneratedField::SupportedCompressors),
                             "supportedBatchUpdateCompressors" | "supported_batch_update_compressors" => Ok(GeneratedField::SupportedBatchUpdateCompressors),
+                            "maxCasBlobSizeBytes" | "max_cas_blob_size_bytes" => Ok(GeneratedField::MaxCasBlobSizeBytes),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1560,6 +1572,7 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                 let mut symlink_absolute_path_strategy__ = None;
                 let mut supported_compressors__ = None;
                 let mut supported_batch_update_compressors__ = None;
+                let mut max_cas_blob_size_bytes__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DigestFunctions => {
@@ -1606,6 +1619,14 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                             }
                             supported_batch_update_compressors__ = Some(map_.next_value::<Vec<compressor::Value>>()?.into_iter().map(|x| x as i32).collect());
                         }
+                        GeneratedField::MaxCasBlobSizeBytes => {
+                            if max_cas_blob_size_bytes__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("maxCasBlobSizeBytes"));
+                            }
+                            max_cas_blob_size_bytes__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
                     }
                 }
                 Ok(CacheCapabilities {
@@ -1616,6 +1637,7 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                     symlink_absolute_path_strategy: symlink_absolute_path_strategy__.unwrap_or_default(),
                     supported_compressors: supported_compressors__.unwrap_or_default(),
                     supported_batch_update_compressors: supported_batch_update_compressors__.unwrap_or_default(),
+                    max_cas_blob_size_bytes: max_cas_blob_size_bytes__.unwrap_or_default(),
                 })
             }
         }

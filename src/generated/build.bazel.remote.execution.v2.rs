@@ -1862,6 +1862,17 @@ pub struct CacheCapabilities {
     /// requests.
     #[prost(enumeration = "compressor::Value", repeated, tag = "7")]
     pub supported_batch_update_compressors: ::prost::alloc::vec::Vec<i32>,
+    /// The maximum blob size that the server will accept for CAS blob uploads.
+    /// - If it is 0, it means there is no limit set. A client may assume
+    ///    arbitrarily large blobs may be uploaded to and downloaded from the cache.
+    /// - If it is larger than 0, implementations SHOULD NOT attempt to upload
+    ///    blobs with size larger than the limit. Servers SHOULD reject blob
+    ///    uploads over the `max_cas_blob_size_bytes` limit with response code
+    ///    `INVALID_ARGUMENT`
+    /// - If the cache implementation returns a given limit, it MAY still serve
+    ///    blobs larger than this limit.
+    #[prost(int64, tag = "8")]
+    pub max_cas_blob_size_bytes: i64,
 }
 /// Capabilities of the remote execution system.
 #[derive(Clone, PartialEq, ::prost::Message)]
