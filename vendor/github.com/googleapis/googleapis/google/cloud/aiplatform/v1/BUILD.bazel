@@ -9,7 +9,7 @@
 #    * extra_protoc_file_parameters
 # The complete list of preserved parameters can be found in the source code.
 
-load("@com_google_googleapis_imports//:imports.bzl", "cc_grpc_library", "cc_proto_library", "csharp_gapic_assembly_pkg", "csharp_gapic_library", "csharp_grpc_library", "csharp_proto_library", "go_gapic_assembly_pkg", "go_gapic_library", "go_proto_library", "java_gapic_assembly_gradle_pkg", "java_gapic_library", "java_gapic_test", "java_grpc_library", "java_proto_library", "nodejs_gapic_assembly_pkg", "nodejs_gapic_library", "php_gapic_assembly_pkg", "php_gapic_library", "php_proto_library", "proto_library_with_info", "py_gapic_assembly_pkg", "py_gapic_library", "py_test", "ruby_cloud_gapic_library", "ruby_gapic_assembly_pkg", "ruby_grpc_library", "ruby_proto_library")
+load("@com_google_googleapis_imports//:imports.bzl", "cc_grpc_library", "cc_proto_library", "csharp_gapic_assembly_pkg", "csharp_gapic_library", "csharp_grpc_library", "csharp_proto_library", "go_gapic_assembly_pkg", "go_gapic_library", "go_grpc_library", "java_gapic_assembly_gradle_pkg", "java_gapic_library", "java_gapic_test", "java_grpc_library", "java_proto_library", "nodejs_gapic_assembly_pkg", "nodejs_gapic_library", "php_gapic_assembly_pkg", "php_gapic_library", "php_proto_library", "proto_library_with_info", "py_gapic_assembly_pkg", "py_gapic_library", "py_test", "ruby_cloud_gapic_library", "ruby_gapic_assembly_pkg", "ruby_grpc_library", "ruby_proto_library")
 
 ##############################################################################
 # Common
@@ -40,6 +40,7 @@ proto_library(
         "content.proto",
         "context.proto",
         "custom_job.proto",
+        "data_foundry_service.proto",
         "data_item.proto",
         "data_labeling_job.proto",
         "dataset.proto",
@@ -49,6 +50,7 @@ proto_library(
         "deployed_model_ref.proto",
         "deployment_resource_pool.proto",
         "deployment_resource_pool_service.proto",
+        "deployment_stage.proto",
         "encryption_spec.proto",
         "endpoint.proto",
         "endpoint_service.proto",
@@ -228,6 +230,7 @@ java_gapic_library(
 java_gapic_test(
     name = "aiplatform_java_gapic_test_suite",
     test_classes = [
+        "com.google.cloud.aiplatform.v1.DataFoundryServiceClientTest",
         "com.google.cloud.aiplatform.v1.DatasetServiceClientTest",
         "com.google.cloud.aiplatform.v1.DeploymentResourcePoolServiceClientTest",
         "com.google.cloud.aiplatform.v1.EndpointServiceClientTest",
@@ -272,9 +275,8 @@ java_gapic_assembly_gradle_pkg(
     ] + _JAVA_PROTO_SUBPACKAGE_DEPS + _PROTO_SUBPACKAGE_DEPS + _JAVA_GRPC_SUBPACKAGE_DEPS,
 )
 
-go_proto_library(
+go_grpc_library(
     name = "aiplatform_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "cloud.google.com/go/aiplatform/apiv1/aiplatformpb",
     protos = [":aiplatform_proto"],
     deps = [

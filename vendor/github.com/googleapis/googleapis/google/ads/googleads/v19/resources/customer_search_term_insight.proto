@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@ option ruby_package = "Google::Ads::GoogleAds::V19::Resources";
 
 // Proto file describing the customer search term insight resource.
 
-// A Customer search term view.
+// This report provides a high-level view of search demand at the customer
+// level by grouping similar search terms into categories and showing their
+// search volume.
 // Historical data is available starting March 2023.
 message CustomerSearchTermInsight {
   option (google.api.resource) = {

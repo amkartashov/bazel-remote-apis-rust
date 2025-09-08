@@ -36,7 +36,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "cloud.google.com/go/bigquery/apiv2/bigquerypb;bigquerypb";
+option go_package = "cloud.google.com/go/bigquery/v2/apiv2/bigquerypb;bigquerypb";
 option java_outer_classname = "JobProto";
 option java_package = "com.google.cloud.bigquery.v2";
 
@@ -163,7 +163,6 @@ message Job {
   ];
 
   // Output only. The reason why a Job was created.
-  // [Preview](https://cloud.google.com/products/#product-launch-stages)
   JobCreationReason job_creation_reason = 14
       [(google.api.field_behavior) = OUTPUT_ONLY];
 }
@@ -566,6 +565,14 @@ message QueryRequest {
   // if a job does not need to be created.
   optional int64 job_timeout_ms = 26 [(google.api.field_behavior) = OPTIONAL];
 
+  // Optional. INTERNAL: DO NOT USE. The maximum rate of slot consumption to
+  // allow for this job.
+  //
+  // If set, the number of slots used to execute the job will be throttled
+  // to try and keep its slot consumption below the requested rate. This limit
+  // is best effort.
+  optional int32 max_slots = 28 [(google.api.field_behavior) = OPTIONAL];
+
   // Optional. Custom encryption configuration (e.g., Cloud KMS keys)
   EncryptionConfiguration destination_encryption_configuration = 27
       [(google.api.field_behavior) = OPTIONAL];
@@ -669,7 +676,6 @@ message QueryRequest {
   //
   // If set, the query request will follow the behavior described
   // JobCreationMode.
-  // [Preview](https://cloud.google.com/products/#product-launch-stages)
   JobCreationMode job_creation_mode = 22
       [(google.api.field_behavior) = OPTIONAL];
 
@@ -712,12 +718,10 @@ message QueryResponse {
   //
   // Only relevant when a job_reference is present in the response.
   // If job_reference is not present it will always be unset.
-  // [Preview](https://cloud.google.com/products/#product-launch-stages)
   JobCreationReason job_creation_reason = 15
       [(google.api.field_behavior) = OPTIONAL];
 
   // Auto-generated ID for the query.
-  // [Preview](https://cloud.google.com/products/#product-launch-stages)
   string query_id = 14;
 
   // Output only. The geographic location of the query.

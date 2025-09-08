@@ -259,6 +259,18 @@
       "service" : "google.cloud.compute.v1.InstantSnapshots",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "GetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "GetOperationalStatus"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1.InterconnectAttachments",
       "method" : "AggregatedList"
     }, {
@@ -266,6 +278,18 @@
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1.InterconnectAttachments",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "GetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "GetOperationalStatus"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1.InterconnectLocations",
@@ -631,6 +655,18 @@
       "service" : "google.cloud.compute.v1.Regions",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1.ReservationBlocks",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationBlocks",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSubBlocks",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSubBlocks",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1.Reservations",
       "method" : "AggregatedList"
     }, {
@@ -993,6 +1029,9 @@
     }, {
       "service" : "google.cloud.compute.v1.Disks",
       "method" : "BulkInsert"
+    }, {
+      "service" : "google.cloud.compute.v1.Disks",
+      "method" : "BulkSetLabels"
     }, {
       "service" : "google.cloud.compute.v1.Disks",
       "method" : "CreateSnapshot"
@@ -1432,6 +1471,21 @@
       "service" : "google.cloud.compute.v1.InstantSnapshots",
       "method" : "TestIamPermissions"
     }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectAttachmentGroups",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1.InterconnectAttachments",
       "method" : "Delete"
     }, {
@@ -1443,6 +1497,24 @@
     }, {
       "service" : "google.cloud.compute.v1.InterconnectAttachments",
       "method" : "SetLabels"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "CreateMembers"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1.InterconnectGroups",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1.Interconnects",
       "method" : "Delete"
@@ -1471,6 +1543,9 @@
       "service" : "google.cloud.compute.v1.Licenses",
       "method" : "TestIamPermissions"
     }, {
+      "service" : "google.cloud.compute.v1.Licenses",
+      "method" : "Update"
+    }, {
       "service" : "google.cloud.compute.v1.MachineImages",
       "method" : "Delete"
     }, {
@@ -1479,6 +1554,9 @@
     }, {
       "service" : "google.cloud.compute.v1.MachineImages",
       "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1.MachineImages",
+      "method" : "SetLabels"
     }, {
       "service" : "google.cloud.compute.v1.MachineImages",
       "method" : "TestIamPermissions"
@@ -1581,6 +1659,9 @@
     }, {
       "service" : "google.cloud.compute.v1.Networks",
       "method" : "RemovePeering"
+    }, {
+      "service" : "google.cloud.compute.v1.Networks",
+      "method" : "RequestRemovePeering"
     }, {
       "service" : "google.cloud.compute.v1.Networks",
       "method" : "SwitchToCustomMode"
@@ -2044,11 +2125,20 @@
       "service" : "google.cloud.compute.v1.RegionUrlMaps",
       "method" : "Validate"
     }, {
+      "service" : "google.cloud.compute.v1.ReservationBlocks",
+      "method" : "PerformMaintenance"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSubBlocks",
+      "method" : "PerformMaintenance"
+    }, {
       "service" : "google.cloud.compute.v1.Reservations",
       "method" : "Delete"
     }, {
       "service" : "google.cloud.compute.v1.Reservations",
       "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.Reservations",
+      "method" : "PerformMaintenance"
     }, {
       "service" : "google.cloud.compute.v1.Reservations",
       "method" : "Resize"

@@ -11,6 +11,7 @@ types:
 - name: google.privacy.dlp.v2.DataProfileBigQueryRowSchema
 - name: google.privacy.dlp.v2.DataProfileFinding
 - name: google.privacy.dlp.v2.DataProfilePubSubMessage
+- name: google.privacy.dlp.v2.SaveToGcsFindingsOutput
 - name: google.privacy.dlp.v2.TransformationDetails
 
 documentation:
@@ -25,3 +26,9 @@ authentication:
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
+
+publishing:
+  library_settings:
+  - version: google.privacy.dlp.v2
+    java_settings:
+      library_package: com.google.cloud.dlp.v2

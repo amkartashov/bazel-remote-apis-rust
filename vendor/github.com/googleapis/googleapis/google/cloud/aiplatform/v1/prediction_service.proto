@@ -738,6 +738,11 @@ message GenerateContentRequest {
   repeated SafetySetting safety_settings = 3
       [(google.api.field_behavior) = OPTIONAL];
 
+  // Optional. Settings for prompt and response sanitization using the Model
+  // Armor service. If supplied, safety_settings must not be supplied.
+  ModelArmorConfig model_armor_config = 11
+      [(google.api.field_behavior) = OPTIONAL];
+
   // Optional. Generation config.
   GenerationConfig generation_config = 4
       [(google.api.field_behavior) = OPTIONAL];
@@ -764,6 +769,9 @@ message GenerateContentResponse {
 
       // Candidates blocked due to prohibited content.
       PROHIBITED_CONTENT = 4;
+
+      // The user prompt was blocked by Model Armor.
+      MODEL_ARMOR = 5;
     }
 
     // Output only. Blocked reason.
@@ -786,6 +794,9 @@ message GenerateContentResponse {
 
     // Number of tokens in the response(s).
     int32 candidates_token_count = 2;
+
+    // Output only. Number of tokens present in thoughts output.
+    int32 thoughts_token_count = 14 [(google.api.field_behavior) = OUTPUT_ONLY];
 
     // Total token count for prompt and response candidates.
     int32 total_token_count = 3;

@@ -55,6 +55,7 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 proto_library(
     name = "places_proto",
     srcs = [
+        "address_descriptor.proto",
         "attribution.proto",
         "content_block.proto",
         "contextual_content.proto",
@@ -158,7 +159,6 @@ java_gapic_test(
 # Open Source Packages
 java_gapic_assembly_gradle_pkg(
     name = "google-cloud-maps-places-v1-java",
-    include_samples = True,
     transport = "grpc+rest",
     deps = [
         ":places_java_gapic",
@@ -239,7 +239,10 @@ py_gapic_library(
     name = "places_py_gapic",
     srcs = [":places_proto"],
     grpc_service_config = "places_grpc_service_config.json",
-    opt_args = ["proto-plus-deps=google.geo.type"],
+    opt_args = [
+        "proto-plus-deps=google.geo.type",
+        "autogen-snippets=False",
+    ],
     rest_numeric_enums = True,
     service_yaml = "places_v1.yaml",
     transport = "grpc+rest",

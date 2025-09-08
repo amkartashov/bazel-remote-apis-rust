@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -570,7 +570,7 @@ message GenerateRecommendationsRequest {
 
   // Current budget information of the campaign.
   message BudgetInfo {
-    // Required. Current budget amount.
+    // Required. Current budget amount in micros.
     // This field is necessary for the following recommendation_types if
     // budget_info is set:
     // CAMPAIGN_BUDGET

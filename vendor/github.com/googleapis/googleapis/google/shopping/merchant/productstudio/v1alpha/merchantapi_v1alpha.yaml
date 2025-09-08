@@ -4,6 +4,7 @@ name: merchantapi.googleapis.com
 title: Merchant API
 
 apis:
+- name: google.shopping.merchant.productstudio.v1alpha.ImageService
 - name: google.shopping.merchant.productstudio.v1alpha.TextSuggestionsService
 
 documentation:
@@ -27,6 +28,10 @@ documentation:
 
 authentication:
   rules:
+  - selector: 'google.shopping.merchant.productstudio.v1alpha.ImageService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/content
   - selector: google.shopping.merchant.productstudio.v1alpha.TextSuggestionsService.GenerateProductTextSuggestions
     oauth:
       canonical_scopes: |-
@@ -51,18 +56,6 @@ publishing:
         destinations:
         - PACKAGE_MANAGER
     python_settings:
-      common:
-        destinations:
-        - PACKAGE_MANAGER
-    node_settings:
-      common:
-        destinations:
-        - PACKAGE_MANAGER
-    dotnet_settings:
-      common:
-        destinations:
-        - PACKAGE_MANAGER
-    ruby_settings:
       common:
         destinations:
         - PACKAGE_MANAGER

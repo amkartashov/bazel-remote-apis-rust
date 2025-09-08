@@ -1,0 +1,37 @@
+{
+  "csharp": {
+    "version": "1.4.35",
+    "commit": null,
+    "sha": "c656983db36a16cd42f5c03a03dcfc87fb6049f7c05babf8aca7f77a4492f6dd"
+  },
+  "go": {
+    "version": "0.53.1",
+    "commit": null,
+    "sha": null
+  },
+  "java": {
+    "version": "2.62.0",
+    "commit": null,
+    "sha": null
+  },
+  "php": {
+    "version": "1.19.0",
+    "commit": null,
+    "sha": null
+  },
+  "python": {
+    "version": "1.26.2",
+    "commit": null,
+    "sha": "6cc18ef77c47633163ad5c2b6ab88ff0c13a4cc51e02061f5411792ab65aacd1"
+  },
+  "ruby": {
+    "version": "0.46.1",
+    "commit": null,
+    "sha": "2c5ec6e6853a5999895773671d6cb01454042290dfc64d50ebec784a7860da5d"
+  },
+  "typescript": {
+    "version": "4.11.4",
+    "commit": null,
+    "sha": "184862233081f0e9dd8eb15e6b4c7390b2488c1e9da34961d59fc6e4d87df41a"
+  }
+}

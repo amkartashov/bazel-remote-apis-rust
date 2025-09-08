@@ -10,6 +10,7 @@ apis:
 
 types:
 - name: google.firestore.admin.v1.BulkDeleteDocumentsMetadata
+- name: google.firestore.admin.v1.CloneDatabaseMetadata
 - name: google.firestore.admin.v1.CreateDatabaseMetadata
 - name: google.firestore.admin.v1.DeleteDatabaseMetadata
 - name: google.firestore.admin.v1.ExportDocumentsMetadata
@@ -66,3 +67,9 @@ authentication:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform,
         https://www.googleapis.com/auth/datastore
+
+publishing:
+  library_settings:
+  - version: google.firestore.admin.v1
+    java_settings:
+      library_package: com.google.cloud.firestore.v1

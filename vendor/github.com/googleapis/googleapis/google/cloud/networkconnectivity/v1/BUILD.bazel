@@ -26,7 +26,9 @@ proto_library(
     srcs = [
         "common.proto",
         "cross_network_automation.proto",
+        "data_transfer.proto",
         "hub.proto",
+        "internal_range.proto",
         "policy_based_routing.proto",
     ],
     deps = [
@@ -103,7 +105,9 @@ java_gapic_test(
     name = "networkconnectivity_java_gapic_test_suite",
     test_classes = [
         "com.google.cloud.networkconnectivity.v1.CrossNetworkAutomationServiceClientTest",
+        "com.google.cloud.networkconnectivity.v1.DataTransferServiceClientTest",
         "com.google.cloud.networkconnectivity.v1.HubServiceClientTest",
+        "com.google.cloud.networkconnectivity.v1.InternalRangeServiceClientTest",
         "com.google.cloud.networkconnectivity.v1.PolicyBasedRoutingServiceClientTest",
     ],
     runtime_deps = [":networkconnectivity_java_gapic_test"],

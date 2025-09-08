@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ message ConversionUploadErrorEnum {
     // Upload fewer than 2001 events in a single request.
     TOO_MANY_CONVERSIONS_IN_REQUEST = 2;
 
-    // The imported gclid could not be decoded. Make sure you have not modified
-    // the click IDs.
+    // The imported gclid could not be decoded.
     UNPARSEABLE_GCLID = 3;
 
     // The imported event has a `conversion_date_time` that precedes the click.

@@ -20,9 +20,6 @@ package(default_visibility = ["//visibility:public"])
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@com_google_googleapis_imports//:imports.bzl", "proto_library_with_info")
 
-# TODO(ohren): Change srcs to use an enumeration of each individual proto
-# instead of *.proto globbing once the build file generator supports
-# subpackages.
 proto_library(
     name = "services_proto",
     srcs = glob(["*.proto"]),
@@ -34,6 +31,7 @@ proto_library(
         "//google/api:annotations_proto",
         "//google/api:client_proto",
         "//google/api:field_behavior_proto",
+        "//google/api:field_info_proto",
         "//google/api:resource_proto",
         "//google/longrunning:operations_proto",
         "//google/rpc:status_proto",
