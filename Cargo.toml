@@ -7,6 +7,7 @@ description = "Rust bindings for Bazel Remote APIs"
 license = "MIT"
 homepage = "https://github.com/amkartashov/bazel-remote-apis-rust"
 repository = "https://github.com/amkartashov/bazel-remote-apis-rust.git"
+exclude = ["vendor/", ".github/"]
 
 [features]
 serde = ["dep:pbjson", "dep:pbjson-types", "dep:serde"]
