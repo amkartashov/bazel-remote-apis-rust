@@ -47,16 +47,6 @@ authentication:
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.manage.users
-  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.FetchAutomatedGa4ConfigurationOptOut
-    oauth:
-      canonical_scopes: |-
-        https://www.googleapis.com/auth/analytics.edit,
-        https://www.googleapis.com/auth/analytics.readonly
-  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.FetchConnectedGa4Property
-    oauth:
-      canonical_scopes: |-
-        https://www.googleapis.com/auth/analytics.edit,
-        https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetAccessBinding
     oauth:
       canonical_scopes: |-
@@ -187,6 +177,16 @@ authentication:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.edit,
         https://www.googleapis.com/auth/analytics.readonly
+  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetReportingDataAnnotation
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/analytics.edit,
+        https://www.googleapis.com/auth/analytics.readonly
+  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetReportingIdentitySettings
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/analytics.edit,
+        https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetRollupPropertySourceLink
     oauth:
       canonical_scopes: |-
@@ -203,6 +203,11 @@ authentication:
         https://www.googleapis.com/auth/analytics.edit,
         https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetSubpropertyEventFilter
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/analytics.edit,
+        https://www.googleapis.com/auth/analytics.readonly
+  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.GetSubpropertySyncConfig
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.edit,
@@ -243,11 +248,6 @@ authentication:
         https://www.googleapis.com/auth/analytics.edit,
         https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListChannelGroups
-    oauth:
-      canonical_scopes: |-
-        https://www.googleapis.com/auth/analytics.edit,
-        https://www.googleapis.com/auth/analytics.readonly
-  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListConnectedSiteTags
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.edit,
@@ -322,6 +322,11 @@ authentication:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.edit,
         https://www.googleapis.com/auth/analytics.readonly
+  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListReportingDataAnnotations
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/analytics.edit,
+        https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListRollupPropertySourceLinks
     oauth:
       canonical_scopes: |-
@@ -338,6 +343,11 @@ authentication:
         https://www.googleapis.com/auth/analytics.edit,
         https://www.googleapis.com/auth/analytics.readonly
   - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListSubpropertyEventFilters
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/analytics.edit,
+        https://www.googleapis.com/auth/analytics.readonly
+  - selector: google.analytics.admin.v1alpha.AnalyticsAdminService.ListSubpropertySyncConfigs
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/analytics.edit,

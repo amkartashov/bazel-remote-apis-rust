@@ -62,6 +62,7 @@ proto_library(
         "serving_config.proto",
         "serving_config_service.proto",
         "session.proto",
+        "session_service.proto",
         "site_search_engine.proto",
         "site_search_engine_service.proto",
         "user_event.proto",
@@ -173,6 +174,8 @@ java_gapic_test(
         "com.google.cloud.discoveryengine.v1beta.SearchTuningServiceClientTest",
         "com.google.cloud.discoveryengine.v1beta.ServingConfigServiceClientHttpJsonTest",
         "com.google.cloud.discoveryengine.v1beta.ServingConfigServiceClientTest",
+        "com.google.cloud.discoveryengine.v1beta.SessionServiceClientHttpJsonTest",
+        "com.google.cloud.discoveryengine.v1beta.SessionServiceClientTest",
         "com.google.cloud.discoveryengine.v1beta.SiteSearchEngineServiceClientHttpJsonTest",
         "com.google.cloud.discoveryengine.v1beta.SiteSearchEngineServiceClientTest",
         "com.google.cloud.discoveryengine.v1beta.UserEventServiceClientHttpJsonTest",
@@ -202,12 +205,11 @@ load(
     "@com_google_googleapis_imports//:imports.bzl",
     "go_gapic_assembly_pkg",
     "go_gapic_library",
-    "go_proto_library",
+    "go_grpc_library",
 )
 
-go_proto_library(
+go_grpc_library(
     name = "discoveryengine_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "cloud.google.com/go/discoveryengine/apiv1beta/discoveryenginepb",
     protos = [":discoveryengine_proto"],
     deps = [

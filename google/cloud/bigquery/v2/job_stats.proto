@@ -30,7 +30,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "cloud.google.com/go/bigquery/apiv2/bigquerypb;bigquerypb";
+option go_package = "cloud.google.com/go/bigquery/v2/apiv2/bigquerypb;bigquerypb";
 option java_outer_classname = "JobStatsProto";
 option java_package = "com.google.cloud.bigquery.v2";
 option (google.api.resource_definition) = {
@@ -181,6 +181,10 @@ message QueryTimelineSample {
   // slot usage. This is the largest value observed since the last sample.
   google.protobuf.Int64Value active_units = 5;
 
+  // Total shuffle usage ratio in shuffle RAM per reservation of this query.
+  // This will be provided for reservation customers only.
+  google.protobuf.DoubleValue shuffle_ram_usage_ratio = 6;
+
   // Units of work that can be scheduled immediately. Providing additional slots
   // for these units of work will accelerate the query, if no other query in
   // the reservation needs additional slots.
@@ -215,6 +219,11 @@ message ExternalServiceCost {
   // For example, reserved slots for Cloua AI Platform job are the VM usages
   // converted to BigQuery slot with equivalent mount of price.
   int64 reserved_slot_count = 5;
+
+  // The billing method used for the external job.
+  // This field is only used when billed on the services sku, set to
+  // "SERVICES_SKU". Otherwise, it is unspecified for backward compatibility.
+  string billing_method = 6;
 }
 
 // Statistics for the EXPORT DATA statement as part of Query Job. EXTRACT
@@ -389,6 +398,12 @@ message IndexUnusedReason {
     // Indicates that the estimated performance gain from using the search index
     // is too low for the given search query.
     ESTIMATED_PERFORMANCE_GAIN_TOO_LOW = 15;
+
+    // Indicates that the column metadata index (which the search index depends
+    // on) is not used. User can refer to the [column metadata index
+    // usage](https://cloud.google.com/bigquery/docs/metadata-indexing-managed-tables#view_column_metadata_index_usage)
+    // for more details on why it was not used.
+    COLUMN_METADATA_INDEX_NOT_USED = 21;
 
     // Indicates that search indexes can not be used for search query with
     // STANDARD edition.
@@ -641,12 +656,18 @@ message JobStatistics2 {
   google.protobuf.Int64Value total_slot_ms = 8
       [(google.api.field_behavior) = OUTPUT_ONLY];
 
+  // Output only. Total slot-milliseconds for the job that run on external
+  // services and billed on the service SKU. This field is only populated for
+  // jobs that have external service costs, and is the total of the usage for
+  // costs whose billing method is "SERVICES_SKU".
+  optional int64 total_services_sku_slot_ms = 52
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
   // Output only. Whether the query result was fetched from the query cache.
   google.protobuf.BoolValue cache_hit = 9
       [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // Output only. Referenced tables for the job. Queries that reference more
-  // than 50 tables will not have a complete list.
+  // Output only. Referenced tables for the job.
   repeated TableReference referenced_tables = 10
       [(google.api.field_behavior) = OUTPUT_ONLY];
 
