@@ -25,9 +25,9 @@
     "sha": "6cc18ef77c47633163ad5c2b6ab88ff0c13a4cc51e02061f5411792ab65aacd1"
   },
   "ruby": {
-    "version": "0.46.1",
+    "version": "0.47.1",
     "commit": null,
-    "sha": "2c5ec6e6853a5999895773671d6cb01454042290dfc64d50ebec784a7860da5d"
+    "sha": "5e9a76a547595a0b84c263a641d75d8556239e0cc230ee8702584ea2e59f7f7c"
   },
   "typescript": {
     "version": "4.11.4",
