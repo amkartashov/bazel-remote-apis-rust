@@ -20,7 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
 
         let descriptor_path = out_dir.join("proto_descriptor.bin");
-        tonic_build::configure()
+        tonic_prost_build::configure()
             .out_dir(out_dir)
             .file_descriptor_set_path(&descriptor_path)
             .compile_well_known_types(true)
