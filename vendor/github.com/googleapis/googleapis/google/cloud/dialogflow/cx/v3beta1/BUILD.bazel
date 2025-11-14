@@ -29,6 +29,7 @@ proto_library(
         "audio_config.proto",
         "bigquery_export.proto",
         "changelog.proto",
+        "code_block.proto",
         "conversation_history.proto",
         "data_store_connection.proto",
         "deployment.proto",
@@ -55,6 +56,7 @@ proto_library(
         "test_case.proto",
         "tool.proto",
         "tool_call.proto",
+        "trace.proto",
         "transition_route_group.proto",
         "validation_message.proto",
         "version.proto",
@@ -430,6 +432,7 @@ load(
 
 csharp_proto_library(
     name = "cx_csharp_proto",
+    extra_opts = [],
     deps = [":cx_proto"],
 )
 

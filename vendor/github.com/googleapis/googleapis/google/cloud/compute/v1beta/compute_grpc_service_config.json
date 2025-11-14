@@ -29,6 +29,9 @@
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1beta.BackendBuckets",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.BackendBuckets",
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1beta.BackendBuckets",
@@ -178,6 +181,12 @@
       "service" : "google.cloud.compute.v1beta.GlobalPublicDelegatedPrefixes",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1beta.GlobalVmExtensionPolicies",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.GlobalVmExtensionPolicies",
+      "method" : "Get"
+    }, {
       "service" : "google.cloud.compute.v1beta.HealthChecks",
       "method" : "AggregatedList"
     }, {
@@ -213,6 +222,9 @@
     }, {
       "service" : "google.cloud.compute.v1beta.InstanceGroupManagers",
       "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.InstanceGroupManagers",
+      "method" : "GetAvailableAcceleratorTopologies"
     }, {
       "service" : "google.cloud.compute.v1beta.InstanceGroupManagers",
       "method" : "List"
@@ -541,6 +553,18 @@
       "service" : "google.cloud.compute.v1beta.RegionAutoscalers",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "GetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "ListUsable"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionBackendServices",
       "method" : "Get"
     }, {
@@ -562,6 +586,15 @@
       "service" : "google.cloud.compute.v1beta.RegionCommitments",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionDiskSettings",
       "method" : "Get"
     }, {
@@ -580,6 +613,15 @@
       "service" : "google.cloud.compute.v1beta.RegionDisks",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionHealthCheckServices",
       "method" : "Get"
     }, {
@@ -590,6 +632,15 @@
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionHealthChecks",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionInstanceGroupManagerResizeRequests",
@@ -656,6 +707,21 @@
       "method" : "GetRule"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionNetworkFirewallPolicies",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "GetAssociation"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "GetTrafficClassificationRule"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionNotificationEndpoints",
@@ -743,10 +809,16 @@
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1beta.ReservationBlocks",
+      "method" : "GetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationBlocks",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
       "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
+      "method" : "GetIamPolicy"
     }, {
       "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
       "method" : "List"
@@ -1016,6 +1088,12 @@
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1beta.ZoneOperations",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ZoneVmExtensionPolicies",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ZoneVmExtensionPolicies",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1beta.Zones",
@@ -2029,6 +2107,21 @@
       "service" : "google.cloud.compute.v1beta.RegionAutoscalers",
       "method" : "Update"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionBackendBuckets",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionBackendServices",
       "method" : "Delete"
     }, {
@@ -2064,6 +2157,18 @@
     }, {
       "service" : "google.cloud.compute.v1beta.RegionCommitments",
       "method" : "UpdateReservations"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionCompositeHealthChecks",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionDiskSettings",
       "method" : "Patch"
@@ -2110,6 +2215,18 @@
       "service" : "google.cloud.compute.v1beta.RegionDisks",
       "method" : "Update"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthAggregationPolicies",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionHealthCheckServices",
       "method" : "Delete"
     }, {
@@ -2136,6 +2253,18 @@
     }, {
       "service" : "google.cloud.compute.v1beta.RegionHealthChecks",
       "method" : "Update"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionHealthSources",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionInstanceGroupManagerResizeRequests",
       "method" : "Cancel"
@@ -2308,6 +2437,30 @@
       "service" : "google.cloud.compute.v1beta.RegionNetworkFirewallPolicies",
       "method" : "TestIamPermissions"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "AddAssociation"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "AddTrafficClassificationRule"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "PatchTrafficClassificationRule"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "RemoveAssociation"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionNetworkPolicies",
+      "method" : "RemoveTrafficClassificationRule"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionNotificationEndpoints",
       "method" : "Delete"
     }, {
@@ -2446,8 +2599,23 @@
       "service" : "google.cloud.compute.v1beta.ReservationBlocks",
       "method" : "PerformMaintenance"
     }, {
+      "service" : "google.cloud.compute.v1beta.ReservationBlocks",
+      "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationBlocks",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
       "method" : "PerformMaintenance"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
+      "method" : "ReportFaulty"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
+      "method" : "SetIamPolicy"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ReservationSubBlocks",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1beta.Reservations",
       "method" : "Delete"
@@ -2841,6 +3009,15 @@
     }, {
       "service" : "google.cloud.compute.v1beta.ZoneOperations",
       "method" : "Wait"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ZoneVmExtensionPolicies",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ZoneVmExtensionPolicies",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1beta.ZoneVmExtensionPolicies",
+      "method" : "Update"
     } ],
     "timeout" : "600s"
   } ]
