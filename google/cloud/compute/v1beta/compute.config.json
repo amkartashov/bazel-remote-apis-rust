@@ -1,11 +1,11 @@
 {
   "converterVersion": "",
-  "updateTime": "2025-09-11T08:32:16Z",
+  "updateTime": "2025-11-05T08:32:48Z",
   "apiVersion": "v1beta",
-  "discoveryRevision": "20250902",
+  "discoveryRevision": "20251019",
   "inlineSchemas": [
     {
-      "schema": "7db34f55",
+      "schema": "a870e510",
       "locations": {
         "Data": [
           "schemas.AutoscalerList.warning.data.data",
@@ -18,6 +18,7 @@
           "schemas.MachineImageList.warning.data.data",
           "schemas.AcceleratorTypesScopedList.warning.data.data",
           "schemas.DiskTypesScopedList.warning.data.data",
+          "schemas.VmExtensionPolicyAggregatedListResponse.warning.data.data",
           "schemas.SubnetworksScopedList.warning.data.data",
           "schemas.TargetHttpProxyAggregatedList.warning.data.data",
           "schemas.InterconnectAttachmentGroupsListResponse.warning.data.data",
@@ -43,6 +44,7 @@
           "schemas.StoragePoolsScopedList.warning.data.data",
           "schemas.FutureReservationsAggregatedListResponse.warning.data.data",
           "schemas.FirewallPolicyList.warning.data.data",
+          "schemas.HealthAggregationPolicyList.warning.data.data",
           "schemas.TargetPoolList.warning.data.data",
           "schemas.InstantSnapshotsScopedList.warning.data.data",
           "schemas.DiskAggregatedList.warning.data.data",
@@ -70,6 +72,7 @@
           "schemas.ReservationList.warning.data.data",
           "schemas.VpnGatewayAggregatedList.warning.data.data",
           "schemas.StoragePoolAggregatedList.warning.data.data",
+          "schemas.VmExtensionPolicyList.warning.data.data",
           "schemas.TargetInstanceList.warning.data.data",
           "schemas.VmEndpointNatMappingsList.warning.data.data",
           "schemas.CommitmentAggregatedList.warning.data.data",
@@ -77,7 +80,9 @@
           "schemas.FutureReservationsScopedList.warning.data.data",
           "schemas.RegionInstanceGroupManagerResizeRequestsListResponse.warning.data.data",
           "schemas.HttpsHealthCheckList.warning.data.data",
+          "schemas.CompositeHealthCheckAggregatedList.warning.data.data",
           "schemas.SecurityPoliciesScopedList.warning.data.data",
+          "schemas.HealthAggregationPolicyAggregatedList.warning.data.data",
           "schemas.SnapshotsScopedList.warning.data.data",
           "schemas.TargetGrpcProxyList.warning.data.data",
           "schemas.Route.warnings.warnings.data.data",
@@ -94,8 +99,10 @@
           "schemas.OperationAggregatedList.warning.data.data",
           "schemas.TargetHttpProxiesScopedList.warning.data.data",
           "schemas.NetworkAttachmentsScopedList.warning.data.data",
+          "schemas.CompositeHealthCheckList.warning.data.data",
           "schemas.TargetTcpProxiesScopedList.warning.data.data",
           "schemas.BackendBucketListUsable.warning.data.data",
+          "schemas.CompositeHealthChecksScopedList.warning.data.data",
           "schemas.WireGroupList.warning.data.data",
           "schemas.NodeTypeList.warning.data.data",
           "schemas.InterconnectAttachmentAggregatedList.warning.data.data",
@@ -105,6 +112,7 @@
           "schemas.DiskTypeAggregatedList.warning.data.data",
           "schemas.InstanceGroupsListInstances.warning.data.data",
           "schemas.BackendBucketList.warning.data.data",
+          "schemas.NetworkPolicyAggregatedList.warning.data.data",
           "schemas.AddressList.warning.data.data",
           "schemas.AddressesScopedList.warning.data.data",
           "schemas.NodeGroupList.warning.data.data",
@@ -116,6 +124,9 @@
           "schemas.RouteList.warning.data.data",
           "schemas.UsableSubnetworksAggregatedList.warning.data.data",
           "schemas.PacketMirroringsScopedList.warning.data.data",
+          "schemas.BackendBucketAggregatedList.warning.data.data",
+          "schemas.VmExtensionPoliciesScopedList.warning.data.data",
+          "schemas.HealthSourceAggregatedList.warning.data.data",
           "schemas.MachineTypesScopedList.warning.data.data",
           "schemas.InstanceGroupList.warning.data.data",
           "schemas.NetworkProfilesListResponse.warning.data.data",
@@ -137,6 +148,7 @@
           "schemas.DiskTypeList.warning.data.data",
           "schemas.InstantSnapshotAggregatedList.warning.data.data",
           "schemas.RoutersListRoutePolicies.warning.data.data",
+          "schemas.HealthAggregationPoliciesScopedList.warning.data.data",
           "schemas.ForwardingRuleAggregatedList.warning.data.data",
           "schemas.NodeTypeAggregatedList.warning.data.data",
           "schemas.InstanceGroupsScopedList.warning.data.data",
@@ -149,14 +161,17 @@
           "schemas.NetworkEndpointGroupsScopedList.warning.data.data",
           "schemas.NetworkAttachmentList.warning.data.data",
           "schemas.NetworkEdgeSecurityServiceAggregatedList.warning.data.data",
+          "schemas.BackendBucketsScopedList.warning.data.data",
           "schemas.InterconnectLocationList.warning.data.data",
           "schemas.SslPolicy.warnings.warnings.data.data",
           "schemas.TargetPoolsScopedList.warning.data.data",
+          "schemas.NetworkPolicyList.warning.data.data",
           "schemas.InterconnectList.warning.data.data",
           "schemas.OperationsScopedList.warning.data.data",
           "schemas.TargetHttpsProxyAggregatedList.warning.data.data",
           "schemas.InstanceAggregatedList.warning.data.data",
           "schemas.TargetInstancesScopedList.warning.data.data",
+          "schemas.HealthSourcesScopedList.warning.data.data",
           "schemas.SnapshotAggregatedList.warning.data.data",
           "schemas.HealthCheckList.warning.data.data",
           "schemas.PacketMirroringList.warning.data.data",
@@ -180,6 +195,7 @@
           "schemas.UrlMapsScopedList.warning.data.data",
           "schemas.InstanceList.warning.data.data",
           "schemas.RegionDiskTypeList.warning.data.data",
+          "schemas.NetworkPoliciesScopedList.warning.data.data",
           "schemas.VpnGatewaysScopedList.warning.data.data",
           "schemas.StoragePoolTypeList.warning.data.data",
           "schemas.MachineTypeAggregatedList.warning.data.data",
@@ -201,6 +217,7 @@
           "schemas.DisksScopedList.warning.data.data",
           "schemas.StoragePoolListDisks.warning.data.data",
           "schemas.FirewallList.warning.data.data",
+          "schemas.HealthSourceList.warning.data.data",
           "schemas.SslPoliciesAggregatedList.warning.data.data",
           "schemas.Region.quotaStatusWarning.data.data",
           "schemas.CommitmentList.warning.data.data"
@@ -208,22 +225,26 @@
       }
     },
     {
-      "schema": "1266f1f1",
+      "schema": "3d2487ac",
       "locations": {
         "Warning": [
           "schemas.StoragePoolTypeAggregatedList.warning",
           "schemas.StoragePoolsScopedList.warning",
           "schemas.BackendServiceAggregatedList.warning",
           "schemas.StoragePoolTypesScopedList.warning",
+          "schemas.CompositeHealthCheckAggregatedList.warning",
           "schemas.SslCertificatesScopedList.warning",
           "schemas.VpnGatewaysScopedList.warning",
+          "schemas.BackendBucketAggregatedList.warning",
           "schemas.TargetHttpsProxyAggregatedList.warning",
           "schemas.VpnTunnelList.warning",
           "schemas.InstanceTemplateAggregatedList.warning",
           "schemas.TargetVpnGatewaysScopedList.warning",
           "schemas.NodeTypeList.warning",
+          "schemas.HealthAggregationPolicyList.warning",
           "schemas.InterconnectLocationList.warning",
           "schemas.NodeGroupList.warning",
+          "schemas.NetworkPoliciesScopedList.warning",
           "schemas.BackendServiceList.warning",
           "schemas.NetworkEndpointGroupAggregatedList.warning",
           "schemas.BackendServicesScopedList.warning",
@@ -253,6 +274,7 @@
           "schemas.RoutersListBgpRoutes.warning",
           "schemas.SnapshotsScopedList.warning",
           "schemas.TargetTcpProxyAggregatedList.warning",
+          "schemas.HealthSourceList.warning",
           "schemas.ServiceAttachmentAggregatedList.warning",
           "schemas.InterconnectRemoteLocationList.warning",
           "schemas.SubnetworkAggregatedList.warning",
@@ -266,7 +288,9 @@
           "schemas.ExternalVpnGatewayList.warning",
           "schemas.ForwardingRulesScopedList.warning",
           "schemas.InstantSnapshotsScopedList.warning",
+          "schemas.NetworkPolicyList.warning",
           "schemas.NodeTemplateAggregatedList.warning",
+          "schemas.VmExtensionPolicyAggregatedListResponse.warning",
           "schemas.FirewallList.warning",
           "schemas.SslPoliciesList.warning",
           "schemas.NetworkEdgeSecurityServiceAggregatedList.warning",
@@ -275,6 +299,7 @@
           "schemas.SslPoliciesScopedList.warning",
           "schemas.MachineTypeAggregatedList.warning",
           "schemas.NodeGroupsScopedList.warning",
+          "schemas.NetworkPolicyAggregatedList.warning",
           "schemas.NetworkProfilesListResponse.warning",
           "schemas.NetworkAttachmentAggregatedList.warning",
           "schemas.ReservationBlocksListResponse.warning",
@@ -288,6 +313,7 @@
           "schemas.RegionAutoscalerList.warning",
           "schemas.VpnTunnelAggregatedList.warning",
           "schemas.InstanceGroupManagerList.warning",
+          "schemas.HealthSourceAggregatedList.warning",
           "schemas.RouteList.warning",
           "schemas.InstanceTemplatesScopedList.warning",
           "schemas.MachineTypesScopedList.warning",
@@ -308,10 +334,12 @@
           "schemas.InterconnectAttachmentsScopedList.warning",
           "schemas.PublicAdvertisedPrefixList.warning",
           "schemas.MachineImageList.warning",
+          "schemas.BackendBucketsScopedList.warning",
           "schemas.ExchangedPeeringRoutesList.warning",
           "schemas.HealthCheckServicesList.warning",
           "schemas.ForwardingRuleAggregatedList.warning",
           "schemas.TargetPoolList.warning",
+          "schemas.HealthSourcesScopedList.warning",
           "schemas.InstanceGroupManagersScopedList.warning",
           "schemas.InstanceGroupsScopedList.warning",
           "schemas.CrossSiteNetworkList.warning",
@@ -329,6 +357,7 @@
           "schemas.NetworkAttachmentList.warning",
           "schemas.FutureReservationsListResponse.warning",
           "schemas.InstanceGroupManagersListPerInstanceConfigsResp.warning",
+          "schemas.VmExtensionPolicyList.warning",
           "schemas.PublicDelegatedPrefixList.warning",
           "schemas.VmEndpointNatMappingsList.warning",
           "schemas.PreviewFeatureList.warning",
@@ -353,6 +382,7 @@
           "schemas.HealthCheckList.warning",
           "schemas.SubnetworksScopedList.warning",
           "schemas.InstancesScopedList.warning",
+          "schemas.HealthAggregationPoliciesScopedList.warning",
           "schemas.TargetHttpProxyList.warning",
           "schemas.BackendServiceListUsable.warning",
           "schemas.AutoscalersScopedList.warning",
@@ -361,14 +391,17 @@
           "schemas.InstanceListReferrers.warning",
           "schemas.NodeGroupsListNodes.warning",
           "schemas.PublicDelegatedPrefixesScopedList.warning",
+          "schemas.VmExtensionPoliciesScopedList.warning",
           "schemas.TargetHttpProxiesScopedList.warning",
           "schemas.ReservationList.warning",
           "schemas.RegionInstanceGroupManagerResizeRequestsListResponse.warning",
           "schemas.VpnGatewayList.warning",
           "schemas.NetworkFirewallPolicyAggregatedList.warning",
+          "schemas.CompositeHealthChecksScopedList.warning",
           "schemas.SslPoliciesAggregatedList.warning",
           "schemas.NetworkEndpointGroupsListNetworkEndpoints.warning",
           "schemas.ResourcePolicyAggregatedList.warning",
+          "schemas.HealthAggregationPolicyAggregatedList.warning",
           "schemas.SecurityPoliciesScopedList.warning",
           "schemas.PacketMirroringList.warning",
           "schemas.StoragePoolTypeList.warning",
@@ -385,6 +418,7 @@
           "schemas.RegionInstanceGroupsListInstances.warning",
           "schemas.InterconnectList.warning",
           "schemas.TargetPoolsScopedList.warning",
+          "schemas.CompositeHealthCheckList.warning",
           "schemas.FirewallPoliciesScopedList.warning",
           "schemas.ZoneList.warning",
           "schemas.UrlMapList.warning",
@@ -407,7 +441,7 @@
       }
     },
     {
-      "schema": "c6a5d2fe",
+      "schema": "f16368b9",
       "locations": {
         "ErrorDetails": [
           "schemas.MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheck.error.errors.errors.errorDetails.errorDetails",
@@ -420,7 +454,7 @@
       }
     },
     {
-      "schema": "f6360fe7",
+      "schema": "20f3a5a2",
       "locations": {
         "Errors": [
           "schemas.InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheck.error.errors.errors",
@@ -433,7 +467,7 @@
       }
     },
     {
-      "schema": "a5c1a152",
+      "schema": "d07f370d",
       "locations": {
         "Error": [
           "schemas.InstanceGroupManagerStatusBulkInstanceOperationLastProgressCheck.error",
@@ -445,7 +479,7 @@
       }
     },
     {
-      "schema": "d3e9a4d6",
+      "schema": "fea73a91",
       "locations": {
         "Warnings": [
           "schemas.Operation.warnings.warnings",
@@ -471,7 +505,7 @@
       }
     },
     {
-      "schema": "ed216030",
+      "schema": "17def5eb",
       "locations": {
         "Accelerators": [
           "schemas.MachineType.accelerators.accelerators"
@@ -515,6 +549,14 @@
       "locations": {
         "AddAssociationRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.addAssociation._request"
+        ]
+      }
+    },
+    {
+      "schema": "cdd5756a",
+      "locations": {
+        "AddAssociationRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.addAssociation._request"
         ]
       }
     },
@@ -671,6 +713,14 @@
       }
     },
     {
+      "schema": "b1408848",
+      "locations": {
+        "AddTrafficClassificationRuleRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.addTrafficClassificationRule._request"
+        ]
+      }
+    },
+    {
       "schema": "bd75bebb",
       "locations": {
         "AggregatedListAcceleratorTypesRequest": [
@@ -691,6 +741,14 @@
       "locations": {
         "AggregatedListAutoscalersRequest": [
           "resources.autoscalers.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "5e163054",
+      "locations": {
+        "AggregatedListBackendBucketsRequest": [
+          "resources.backendBuckets.aggregatedList._request"
         ]
       }
     },
@@ -739,6 +797,14 @@
       "locations": {
         "AggregatedListGlobalOperationsRequest": [
           "resources.globalOperations.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "6de3b222",
+      "locations": {
+        "AggregatedListGlobalVmExtensionPoliciesRequest": [
+          "resources.globalVmExtensionPolicies.aggregatedList._request"
         ]
       }
     },
@@ -883,6 +949,38 @@
       "locations": {
         "AggregatedListRegionCommitmentsRequest": [
           "resources.regionCommitments.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "2cc00a5d",
+      "locations": {
+        "AggregatedListRegionCompositeHealthChecksRequest": [
+          "resources.regionCompositeHealthChecks.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "f0630395",
+      "locations": {
+        "AggregatedListRegionHealthAggregationPoliciesRequest": [
+          "resources.regionHealthAggregationPolicies.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "1f93ebef",
+      "locations": {
+        "AggregatedListRegionHealthSourcesRequest": [
+          "resources.regionHealthSources.aggregatedList._request"
+        ]
+      }
+    },
+    {
+      "schema": "af3e7d0d",
+      "locations": {
+        "AggregatedListRegionNetworkPoliciesRequest": [
+          "resources.regionNetworkPolicies.aggregatedList._request"
         ]
       }
     },
@@ -1047,7 +1145,7 @@
       }
     },
     {
-      "schema": "83155838",
+      "schema": "add2edf3",
       "locations": {
         "Allowed": [
           "schemas.Firewall.allowed.allowed"
@@ -1679,6 +1777,14 @@
       }
     },
     {
+      "schema": "53bd81e8",
+      "locations": {
+        "DeleteRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.delete._request"
+        ]
+      }
+    },
+    {
       "schema": "78b78901",
       "locations": {
         "DeleteRegionBackendServiceRequest": [
@@ -1687,10 +1793,26 @@
       }
     },
     {
+      "schema": "b01bb645",
+      "locations": {
+        "DeleteRegionCompositeHealthCheckRequest": [
+          "resources.regionCompositeHealthChecks.delete._request"
+        ]
+      }
+    },
+    {
       "schema": "a6302add",
       "locations": {
         "DeleteRegionDiskRequest": [
           "resources.regionDisks.delete._request"
+        ]
+      }
+    },
+    {
+      "schema": "cf07677d",
+      "locations": {
+        "DeleteRegionHealthAggregationPolicyRequest": [
+          "resources.regionHealthAggregationPolicies.delete._request"
         ]
       }
     },
@@ -1707,6 +1829,14 @@
       "locations": {
         "DeleteRegionHealthCheckServiceRequest": [
           "resources.regionHealthCheckServices.delete._request"
+        ]
+      }
+    },
+    {
+      "schema": "472b49d7",
+      "locations": {
+        "DeleteRegionHealthSourceRequest": [
+          "resources.regionHealthSources.delete._request"
         ]
       }
     },
@@ -1763,6 +1893,14 @@
       "locations": {
         "DeleteRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.delete._request"
+        ]
+      }
+    },
+    {
+      "schema": "20cfd8f5",
+      "locations": {
+        "DeleteRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.delete._request"
         ]
       }
     },
@@ -2079,7 +2217,15 @@
       }
     },
     {
-      "schema": "532f56e5",
+      "schema": "926c7393",
+      "locations": {
+        "DeleteZoneVmExtensionPolicyRequest": [
+          "resources.zoneVmExtensionPolicies.delete._request"
+        ]
+      }
+    },
+    {
+      "schema": "7dececa0",
       "locations": {
         "Denied": [
           "schemas.Firewall.denied.denied"
@@ -2215,10 +2361,26 @@
       }
     },
     {
+      "schema": "82a58b95",
+      "locations": {
+        "GetAssociationRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.getAssociation._request"
+        ]
+      }
+    },
+    {
       "schema": "1a5a01bc",
       "locations": {
         "GetAutoscalerRequest": [
           "resources.autoscalers.get._request"
+        ]
+      }
+    },
+    {
+      "schema": "94ffcc9f",
+      "locations": {
+        "GetAvailableAcceleratorTopologiesInstanceGroupManagerRequest": [
+          "resources.instanceGroupManagers.getAvailableAcceleratorTopologies._request"
         ]
       }
     },
@@ -2407,6 +2569,14 @@
       }
     },
     {
+      "schema": "27327915",
+      "locations": {
+        "GetGlobalVmExtensionPolicyRequest": [
+          "resources.globalVmExtensionPolicies.get._request"
+        ]
+      }
+    },
+    {
       "schema": "a52ac56f",
       "locations": {
         "GetGuestAttributesInstanceRequest": [
@@ -2575,6 +2745,14 @@
       }
     },
     {
+      "schema": "4a9346ee",
+      "locations": {
+        "GetIamPolicyRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.getIamPolicy._request"
+        ]
+      }
+    },
+    {
       "schema": "c227d747",
       "locations": {
         "GetIamPolicyRegionBackendServiceRequest": [
@@ -2615,10 +2793,26 @@
       }
     },
     {
+      "schema": "f1a6453",
+      "locations": {
+        "GetIamPolicyReservationBlockRequest": [
+          "resources.reservationBlocks.getIamPolicy._request"
+        ]
+      }
+    },
+    {
       "schema": "42283530",
       "locations": {
         "GetIamPolicyReservationRequest": [
           "resources.reservations.getIamPolicy._request"
+        ]
+      }
+    },
+    {
+      "schema": "df5f67bd",
+      "locations": {
+        "GetIamPolicyReservationSubBlockRequest": [
+          "resources.reservationSubBlocks.getIamPolicy._request"
         ]
       }
     },
@@ -3007,6 +3201,14 @@
       }
     },
     {
+      "schema": "8bd686f7",
+      "locations": {
+        "GetRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.get._request"
+        ]
+      }
+    },
+    {
       "schema": "33827e7e",
       "locations": {
         "GetRegionBackendServiceRequest": [
@@ -3019,6 +3221,14 @@
       "locations": {
         "GetRegionCommitmentRequest": [
           "resources.regionCommitments.get._request"
+        ]
+      }
+    },
+    {
+      "schema": "583af7ba",
+      "locations": {
+        "GetRegionCompositeHealthCheckRequest": [
+          "resources.regionCompositeHealthChecks.get._request"
         ]
       }
     },
@@ -3047,6 +3257,14 @@
       }
     },
     {
+      "schema": "bdb79182",
+      "locations": {
+        "GetRegionHealthAggregationPolicyRequest": [
+          "resources.regionHealthAggregationPolicies.get._request"
+        ]
+      }
+    },
+    {
       "schema": "46474c09",
       "locations": {
         "GetRegionHealthCheckRequest": [
@@ -3059,6 +3277,14 @@
       "locations": {
         "GetRegionHealthCheckServiceRequest": [
           "resources.regionHealthCheckServices.get._request"
+        ]
+      }
+    },
+    {
+      "schema": "76c45d68",
+      "locations": {
+        "GetRegionHealthSourceRequest": [
+          "resources.regionHealthSources.get._request"
         ]
       }
     },
@@ -3123,6 +3349,14 @@
       "locations": {
         "GetRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.get._request"
+        ]
+      }
+    },
+    {
+      "schema": "ae49530a",
+      "locations": {
+        "GetRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.get._request"
         ]
       }
     },
@@ -3511,6 +3745,14 @@
       }
     },
     {
+      "schema": "ad0cf733",
+      "locations": {
+        "GetTrafficClassificationRuleRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.getTrafficClassificationRule._request"
+        ]
+      }
+    },
+    {
       "schema": "64963d66",
       "locations": {
         "GetUrlMapRequest": [
@@ -3571,6 +3813,14 @@
       "locations": {
         "GetZoneRequest": [
           "resources.zones.get._request"
+        ]
+      }
+    },
+    {
+      "schema": "e3ded2c",
+      "locations": {
+        "GetZoneVmExtensionPolicyRequest": [
+          "resources.zoneVmExtensionPolicies.get._request"
         ]
       }
     },
@@ -3903,6 +4153,14 @@
       }
     },
     {
+      "schema": "5cc7bef6",
+      "locations": {
+        "InsertRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.insert._request"
+        ]
+      }
+    },
+    {
       "schema": "81c1c60f",
       "locations": {
         "InsertRegionBackendServiceRequest": [
@@ -3919,10 +4177,26 @@
       }
     },
     {
+      "schema": "b925f353",
+      "locations": {
+        "InsertRegionCompositeHealthCheckRequest": [
+          "resources.regionCompositeHealthChecks.insert._request"
+        ]
+      }
+    },
+    {
       "schema": "af3a67eb",
       "locations": {
         "InsertRegionDiskRequest": [
           "resources.regionDisks.insert._request"
+        ]
+      }
+    },
+    {
+      "schema": "d811a48b",
+      "locations": {
+        "InsertRegionHealthAggregationPolicyRequest": [
+          "resources.regionHealthAggregationPolicies.insert._request"
         ]
       }
     },
@@ -3939,6 +4213,14 @@
       "locations": {
         "InsertRegionHealthCheckServiceRequest": [
           "resources.regionHealthCheckServices.insert._request"
+        ]
+      }
+    },
+    {
+      "schema": "503586e5",
+      "locations": {
+        "InsertRegionHealthSourceRequest": [
+          "resources.regionHealthSources.insert._request"
         ]
       }
     },
@@ -3995,6 +4277,14 @@
       "locations": {
         "InsertRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.insert._request"
+        ]
+      }
+    },
+    {
+      "schema": "29da1603",
+      "locations": {
+        "InsertRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.insert._request"
         ]
       }
     },
@@ -4255,6 +4545,14 @@
       }
     },
     {
+      "schema": "9b76b0a1",
+      "locations": {
+        "InsertZoneVmExtensionPolicyRequest": [
+          "resources.zoneVmExtensionPolicies.insert._request"
+        ]
+      }
+    },
+    {
       "schema": "23de5343",
       "locations": {
         "InvalidateCacheRegionUrlMapRequest": [
@@ -4271,7 +4569,7 @@
       }
     },
     {
-      "schema": "4f7327f",
+      "schema": "2fb4c83a",
       "locations": {
         "Items": [
           "schemas.Metadata.items.items"
@@ -4855,6 +5153,14 @@
       }
     },
     {
+      "schema": "47bc405b",
+      "locations": {
+        "ListRegionBackendBucketsRequest": [
+          "resources.regionBackendBuckets.list._request"
+        ]
+      }
+    },
+    {
       "schema": "958f39b4",
       "locations": {
         "ListRegionBackendServicesRequest": [
@@ -4867,6 +5173,14 @@
       "locations": {
         "ListRegionCommitmentsRequest": [
           "resources.regionCommitments.list._request"
+        ]
+      }
+    },
+    {
+      "schema": "7e5e7f8",
+      "locations": {
+        "ListRegionCompositeHealthChecksRequest": [
+          "resources.regionCompositeHealthChecks.list._request"
         ]
       }
     },
@@ -4887,6 +5201,14 @@
       }
     },
     {
+      "schema": "51fc8730",
+      "locations": {
+        "ListRegionHealthAggregationPoliciesRequest": [
+          "resources.regionHealthAggregationPolicies.list._request"
+        ]
+      }
+    },
+    {
       "schema": "29ea49bc",
       "locations": {
         "ListRegionHealthCheckServicesRequest": [
@@ -4899,6 +5221,14 @@
       "locations": {
         "ListRegionHealthChecksRequest": [
           "resources.regionHealthChecks.list._request"
+        ]
+      }
+    },
+    {
+      "schema": "ba89380a",
+      "locations": {
+        "ListRegionHealthSourcesRequest": [
+          "resources.regionHealthSources.list._request"
         ]
       }
     },
@@ -4963,6 +5293,14 @@
       "locations": {
         "ListRegionNetworkFirewallPoliciesRequest": [
           "resources.regionNetworkFirewallPolicies.list._request"
+        ]
+      }
+    },
+    {
+      "schema": "73a2f6a8",
+      "locations": {
+        "ListRegionNetworkPoliciesRequest": [
+          "resources.regionNetworkPolicies.list._request"
         ]
       }
     },
@@ -5271,6 +5609,14 @@
       }
     },
     {
+      "schema": "d3c873",
+      "locations": {
+        "ListUsableRegionBackendBucketsRequest": [
+          "resources.regionBackendBuckets.listUsable._request"
+        ]
+      }
+    },
+    {
       "schema": "7cd29b0c",
       "locations": {
         "ListUsableRegionBackendServicesRequest": [
@@ -5327,6 +5673,14 @@
       }
     },
     {
+      "schema": "1241a0c6",
+      "locations": {
+        "ListZoneVmExtensionPoliciesRequest": [
+          "resources.zoneVmExtensionPolicies.list._request"
+        ]
+      }
+    },
+    {
       "schema": "af9ffc8b",
       "locations": {
         "ListZonesRequest": [
@@ -5335,7 +5689,7 @@
       }
     },
     {
-      "schema": "6b4abe8f",
+      "schema": "9608544a",
       "locations": {
         "ManagedInstanceLastAttemptErrors": [
           "schemas.ManagedInstanceLastAttempt.errors"
@@ -5663,6 +6017,14 @@
       }
     },
     {
+      "schema": "8c01b69",
+      "locations": {
+        "PatchRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.patch._request"
+        ]
+      }
+    },
+    {
       "schema": "754c4d30",
       "locations": {
         "PatchRegionBackendServiceRequest": [
@@ -5671,10 +6033,26 @@
       }
     },
     {
+      "schema": "4dcb676c",
+      "locations": {
+        "PatchRegionCompositeHealthCheckRequest": [
+          "resources.regionCompositeHealthChecks.patch._request"
+        ]
+      }
+    },
+    {
       "schema": "b804d034",
       "locations": {
         "PatchRegionDiskSettingRequest": [
           "resources.regionDiskSettings.patch._request"
+        ]
+      }
+    },
+    {
+      "schema": "4688af34",
+      "locations": {
+        "PatchRegionHealthAggregationPolicyRequest": [
+          "resources.regionHealthAggregationPolicies.patch._request"
         ]
       }
     },
@@ -5695,6 +6073,14 @@
       }
     },
     {
+      "schema": "ef92199a",
+      "locations": {
+        "PatchRegionHealthSourceRequest": [
+          "resources.regionHealthSources.patch._request"
+        ]
+      }
+    },
+    {
       "schema": "a584734e",
       "locations": {
         "PatchRegionInstanceGroupManagerRequest": [
@@ -5707,6 +6093,14 @@
       "locations": {
         "PatchRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.patch._request"
+        ]
+      }
+    },
+    {
+      "schema": "59b02ebc",
+      "locations": {
+        "PatchRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.patch._request"
         ]
       }
     },
@@ -5887,6 +6281,14 @@
       }
     },
     {
+      "schema": "b39e47c1",
+      "locations": {
+        "PatchTrafficClassificationRuleRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.patchTrafficClassificationRule._request"
+        ]
+      }
+    },
+    {
       "schema": "b06bf218",
       "locations": {
         "PatchUrlMapRequest": [
@@ -5951,7 +6353,7 @@
       }
     },
     {
-      "schema": "aec451b",
+      "schema": "35a9dad6",
       "locations": {
         "QuotaStatusWarning": [
           "schemas.Region.quotaStatusWarning"
@@ -5959,7 +6361,7 @@
       }
     },
     {
-      "schema": "a1385dc8",
+      "schema": "cbf5f383",
       "locations": {
         "RawDisk": [
           "schemas.Image.rawDisk"
@@ -6011,6 +6413,14 @@
       "locations": {
         "RemoveAssociationRegionNetworkFirewallPolicyRequest": [
           "resources.regionNetworkFirewallPolicies.removeAssociation._request"
+        ]
+      }
+    },
+    {
+      "schema": "2e323051",
+      "locations": {
+        "RemoveAssociationRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.removeAssociation._request"
         ]
       }
     },
@@ -6131,6 +6541,22 @@
       "locations": {
         "RemoveRuleSecurityPolicyRequest": [
           "resources.securityPolicies.removeRule._request"
+        ]
+      }
+    },
+    {
+      "schema": "c0cca2ef",
+      "locations": {
+        "RemoveTrafficClassificationRuleRegionNetworkPolicyRequest": [
+          "resources.regionNetworkPolicies.removeTrafficClassificationRule._request"
+        ]
+      }
+    },
+    {
+      "schema": "ab723777",
+      "locations": {
+        "ReportFaultyReservationSubBlockRequest": [
+          "resources.reservationSubBlocks.reportFaulty._request"
         ]
       }
     },
@@ -6495,6 +6921,14 @@
       }
     },
     {
+      "schema": "a6e70762",
+      "locations": {
+        "SetIamPolicyRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.setIamPolicy._request"
+        ]
+      }
+    },
+    {
       "schema": "1e7b97bb",
       "locations": {
         "SetIamPolicyRegionBackendServiceRequest": [
@@ -6535,10 +6969,26 @@
       }
     },
     {
+      "schema": "6b6e24c7",
+      "locations": {
+        "SetIamPolicyReservationBlockRequest": [
+          "resources.reservationBlocks.setIamPolicy._request"
+        ]
+      }
+    },
+    {
       "schema": "9e7bf5a4",
       "locations": {
         "SetIamPolicyReservationRequest": [
           "resources.reservations.setIamPolicy._request"
+        ]
+      }
+    },
+    {
+      "schema": "3bb32831",
+      "locations": {
+        "SetIamPolicyReservationSubBlockRequest": [
+          "resources.reservationSubBlocks.setIamPolicy._request"
         ]
       }
     },
@@ -7479,6 +7929,14 @@
       }
     },
     {
+      "schema": "3635bf5e",
+      "locations": {
+        "TestIamPermissionsRegionBackendBucketRequest": [
+          "resources.regionBackendBuckets.testIamPermissions._request"
+        ]
+      }
+    },
+    {
       "schema": "9428e8f7",
       "locations": {
         "TestIamPermissionsRegionBackendServiceRequest": [
@@ -7495,10 +7953,26 @@
       }
     },
     {
+      "schema": "387f503b",
+      "locations": {
+        "TestIamPermissionsRegionCompositeHealthCheckRequest": [
+          "resources.regionCompositeHealthChecks.testIamPermissions._request"
+        ]
+      }
+    },
+    {
       "schema": "ad51a0d3",
       "locations": {
         "TestIamPermissionsRegionDiskRequest": [
           "resources.regionDisks.testIamPermissions._request"
+        ]
+      }
+    },
+    {
+      "schema": "1312ed73",
+      "locations": {
+        "TestIamPermissionsRegionHealthAggregationPolicyRequest": [
+          "resources.regionHealthAggregationPolicies.testIamPermissions._request"
         ]
       }
     },
@@ -7515,6 +7989,14 @@
       "locations": {
         "TestIamPermissionsRegionHealthCheckServiceRequest": [
           "resources.regionHealthCheckServices.testIamPermissions._request"
+        ]
+      }
+    },
+    {
+      "schema": "f48418cd",
+      "locations": {
+        "TestIamPermissionsRegionHealthSourceRequest": [
+          "resources.regionHealthSources.testIamPermissions._request"
         ]
       }
     },
@@ -7615,10 +8097,26 @@
       }
     },
     {
+      "schema": "2d087d03",
+      "locations": {
+        "TestIamPermissionsReservationBlockRequest": [
+          "resources.reservationBlocks.testIamPermissions._request"
+        ]
+      }
+    },
+    {
       "schema": "dd3b7420",
       "locations": {
         "TestIamPermissionsReservationRequest": [
           "resources.reservations.testIamPermissions._request"
+        ]
+      }
+    },
+    {
+      "schema": "8f93c8ed",
+      "locations": {
+        "TestIamPermissionsReservationSubBlockRequest": [
+          "resources.reservationSubBlocks.testIamPermissions._request"
         ]
       }
     },
@@ -8043,6 +8541,14 @@
       "locations": {
         "UpdateUrlMapRequest": [
           "resources.urlMaps.update._request"
+        ]
+      }
+    },
+    {
+      "schema": "b00626b1",
+      "locations": {
+        "UpdateZoneVmExtensionPolicyRequest": [
+          "resources.zoneVmExtensionPolicies.update._request"
         ]
       }
     },

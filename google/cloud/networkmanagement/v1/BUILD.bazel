@@ -104,6 +104,10 @@ java_gapic_test(
     test_classes = [
         # This test is temporarily disabled due to the issue:
         # https://github.com/googleapis/sdk-platform-java/issues/1839
+        # "com.google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsServiceClientHttpJsonTest",
+        "com.google.cloud.networkmanagement.v1.OrganizationVpcFlowLogsServiceClientTest",
+        # This test is temporarily disabled due to the issue:
+        # https://github.com/googleapis/sdk-platform-java/issues/1839
         # "com.google.cloud.networkmanagement.v1.ReachabilityServiceClientHttpJsonTest",
         "com.google.cloud.networkmanagement.v1.ReachabilityServiceClientTest",
         # This test is temporarily disabled due to the issue:
@@ -135,12 +139,11 @@ load(
     "@com_google_googleapis_imports//:imports.bzl",
     "go_gapic_assembly_pkg",
     "go_gapic_library",
-    "go_proto_library",
+    "go_grpc_library",
 )
 
-go_proto_library(
+go_grpc_library(
     name = "networkmanagement_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "cloud.google.com/go/networkmanagement/apiv1/networkmanagementpb",
     protos = [":networkmanagement_proto"],
     deps = [
@@ -365,6 +368,7 @@ load(
 
 csharp_proto_library(
     name = "networkmanagement_csharp_proto",
+    extra_opts = [],
     deps = [":networkmanagement_proto"],
 )
 
