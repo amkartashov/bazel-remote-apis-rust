@@ -1436,10 +1436,10 @@ impl serde::Serialize for CacheCapabilities {
         if self.max_cas_blob_size_bytes != 0 {
             len += 1;
         }
-        if self.blob_split_support {
+        if self.split_blob_support {
             len += 1;
         }
-        if self.blob_splice_support {
+        if self.splice_blob_support {
             len += 1;
         }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.CacheCapabilities", len)?;
@@ -1485,11 +1485,11 @@ impl serde::Serialize for CacheCapabilities {
             #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field("maxCasBlobSizeBytes", ToString::to_string(&self.max_cas_blob_size_bytes).as_str())?;
         }
-        if self.blob_split_support {
-            struct_ser.serialize_field("blobSplitSupport", &self.blob_split_support)?;
+        if self.split_blob_support {
+            struct_ser.serialize_field("splitBlobSupport", &self.split_blob_support)?;
         }
-        if self.blob_splice_support {
-            struct_ser.serialize_field("blobSpliceSupport", &self.blob_splice_support)?;
+        if self.splice_blob_support {
+            struct_ser.serialize_field("spliceBlobSupport", &self.splice_blob_support)?;
         }
         struct_ser.end()
     }
@@ -1517,10 +1517,10 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             "supportedBatchUpdateCompressors",
             "max_cas_blob_size_bytes",
             "maxCasBlobSizeBytes",
-            "blob_split_support",
-            "blobSplitSupport",
-            "blob_splice_support",
-            "blobSpliceSupport",
+            "split_blob_support",
+            "splitBlobSupport",
+            "splice_blob_support",
+            "spliceBlobSupport",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1533,8 +1533,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             SupportedCompressors,
             SupportedBatchUpdateCompressors,
             MaxCasBlobSizeBytes,
-            BlobSplitSupport,
-            BlobSpliceSupport,
+            SplitBlobSupport,
+            SpliceBlobSupport,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1564,8 +1564,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                             "supportedCompressors" | "supported_compressors" => Ok(GeneratedField::SupportedCompressors),
                             "supportedBatchUpdateCompressors" | "supported_batch_update_compressors" => Ok(GeneratedField::SupportedBatchUpdateCompressors),
                             "maxCasBlobSizeBytes" | "max_cas_blob_size_bytes" => Ok(GeneratedField::MaxCasBlobSizeBytes),
-                            "blobSplitSupport" | "blob_split_support" => Ok(GeneratedField::BlobSplitSupport),
-                            "blobSpliceSupport" | "blob_splice_support" => Ok(GeneratedField::BlobSpliceSupport),
+                            "splitBlobSupport" | "split_blob_support" => Ok(GeneratedField::SplitBlobSupport),
+                            "spliceBlobSupport" | "splice_blob_support" => Ok(GeneratedField::SpliceBlobSupport),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1593,8 +1593,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                 let mut supported_compressors__ = None;
                 let mut supported_batch_update_compressors__ = None;
                 let mut max_cas_blob_size_bytes__ = None;
-                let mut blob_split_support__ = None;
-                let mut blob_splice_support__ = None;
+                let mut split_blob_support__ = None;
+                let mut splice_blob_support__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DigestFunctions => {
@@ -1649,17 +1649,17 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                                 Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
                             ;
                         }
-                        GeneratedField::BlobSplitSupport => {
-                            if blob_split_support__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("blobSplitSupport"));
+                        GeneratedField::SplitBlobSupport => {
+                            if split_blob_support__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("splitBlobSupport"));
                             }
-                            blob_split_support__ = Some(map_.next_value()?);
+                            split_blob_support__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::BlobSpliceSupport => {
-                            if blob_splice_support__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("blobSpliceSupport"));
+                        GeneratedField::SpliceBlobSupport => {
+                            if splice_blob_support__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("spliceBlobSupport"));
                             }
-                            blob_splice_support__ = Some(map_.next_value()?);
+                            splice_blob_support__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1672,8 +1672,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                     supported_compressors: supported_compressors__.unwrap_or_default(),
                     supported_batch_update_compressors: supported_batch_update_compressors__.unwrap_or_default(),
                     max_cas_blob_size_bytes: max_cas_blob_size_bytes__.unwrap_or_default(),
-                    blob_split_support: blob_split_support__.unwrap_or_default(),
-                    blob_splice_support: blob_splice_support__.unwrap_or_default(),
+                    split_blob_support: split_blob_support__.unwrap_or_default(),
+                    splice_blob_support: splice_blob_support__.unwrap_or_default(),
                 })
             }
         }

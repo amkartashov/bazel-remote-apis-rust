@@ -1969,14 +1969,14 @@ pub struct CacheCapabilities {
     /// \[ContentAddressableStorage.SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
     /// operation.
     #[prost(bool, tag = "9")]
-    pub blob_split_support: bool,
+    pub split_blob_support: bool,
     /// Whether blob splicing is supported for the particular server/instance. If
     /// yes, the server/instance implements the specified behavior for blob
     /// splicing and a meaningful result can be expected from the
     /// \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\]
     /// operation.
     #[prost(bool, tag = "10")]
-    pub blob_splice_support: bool,
+    pub splice_blob_support: bool,
 }
 /// Capabilities of the remote execution system.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -3601,7 +3601,7 @@ pub mod content_addressable_storage_client {
         ///
         /// Servers which implement this functionality MUST declare that they support
         /// it by setting the
-        /// \[CacheCapabilities.blob_split_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.blob_split_support\]
+        /// \[CacheCapabilities.split_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.split_blob_support\]
         /// field accordingly.
         ///
         /// Clients MUST check that the server supports this capability, before using
@@ -3679,7 +3679,7 @@ pub mod content_addressable_storage_client {
         ///
         /// Servers which implement this functionality MUST declare that they support
         /// it by setting the
-        /// \[CacheCapabilities.blob_splice_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.blob_splice_support\]
+        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
         /// field accordingly.
         ///
         /// Clients MUST check that the server supports this capability, before using
@@ -3879,7 +3879,7 @@ pub mod content_addressable_storage_server {
         ///
         /// Servers which implement this functionality MUST declare that they support
         /// it by setting the
-        /// \[CacheCapabilities.blob_split_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.blob_split_support\]
+        /// \[CacheCapabilities.split_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.split_blob_support\]
         /// field accordingly.
         ///
         /// Clients MUST check that the server supports this capability, before using
@@ -3935,7 +3935,7 @@ pub mod content_addressable_storage_server {
         ///
         /// Servers which implement this functionality MUST declare that they support
         /// it by setting the
-        /// \[CacheCapabilities.blob_splice_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.blob_splice_support\]
+        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
         /// field accordingly.
         ///
         /// Clients MUST check that the server supports this capability, before using

@@ -291,6 +291,9 @@ impl serde::Serialize for ListOperationsRequest {
         if !self.page_token.is_empty() {
             len += 1;
         }
+        if self.return_partial_success {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.longrunning.ListOperationsRequest", len)?;
         if !self.name.is_empty() {
             struct_ser.serialize_field("name", &self.name)?;
@@ -303,6 +306,9 @@ impl serde::Serialize for ListOperationsRequest {
         }
         if !self.page_token.is_empty() {
             struct_ser.serialize_field("pageToken", &self.page_token)?;
+        }
+        if self.return_partial_success {
+            struct_ser.serialize_field("returnPartialSuccess", &self.return_partial_success)?;
         }
         struct_ser.end()
     }
@@ -320,6 +326,8 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
             "pageSize",
             "page_token",
             "pageToken",
+            "return_partial_success",
+            "returnPartialSuccess",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -328,6 +336,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
             Filter,
             PageSize,
             PageToken,
+            ReturnPartialSuccess,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -353,6 +362,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
                             "filter" => Ok(GeneratedField::Filter),
                             "pageSize" | "page_size" => Ok(GeneratedField::PageSize),
                             "pageToken" | "page_token" => Ok(GeneratedField::PageToken),
+                            "returnPartialSuccess" | "return_partial_success" => Ok(GeneratedField::ReturnPartialSuccess),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -376,6 +386,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
                 let mut filter__ = None;
                 let mut page_size__ = None;
                 let mut page_token__ = None;
+                let mut return_partial_success__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Name => {
@@ -404,6 +415,12 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
                             }
                             page_token__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::ReturnPartialSuccess => {
+                            if return_partial_success__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("returnPartialSuccess"));
+                            }
+                            return_partial_success__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(ListOperationsRequest {
@@ -411,6 +428,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsRequest {
                     filter: filter__.unwrap_or_default(),
                     page_size: page_size__.unwrap_or_default(),
                     page_token: page_token__.unwrap_or_default(),
+                    return_partial_success: return_partial_success__.unwrap_or_default(),
                 })
             }
         }
@@ -431,12 +449,18 @@ impl serde::Serialize for ListOperationsResponse {
         if !self.next_page_token.is_empty() {
             len += 1;
         }
+        if !self.unreachable.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.longrunning.ListOperationsResponse", len)?;
         if !self.operations.is_empty() {
             struct_ser.serialize_field("operations", &self.operations)?;
         }
         if !self.next_page_token.is_empty() {
             struct_ser.serialize_field("nextPageToken", &self.next_page_token)?;
+        }
+        if !self.unreachable.is_empty() {
+            struct_ser.serialize_field("unreachable", &self.unreachable)?;
         }
         struct_ser.end()
     }
@@ -451,12 +475,14 @@ impl<'de> serde::Deserialize<'de> for ListOperationsResponse {
             "operations",
             "next_page_token",
             "nextPageToken",
+            "unreachable",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Operations,
             NextPageToken,
+            Unreachable,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -480,6 +506,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsResponse {
                         match value {
                             "operations" => Ok(GeneratedField::Operations),
                             "nextPageToken" | "next_page_token" => Ok(GeneratedField::NextPageToken),
+                            "unreachable" => Ok(GeneratedField::Unreachable),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -501,6 +528,7 @@ impl<'de> serde::Deserialize<'de> for ListOperationsResponse {
             {
                 let mut operations__ = None;
                 let mut next_page_token__ = None;
+                let mut unreachable__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Operations => {
@@ -515,11 +543,18 @@ impl<'de> serde::Deserialize<'de> for ListOperationsResponse {
                             }
                             next_page_token__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Unreachable => {
+                            if unreachable__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unreachable"));
+                            }
+                            unreachable__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(ListOperationsResponse {
                     operations: operations__.unwrap_or_default(),
                     next_page_token: next_page_token__.unwrap_or_default(),
+                    unreachable: unreachable__.unwrap_or_default(),
                 })
             }
         }
