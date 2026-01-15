@@ -1,8 +1,8 @@
 {
   "csharp": {
-    "version": "1.4.35",
+    "version": "1.4.36",
     "commit": null,
-    "sha": "c656983db36a16cd42f5c03a03dcfc87fb6049f7c05babf8aca7f77a4492f6dd"
+    "sha": "6d1d01a7f199cf5462696dd882acf0547125e99fb490020916ee5148ba0df832"
   },
   "go": {
     "version": "0.54.0",
@@ -10,7 +10,7 @@
     "sha": null
   },
   "java": {
-    "version": "2.62.2",
+    "version": "2.65.1",
     "commit": null,
     "sha": null
   },
@@ -20,9 +20,9 @@
     "sha": null
   },
   "python": {
-    "version": "1.28.0",
+    "version": "1.30.2",
     "commit": null,
-    "sha": "95d47401cc58d463a98513fcd75fae437d6bf6d7ae23d3076a2abbfebf35d0b0"
+    "sha": "758474f53f25e32bf7c7ac27c05cfa79bf8e4aad6b6612bb899709b9294d148e"
   },
   "ruby": {
     "version": "0.47.2",

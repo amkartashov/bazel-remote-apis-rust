@@ -682,6 +682,12 @@
       "service" : "google.cloud.compute.v1beta.RegionInstantSnapshots",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1beta.RegionMultiMigMembers",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionMultiMigMembers",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1beta.RegionMultiMigs",
       "method" : "Get"
     }, {
@@ -1937,6 +1943,9 @@
       "method" : "AddPeering"
     }, {
       "service" : "google.cloud.compute.v1beta.Networks",
+      "method" : "CancelRequestRemovePeering"
+    }, {
+      "service" : "google.cloud.compute.v1beta.Networks",
       "method" : "Delete"
     }, {
       "service" : "google.cloud.compute.v1beta.Networks",
@@ -2301,6 +2310,9 @@
     }, {
       "service" : "google.cloud.compute.v1beta.RegionInstanceGroupManagers",
       "method" : "AbandonInstances"
+    }, {
+      "service" : "google.cloud.compute.v1beta.RegionInstanceGroupManagers",
+      "method" : "AdoptInstances"
     }, {
       "service" : "google.cloud.compute.v1beta.RegionInstanceGroupManagers",
       "method" : "ApplyUpdatesToInstances"
