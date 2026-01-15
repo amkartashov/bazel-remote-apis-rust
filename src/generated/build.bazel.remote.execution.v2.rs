@@ -1565,16 +1565,19 @@ pub struct SpliceBlobRequest {
     /// omitted.
     #[prost(string, tag = "1")]
     pub instance_name: ::prost::alloc::string::String,
-    /// Expected digest of the spliced blob. The client SHOULD set this field due
+    /// Expected digest of the spliced blob. The client MUST set this field due
     /// to the following reasons:
     ///
     /// 1. It allows the server to perform an early existence check of the blob
-    ///    before spending the splicing effort, as described in the
-    ///    \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\]
+    ///    or existing chunks that assemble the blob before spending the splicing
+    ///    effort, as described in the \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\]
     ///    documentation.
     /// 1. It allows servers with different storage backends to dispatch the
     ///    request to the correct storage backend based on the size and/or the
     ///    hash of the blob.
+    /// 1. If chunking information already exists for the blob, it allows
+    ///    the server to keep the existing chunking information or replace it with
+    ///    new chunking information.
     #[prost(message, optional, tag = "2")]
     pub blob_digest: ::core::option::Option<Digest>,
     /// The ordered list of digests of the chunks which need to be concatenated to
