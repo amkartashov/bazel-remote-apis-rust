@@ -1739,6 +1739,12 @@ pub mod digest_function {
         /// The BLAKE3 hash function.
         /// See <https://github.com/BLAKE3-team/BLAKE3.>
         Blake3 = 9,
+        /// Identical to SHA1, except that "blob ${sizeBytes}\0" is prepended to
+        /// the blob's contents before hashing, where ${sizeBytes} corresponds to
+        /// the decimal size of the original blob. This allows hashes of files to
+        /// be converted from and to the ones used by the Git version control
+        /// system.
+        Gitsha1 = 10,
     }
     impl Value {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -1757,6 +1763,7 @@ pub mod digest_function {
                 Self::Murmur3 => "MURMUR3",
                 Self::Sha256tree => "SHA256TREE",
                 Self::Blake3 => "BLAKE3",
+                Self::Gitsha1 => "GITSHA1",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1772,6 +1779,7 @@ pub mod digest_function {
                 "MURMUR3" => Some(Self::Murmur3),
                 "SHA256TREE" => Some(Self::Sha256tree),
                 "BLAKE3" => Some(Self::Blake3),
+                "GITSHA1" => Some(Self::Gitsha1),
                 _ => None,
             }
         }

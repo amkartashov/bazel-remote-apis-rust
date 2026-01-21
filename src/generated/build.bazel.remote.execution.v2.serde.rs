@@ -2447,6 +2447,7 @@ impl serde::Serialize for digest_function::Value {
             Self::Murmur3 => "MURMUR3",
             Self::Sha256tree => "SHA256TREE",
             Self::Blake3 => "BLAKE3",
+            Self::Gitsha1 => "GITSHA1",
         };
         serializer.serialize_str(variant)
     }
@@ -2468,6 +2469,7 @@ impl<'de> serde::Deserialize<'de> for digest_function::Value {
             "MURMUR3",
             "SHA256TREE",
             "BLAKE3",
+            "GITSHA1",
         ];
 
         struct GeneratedVisitor;
@@ -2518,6 +2520,7 @@ impl<'de> serde::Deserialize<'de> for digest_function::Value {
                     "MURMUR3" => Ok(digest_function::Value::Murmur3),
                     "SHA256TREE" => Ok(digest_function::Value::Sha256tree),
                     "BLAKE3" => Ok(digest_function::Value::Blake3),
+                    "GITSHA1" => Ok(digest_function::Value::Gitsha1),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }
