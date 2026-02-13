@@ -370,7 +370,7 @@ pub mod platform {
 /// well as possibly some metadata about the file or directory.
 ///
 /// In order to ensure that two equivalent directory trees hash to the same
-/// value, the following restrictions MUST be obeyed when constructing a
+/// value, the following restrictions MUST be obeyed when constructing
 /// a `Directory`:
 ///
 /// * Every child in the directory must have a path of exactly one segment.
@@ -632,7 +632,7 @@ pub struct ExecutedActionMetadata {
     ///
     /// The method of timekeeping used to compute the virtual execution duration
     /// MUST be consistent with what is used to enforce the
-    /// \[Action\]\[\[build.bazel.remote.execution.v2.Action\]'s `timeout`. There is no
+    /// \[Action\]\[build.bazel.remote.execution.v2.Action\]'s `timeout`. There is no
     /// relationship between the virtual execution duration and the values of
     /// `execution_start_timestamp` and `execution_completed_timestamp`.
     #[prost(message, optional, tag = "12")]
@@ -897,7 +897,7 @@ pub struct OutputDirectory {
     #[prost(message, optional, tag = "3")]
     pub tree_digest: ::core::option::Option<Digest>,
     /// If set, consumers MAY make the following assumptions about the
-    /// directories contained in the the Tree, so that it may be
+    /// directories contained in the Tree, so that it may be
     /// instantiated on a local file system by scanning through it
     /// sequentially:
     ///
@@ -935,7 +935,7 @@ pub struct OutputDirectory {
     pub is_topologically_sorted: bool,
     /// The digest of the encoded
     /// \[Directory\]\[build.bazel.remote.execution.v2.Directory\] proto
-    /// containing the contents the directory's root.
+    /// containing the contents of the directory's root.
     ///
     /// If both `tree_digest` and `root_directory_digest` are set, this
     /// field MUST match the digest of the root directory contained in the
@@ -1375,7 +1375,7 @@ pub mod batch_update_blobs_request {
         pub data: ::prost::alloc::vec::Vec<u8>,
         /// The format of `data`. Must be `IDENTITY`/unspecified, or one of the
         /// compressors advertised by the
-        /// \[CacheCapabilities.supported_batch_compressors\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_batch_compressors\]
+        /// \[CacheCapabilities.supported_batch_update_compressors\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_batch_update_compressors\]
         /// field.
         #[prost(enumeration = "super::compressor::Value", tag = "3")]
         pub compressor: i32,
@@ -1540,6 +1540,11 @@ pub struct SplitBlobRequest {
     /// in the server's capabilities.
     #[prost(enumeration = "digest_function::Value", tag = "3")]
     pub digest_function: i32,
+    /// The chunking function that the client prefers to use.
+    ///
+    /// The server MAY use a different chunking function.
+    #[prost(enumeration = "chunking_function::Value", tag = "4")]
+    pub chunking_function: i32,
 }
 /// A response message for
 /// \[ContentAddressableStorage.SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\].
@@ -1553,6 +1558,9 @@ pub struct SplitBlobResponse {
     /// implicitly (through hash length) specified in the split request.
     #[prost(message, repeated, tag = "1")]
     pub chunk_digests: ::prost::alloc::vec::Vec<Digest>,
+    /// The chunking function used to split the blob.
+    #[prost(enumeration = "chunking_function::Value", tag = "2")]
+    pub chunking_function: i32,
 }
 /// A request message for
 /// \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\].
@@ -1593,6 +1601,9 @@ pub struct SpliceBlobRequest {
     /// hashes and the digest functions announced in the server's capabilities.
     #[prost(enumeration = "digest_function::Value", tag = "4")]
     pub digest_function: i32,
+    /// The chunking function that the client used to split the blob.
+    #[prost(enumeration = "chunking_function::Value", tag = "5")]
+    pub chunking_function: i32,
 }
 /// A response message for
 /// \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\].
@@ -1785,6 +1796,68 @@ pub mod digest_function {
         }
     }
 }
+/// The chunking function is used to split a blob into chunks.
+///
+/// The server advertises support for a chunking function by setting the
+/// corresponding params field in
+/// \[CacheCapabilities\]\[build.bazel.remote.execution.v2.CacheCapabilities\].
+/// For example, if fast_cdc_2020_params is set, the server supports FAST_CDC_2020.
+///
+/// For optimal deduplication, clients SHOULD use an advertised chunking function.
+/// When clients use UNKNOWN, the server chooses an algorithm for SplitBlob and
+/// simply verifies chunk concatenation for SpliceBlob.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ChunkingFunction {}
+/// Nested message and enum types in `ChunkingFunction`.
+pub mod chunking_function {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum Value {
+        /// No specific algorithm. Servers MUST always accept this value.
+        /// For SplitBlob, the server chooses the algorithm. For SpliceBlob, the
+        /// server only verifies that chunks concatenate to form the expected blob.
+        Unknown = 0,
+        /// The FastCDC chunking algorithm as described in the 2020 paper by
+        /// Wen Xia, et al. See <https://ieeexplore.ieee.org/document/9055082>
+        /// for details.
+        FastCdc2020 = 1,
+        /// The RepMaxCDC chunking algorithm as implemented by buildbarn/go-cdc.
+        /// See <https://github.com/buildbarn/go-cdc> for details.
+        RepMaxCdc = 2,
+    }
+    impl Value {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Self::Unknown => "UNKNOWN",
+                Self::FastCdc2020 => "FAST_CDC_2020",
+                Self::RepMaxCdc => "REP_MAX_CDC",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "UNKNOWN" => Some(Self::Unknown),
+                "FAST_CDC_2020" => Some(Self::FastCdc2020),
+                "REP_MAX_CDC" => Some(Self::RepMaxCdc),
+                _ => None,
+            }
+        }
+    }
+}
 /// Describes the server/instance capabilities for updating the action cache.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ActionCacheUpdateCapabilities {
@@ -1792,8 +1865,8 @@ pub struct ActionCacheUpdateCapabilities {
     pub update_enabled: bool,
 }
 /// Allowed values for priority in
-/// \[ResultsCachePolicy\]\[build.bazel.remoteexecution.v2.ResultsCachePolicy\] and
-/// \[ExecutionPolicy\]\[build.bazel.remoteexecution.v2.ExecutionPolicy\]
+/// \[ResultsCachePolicy\]\[build.bazel.remote.execution.v2.ResultsCachePolicy\] and
+/// \[ExecutionPolicy\]\[build.bazel.remote.execution.v2.ExecutionPolicy\]
 /// Used for querying both cache and execution valid priority ranges.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PriorityCapabilities {
@@ -1988,6 +2061,96 @@ pub struct CacheCapabilities {
     /// operation.
     #[prost(bool, tag = "10")]
     pub splice_blob_support: bool,
+    /// The parameters for the FastCDC 2020 chunking algorithm.
+    /// If set, the server supports the FastCDC chunking algorithm.
+    #[prost(message, optional, tag = "11")]
+    pub fast_cdc_2020_params: ::core::option::Option<FastCdc2020Params>,
+    /// The parameters for the RepMaxCDC chunking algorithm.
+    /// If set, the server supports the RepMaxCDC chunking algorithm.
+    #[prost(message, optional, tag = "12")]
+    pub rep_max_cdc_params: ::core::option::Option<RepMaxCdcParams>,
+}
+/// Parameters for the FastCDC content-defined chunking algorithm.
+///
+/// Implementations MUST follow the FastCDC 2020 paper by Wen Xia, et al.:
+/// <https://ieeexplore.ieee.org/document/9055082>
+///
+/// Supported implementations:
+///
+/// * Rust: <https://docs.rs/fastcdc/3.2.1/fastcdc/v2020/index.html>
+/// * Go: <https://github.com/buildbuddy-io/fastcdc2020>
+///
+/// Test vectors can be found in the accompanying fastcdc2020_test_vectors.txt file.
+///
+/// Implementations MUST use normalization level 2, which has been found
+/// successful for build artifacts with an average chunk size of 512 KiB.
+///
+/// Key algorithm components from the paper:
+///
+/// GEAR table: 256 64-bit integers for the rolling hash, computed as:
+/// GEAR\[i\] = high_64_bits(MD5(byte(i))) for i in 0..255
+///
+/// MASKS table: Bit patterns for chunk boundary detection, derived from
+/// the C reference implementation. The mask selection based on average
+/// chunk size SHOULD match the paper.
+///
+/// The minimum and maximum chunk sizes MUST be derived from the average:
+///
+/// * min_chunk_size = avg_chunk_size_bytes / 4
+/// * max_chunk_size = avg_chunk_size_bytes * 4
+///
+/// Blobs smaller than max_chunk_size (avg_chunk_size_bytes * 4) SHOULD be
+/// uploaded without chunking.
+///
+/// If any of the advertised parameters are not within the expected range,
+/// the client SHOULD ignore FastCDC chunking function support.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct FastCdc2020Params {
+    /// The average (expected) chunk size for the FastCDC chunking algorithm.
+    /// The value MUST be between 1 KiB and 1 MiB. The recommended value is
+    /// 524288 (512 KiB).
+    #[prost(uint64, tag = "1")]
+    pub avg_chunk_size_bytes: u64,
+    /// The seed for the FastCDC mask generation.
+    /// The recommended value is 0.
+    ///
+    /// All clients sharing a cache SHOULD use the same seed to maximize
+    /// chunk reuse.
+    #[prost(uint32, tag = "2")]
+    pub seed: u32,
+}
+/// Parameters for the RepMaxCDC content-defined chunking algorithm.
+///
+/// Supported implementations:
+///
+/// * Go: <https://github.com/buildbarn/go-cdc>
+///
+/// Key algorithm components:
+///
+/// GEAR table: 256 64-bit integers for the rolling hash, computed as:
+/// GEAR\[i\] = high_64_bits(MD5(byte(i))) for i in 0..255
+///
+/// The algorithm repeatedly applies chunking until all chunks are in the
+/// range \[min_chunk_size_bytes, 2\*min_chunk_size_bytes). Cutting points are
+/// selected where the Gear rolling hash is maximized within a lookahead
+/// window of horizon_size_bytes.
+///
+/// If any of the advertised parameters are not within the expected range,
+/// the client SHOULD ignore RepMaxCDC chunking function support.
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct RepMaxCdcParams {
+    /// The minimum chunk size for the RepMaxCDC chunking algorithm.
+    /// The value MUST be at least 64 bytes (the Gear hash window size).
+    /// All chunks will be in the range \[min_chunk_size_bytes, 2\*min_chunk_size_bytes).
+    /// The recommended value is 262144 (256 KiB).
+    #[prost(uint64, tag = "1")]
+    pub min_chunk_size_bytes: u64,
+    /// The lookahead window for finding optimal cutting points.
+    /// Larger values improve deduplication quality with diminishing returns.
+    /// Setting to 0 produces uniform chunks of min_chunk_size_bytes.
+    /// The recommended value is 8 * min_chunk_size_bytes.
+    #[prost(uint64, tag = "2")]
+    pub horizon_size_bytes: u64,
 }
 /// Capabilities of the remote execution system.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -2291,7 +2454,7 @@ pub mod execution_client {
         /// server MAY choose to stream additional updates as execution progresses,
         /// such as to provide an update as to the state of the execution.
         ///
-        /// In addition to the cases describe for Execute, the WaitExecution method
+        /// In addition to the cases described for Execute, the WaitExecution method
         /// may fail as follows:
         ///
         /// * `NOT_FOUND`: The operation no longer exists due to any of a transient
@@ -2448,7 +2611,7 @@ pub mod execution_server {
         /// server MAY choose to stream additional updates as execution progresses,
         /// such as to provide an update as to the state of the execution.
         ///
-        /// In addition to the cases describe for Execute, the WaitExecution method
+        /// In addition to the cases described for Execute, the WaitExecution method
         /// may fail as follows:
         ///
         /// * `NOT_FOUND`: The operation no longer exists due to any of a transient
@@ -3179,7 +3342,7 @@ pub mod content_addressable_storage_client {
     /// For large uploads, the client must use the
     /// \[Write method\]\[google.bytestream.ByteStream.Write\] of the ByteStream API.
     ///
-    /// For uncompressed data, The `WriteRequest.resource_name` is of the following form:
+    /// For uncompressed data, the `WriteRequest.resource_name` is of the following form:
     /// `{instance_name}/uploads/{uuid}/blobs/{digest_function/}{hash}/{size}{/optional_metadata}`
     ///
     /// Where:
@@ -3188,7 +3351,7 @@ pub mod content_addressable_storage_client {
     ///  instances on the server. Syntax and semantics of this field are defined
     ///  by the server; Clients must not make any assumptions about it (e.g.,
     ///  whether it spans multiple path segments or not). If it is the empty path,
-    ///  the leading slash is omitted, so that  the `resource_name` becomes
+    ///  the leading slash is omitted, so that the `resource_name` becomes
     ///  `uploads/{uuid}/blobs/{digest_function/}{hash}/{size}{/optional_metadata}`.
     ///  To simplify parsing, a path segment cannot equal any of the following
     ///  keywords: `blobs`, `uploads`, `actions`, `actionResults`, `operations`,
@@ -3217,7 +3380,7 @@ pub mod content_addressable_storage_client {
     ///  defined as above.
     /// * `compressor` is a lowercase string form of a `Compressor.Value` enum
     ///  other than `identity`, which is supported by the server and advertised in
-    ///  \[CacheCapabilities.supported_compressor\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_compressor\].
+    ///  \[CacheCapabilities.supported_compressors\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_compressors\].
     /// * `uncompressed_hash` and `uncompressed_size` refer to the
     ///  \[Digest\]\[build.bazel.remote.execution.v2.Digest\] of the data being
     ///  uploaded, once uncompressed. Servers MUST verify that these match
@@ -3256,7 +3419,7 @@ pub mod content_addressable_storage_client {
     /// For large downloads, the client must use the
     /// \[Read method\]\[google.bytestream.ByteStream.Read\] of the ByteStream API.
     ///
-    /// For uncompressed data, The `ReadRequest.resource_name` is of the following form:
+    /// For uncompressed data, the `ReadRequest.resource_name` is of the following form:
     /// `{instance_name}/blobs/{digest_function/}{hash}/{size}`
     /// Where `instance_name`, `digest_function`, `hash` and `size` are defined as
     /// for uploads.
@@ -3637,7 +3800,7 @@ pub mod content_addressable_storage_client {
         ///
         /// When blob splitting and splicing is used at the same time, the clients and
         /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
-        /// parties to benefit from each others chunk data and avoid unnecessary data
+        /// parties to benefit from each other's chunk data and avoid unnecessary data
         /// duplication.
         ///
         /// Errors:
@@ -3716,7 +3879,7 @@ pub mod content_addressable_storage_client {
         ///
         /// When blob splitting and splicing is used at the same time, the clients and
         /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
-        /// parties to benefit from each others chunk data and avoid unnecessary data
+        /// parties to benefit from each other's chunk data and avoid unnecessary data
         /// duplication.
         ///
         /// Errors:
@@ -3930,7 +4093,7 @@ pub mod content_addressable_storage_server {
         ///
         /// When blob splitting and splicing is used at the same time, the clients and
         /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
-        /// parties to benefit from each others chunk data and avoid unnecessary data
+        /// parties to benefit from each other's chunk data and avoid unnecessary data
         /// duplication.
         ///
         /// Errors:
@@ -3987,7 +4150,7 @@ pub mod content_addressable_storage_server {
         ///
         /// When blob splitting and splicing is used at the same time, the clients and
         /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
-        /// parties to benefit from each others chunk data and avoid unnecessary data
+        /// parties to benefit from each other's chunk data and avoid unnecessary data
         /// duplication.
         ///
         /// Errors:
@@ -4031,7 +4194,7 @@ pub mod content_addressable_storage_server {
     /// For large uploads, the client must use the
     /// \[Write method\]\[google.bytestream.ByteStream.Write\] of the ByteStream API.
     ///
-    /// For uncompressed data, The `WriteRequest.resource_name` is of the following form:
+    /// For uncompressed data, the `WriteRequest.resource_name` is of the following form:
     /// `{instance_name}/uploads/{uuid}/blobs/{digest_function/}{hash}/{size}{/optional_metadata}`
     ///
     /// Where:
@@ -4040,7 +4203,7 @@ pub mod content_addressable_storage_server {
     ///  instances on the server. Syntax and semantics of this field are defined
     ///  by the server; Clients must not make any assumptions about it (e.g.,
     ///  whether it spans multiple path segments or not). If it is the empty path,
-    ///  the leading slash is omitted, so that  the `resource_name` becomes
+    ///  the leading slash is omitted, so that the `resource_name` becomes
     ///  `uploads/{uuid}/blobs/{digest_function/}{hash}/{size}{/optional_metadata}`.
     ///  To simplify parsing, a path segment cannot equal any of the following
     ///  keywords: `blobs`, `uploads`, `actions`, `actionResults`, `operations`,
@@ -4069,7 +4232,7 @@ pub mod content_addressable_storage_server {
     ///  defined as above.
     /// * `compressor` is a lowercase string form of a `Compressor.Value` enum
     ///  other than `identity`, which is supported by the server and advertised in
-    ///  \[CacheCapabilities.supported_compressor\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_compressor\].
+    ///  \[CacheCapabilities.supported_compressors\]\[build.bazel.remote.execution.v2.CacheCapabilities.supported_compressors\].
     /// * `uncompressed_hash` and `uncompressed_size` refer to the
     ///  \[Digest\]\[build.bazel.remote.execution.v2.Digest\] of the data being
     ///  uploaded, once uncompressed. Servers MUST verify that these match
@@ -4108,7 +4271,7 @@ pub mod content_addressable_storage_server {
     /// For large downloads, the client must use the
     /// \[Read method\]\[google.bytestream.ByteStream.Read\] of the ByteStream API.
     ///
-    /// For uncompressed data, The `ReadRequest.resource_name` is of the following form:
+    /// For uncompressed data, the `ReadRequest.resource_name` is of the following form:
     /// `{instance_name}/blobs/{digest_function/}{hash}/{size}`
     /// Where `instance_name`, `digest_function`, `hash` and `size` are defined as
     /// for uploads.

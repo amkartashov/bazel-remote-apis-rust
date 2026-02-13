@@ -1442,6 +1442,12 @@ impl serde::Serialize for CacheCapabilities {
         if self.splice_blob_support {
             len += 1;
         }
+        if self.fast_cdc_2020_params.is_some() {
+            len += 1;
+        }
+        if self.rep_max_cdc_params.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.CacheCapabilities", len)?;
         if !self.digest_functions.is_empty() {
             let v = self.digest_functions.iter().cloned().map(|v| {
@@ -1491,6 +1497,12 @@ impl serde::Serialize for CacheCapabilities {
         if self.splice_blob_support {
             struct_ser.serialize_field("spliceBlobSupport", &self.splice_blob_support)?;
         }
+        if let Some(v) = self.fast_cdc_2020_params.as_ref() {
+            struct_ser.serialize_field("fastCdc2020Params", v)?;
+        }
+        if let Some(v) = self.rep_max_cdc_params.as_ref() {
+            struct_ser.serialize_field("repMaxCdcParams", v)?;
+        }
         struct_ser.end()
     }
 }
@@ -1521,6 +1533,10 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             "splitBlobSupport",
             "splice_blob_support",
             "spliceBlobSupport",
+            "fast_cdc_2020_params",
+            "fastCdc2020Params",
+            "rep_max_cdc_params",
+            "repMaxCdcParams",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1535,6 +1551,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
             MaxCasBlobSizeBytes,
             SplitBlobSupport,
             SpliceBlobSupport,
+            FastCdc2020Params,
+            RepMaxCdcParams,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1566,6 +1584,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                             "maxCasBlobSizeBytes" | "max_cas_blob_size_bytes" => Ok(GeneratedField::MaxCasBlobSizeBytes),
                             "splitBlobSupport" | "split_blob_support" => Ok(GeneratedField::SplitBlobSupport),
                             "spliceBlobSupport" | "splice_blob_support" => Ok(GeneratedField::SpliceBlobSupport),
+                            "fastCdc2020Params" | "fast_cdc_2020_params" => Ok(GeneratedField::FastCdc2020Params),
+                            "repMaxCdcParams" | "rep_max_cdc_params" => Ok(GeneratedField::RepMaxCdcParams),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1595,6 +1615,8 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                 let mut max_cas_blob_size_bytes__ = None;
                 let mut split_blob_support__ = None;
                 let mut splice_blob_support__ = None;
+                let mut fast_cdc_2020_params__ = None;
+                let mut rep_max_cdc_params__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DigestFunctions => {
@@ -1661,6 +1683,18 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                             }
                             splice_blob_support__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::FastCdc2020Params => {
+                            if fast_cdc_2020_params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("fastCdc2020Params"));
+                            }
+                            fast_cdc_2020_params__ = map_.next_value()?;
+                        }
+                        GeneratedField::RepMaxCdcParams => {
+                            if rep_max_cdc_params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("repMaxCdcParams"));
+                            }
+                            rep_max_cdc_params__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(CacheCapabilities {
@@ -1674,10 +1708,157 @@ impl<'de> serde::Deserialize<'de> for CacheCapabilities {
                     max_cas_blob_size_bytes: max_cas_blob_size_bytes__.unwrap_or_default(),
                     split_blob_support: split_blob_support__.unwrap_or_default(),
                     splice_blob_support: splice_blob_support__.unwrap_or_default(),
+                    fast_cdc_2020_params: fast_cdc_2020_params__,
+                    rep_max_cdc_params: rep_max_cdc_params__,
                 })
             }
         }
         deserializer.deserialize_struct("build.bazel.remote.execution.v2.CacheCapabilities", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for ChunkingFunction {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.ChunkingFunction", len)?;
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for ChunkingFunction {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                            Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ChunkingFunction;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.ChunkingFunction")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ChunkingFunction, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(ChunkingFunction {
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.ChunkingFunction", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for chunking_function::Value {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::Unknown => "UNKNOWN",
+            Self::FastCdc2020 => "FAST_CDC_2020",
+            Self::RepMaxCdc => "REP_MAX_CDC",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+impl<'de> serde::Deserialize<'de> for chunking_function::Value {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "UNKNOWN",
+            "FAST_CDC_2020",
+            "REP_MAX_CDC",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = chunking_function::Value;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "UNKNOWN" => Ok(chunking_function::Value::Unknown),
+                    "FAST_CDC_2020" => Ok(chunking_function::Value::FastCdc2020),
+                    "REP_MAX_CDC" => Ok(chunking_function::Value::RepMaxCdc),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
     }
 }
 impl serde::Serialize for Command {
@@ -4068,6 +4249,121 @@ impl<'de> serde::Deserialize<'de> for execution_stage::Value {
         deserializer.deserialize_any(GeneratedVisitor)
     }
 }
+impl serde::Serialize for FastCdc2020Params {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.avg_chunk_size_bytes != 0 {
+            len += 1;
+        }
+        if self.seed != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.FastCdc2020Params", len)?;
+        if self.avg_chunk_size_bytes != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field("avgChunkSizeBytes", ToString::to_string(&self.avg_chunk_size_bytes).as_str())?;
+        }
+        if self.seed != 0 {
+            struct_ser.serialize_field("seed", &self.seed)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for FastCdc2020Params {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "avg_chunk_size_bytes",
+            "avgChunkSizeBytes",
+            "seed",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            AvgChunkSizeBytes,
+            Seed,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "avgChunkSizeBytes" | "avg_chunk_size_bytes" => Ok(GeneratedField::AvgChunkSizeBytes),
+                            "seed" => Ok(GeneratedField::Seed),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = FastCdc2020Params;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.FastCdc2020Params")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<FastCdc2020Params, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut avg_chunk_size_bytes__ = None;
+                let mut seed__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::AvgChunkSizeBytes => {
+                            if avg_chunk_size_bytes__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("avgChunkSizeBytes"));
+                            }
+                            avg_chunk_size_bytes__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::Seed => {
+                            if seed__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("seed"));
+                            }
+                            seed__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                    }
+                }
+                Ok(FastCdc2020Params {
+                    avg_chunk_size_bytes: avg_chunk_size_bytes__.unwrap_or_default(),
+                    seed: seed__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.FastCdc2020Params", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for FileNode {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -6170,6 +6466,124 @@ impl<'de> serde::Deserialize<'de> for priority_capabilities::PriorityRange {
         deserializer.deserialize_struct("build.bazel.remote.execution.v2.PriorityCapabilities.PriorityRange", FIELDS, GeneratedVisitor)
     }
 }
+impl serde::Serialize for RepMaxCdcParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.min_chunk_size_bytes != 0 {
+            len += 1;
+        }
+        if self.horizon_size_bytes != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.RepMaxCdcParams", len)?;
+        if self.min_chunk_size_bytes != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field("minChunkSizeBytes", ToString::to_string(&self.min_chunk_size_bytes).as_str())?;
+        }
+        if self.horizon_size_bytes != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field("horizonSizeBytes", ToString::to_string(&self.horizon_size_bytes).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for RepMaxCdcParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "min_chunk_size_bytes",
+            "minChunkSizeBytes",
+            "horizon_size_bytes",
+            "horizonSizeBytes",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            MinChunkSizeBytes,
+            HorizonSizeBytes,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "minChunkSizeBytes" | "min_chunk_size_bytes" => Ok(GeneratedField::MinChunkSizeBytes),
+                            "horizonSizeBytes" | "horizon_size_bytes" => Ok(GeneratedField::HorizonSizeBytes),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = RepMaxCdcParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.RepMaxCdcParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<RepMaxCdcParams, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut min_chunk_size_bytes__ = None;
+                let mut horizon_size_bytes__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::MinChunkSizeBytes => {
+                            if min_chunk_size_bytes__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("minChunkSizeBytes"));
+                            }
+                            min_chunk_size_bytes__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::HorizonSizeBytes => {
+                            if horizon_size_bytes__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("horizonSizeBytes"));
+                            }
+                            horizon_size_bytes__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                    }
+                }
+                Ok(RepMaxCdcParams {
+                    min_chunk_size_bytes: min_chunk_size_bytes__.unwrap_or_default(),
+                    horizon_size_bytes: horizon_size_bytes__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.RepMaxCdcParams", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for RequestMetadata {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -6647,6 +7061,9 @@ impl serde::Serialize for SpliceBlobRequest {
         if self.digest_function != 0 {
             len += 1;
         }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.SpliceBlobRequest", len)?;
         if !self.instance_name.is_empty() {
             struct_ser.serialize_field("instanceName", &self.instance_name)?;
@@ -6661,6 +7078,11 @@ impl serde::Serialize for SpliceBlobRequest {
             let v = digest_function::Value::try_from(self.digest_function)
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
             struct_ser.serialize_field("digestFunction", &v)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
         }
         struct_ser.end()
     }
@@ -6680,6 +7102,8 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
             "chunkDigests",
             "digest_function",
             "digestFunction",
+            "chunking_function",
+            "chunkingFunction",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -6688,6 +7112,7 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
             BlobDigest,
             ChunkDigests,
             DigestFunction,
+            ChunkingFunction,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -6713,6 +7138,7 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
                             "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
                             "chunkDigests" | "chunk_digests" => Ok(GeneratedField::ChunkDigests),
                             "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -6736,6 +7162,7 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
                 let mut blob_digest__ = None;
                 let mut chunk_digests__ = None;
                 let mut digest_function__ = None;
+                let mut chunking_function__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::InstanceName => {
@@ -6762,6 +7189,12 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
                             }
                             digest_function__ = Some(map_.next_value::<digest_function::Value>()? as i32);
                         }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
                     }
                 }
                 Ok(SpliceBlobRequest {
@@ -6769,6 +7202,7 @@ impl<'de> serde::Deserialize<'de> for SpliceBlobRequest {
                     blob_digest: blob_digest__,
                     chunk_digests: chunk_digests__.unwrap_or_default(),
                     digest_function: digest_function__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
                 })
             }
         }
@@ -6884,6 +7318,9 @@ impl serde::Serialize for SplitBlobRequest {
         if self.digest_function != 0 {
             len += 1;
         }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.SplitBlobRequest", len)?;
         if !self.instance_name.is_empty() {
             struct_ser.serialize_field("instanceName", &self.instance_name)?;
@@ -6895,6 +7332,11 @@ impl serde::Serialize for SplitBlobRequest {
             let v = digest_function::Value::try_from(self.digest_function)
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
             struct_ser.serialize_field("digestFunction", &v)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
         }
         struct_ser.end()
     }
@@ -6912,6 +7354,8 @@ impl<'de> serde::Deserialize<'de> for SplitBlobRequest {
             "blobDigest",
             "digest_function",
             "digestFunction",
+            "chunking_function",
+            "chunkingFunction",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -6919,6 +7363,7 @@ impl<'de> serde::Deserialize<'de> for SplitBlobRequest {
             InstanceName,
             BlobDigest,
             DigestFunction,
+            ChunkingFunction,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -6943,6 +7388,7 @@ impl<'de> serde::Deserialize<'de> for SplitBlobRequest {
                             "instanceName" | "instance_name" => Ok(GeneratedField::InstanceName),
                             "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
                             "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -6965,6 +7411,7 @@ impl<'de> serde::Deserialize<'de> for SplitBlobRequest {
                 let mut instance_name__ = None;
                 let mut blob_digest__ = None;
                 let mut digest_function__ = None;
+                let mut chunking_function__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::InstanceName => {
@@ -6985,12 +7432,19 @@ impl<'de> serde::Deserialize<'de> for SplitBlobRequest {
                             }
                             digest_function__ = Some(map_.next_value::<digest_function::Value>()? as i32);
                         }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
                     }
                 }
                 Ok(SplitBlobRequest {
                     instance_name: instance_name__.unwrap_or_default(),
                     blob_digest: blob_digest__,
                     digest_function: digest_function__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
                 })
             }
         }
@@ -7008,9 +7462,17 @@ impl serde::Serialize for SplitBlobResponse {
         if !self.chunk_digests.is_empty() {
             len += 1;
         }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.SplitBlobResponse", len)?;
         if !self.chunk_digests.is_empty() {
             struct_ser.serialize_field("chunkDigests", &self.chunk_digests)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
         }
         struct_ser.end()
     }
@@ -7024,11 +7486,14 @@ impl<'de> serde::Deserialize<'de> for SplitBlobResponse {
         const FIELDS: &[&str] = &[
             "chunk_digests",
             "chunkDigests",
+            "chunking_function",
+            "chunkingFunction",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             ChunkDigests,
+            ChunkingFunction,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -7051,6 +7516,7 @@ impl<'de> serde::Deserialize<'de> for SplitBlobResponse {
                     {
                         match value {
                             "chunkDigests" | "chunk_digests" => Ok(GeneratedField::ChunkDigests),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -7071,6 +7537,7 @@ impl<'de> serde::Deserialize<'de> for SplitBlobResponse {
                     V: serde::de::MapAccess<'de>,
             {
                 let mut chunk_digests__ = None;
+                let mut chunking_function__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ChunkDigests => {
@@ -7079,10 +7546,17 @@ impl<'de> serde::Deserialize<'de> for SplitBlobResponse {
                             }
                             chunk_digests__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
                     }
                 }
                 Ok(SplitBlobResponse {
                     chunk_digests: chunk_digests__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
                 })
             }
         }
