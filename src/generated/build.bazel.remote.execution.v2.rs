@@ -2135,6 +2135,11 @@ pub struct FastCdc2020Params {
 /// selected where the Gear rolling hash is maximized within a lookahead
 /// window of horizon_size_bytes.
 ///
+/// For sufficiently large files, the average chunk size prior to
+/// deduplication will approximately be min_chunk_size_bytes divided by
+/// Rényi's parking constant (0.7475979203...). More details:
+/// <https://mathworld.wolfram.com/RenyisParkingConstants.html>
+///
 /// If any of the advertised parameters are not within the expected range,
 /// the client SHOULD ignore RepMaxCDC chunking function support.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
