@@ -300,6 +300,9 @@
           "service": "google.ads.googleads.v23.services.RemarketingActionService"
         },
         {
+          "service": "google.ads.googleads.v23.services.ReservationService"
+        },
+        {
           "service": "google.ads.googleads.v23.services.ShareablePreviewService"
         },
         {
@@ -330,7 +333,7 @@
           "service": "google.ads.googleads.v23.services.UserListService"
         },
         {
-          "service": "google.ads.googleads.v23.services.VisibilityTestService"
+          "service": "google.ads.googleads.v23.services.YouTubeVideoUploadService"
         }
       ],
       "timeout": "14400s",

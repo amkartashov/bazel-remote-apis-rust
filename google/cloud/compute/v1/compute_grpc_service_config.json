@@ -547,6 +547,15 @@
       "service" : "google.cloud.compute.v1.RegionCommitments",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "List"
+    }, {
       "service" : "google.cloud.compute.v1.RegionDiskTypes",
       "method" : "Get"
     }, {
@@ -562,6 +571,18 @@
       "service" : "google.cloud.compute.v1.RegionDisks",
       "method" : "List"
     }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthCheckServices",
+      "method" : "AggregatedList"
+    }, {
       "service" : "google.cloud.compute.v1.RegionHealthCheckServices",
       "method" : "Get"
     }, {
@@ -572,6 +593,15 @@
       "method" : "Get"
     }, {
       "service" : "google.cloud.compute.v1.RegionHealthChecks",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "AggregatedList"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1.RegionInstanceGroupManagers",
@@ -627,6 +657,9 @@
     }, {
       "service" : "google.cloud.compute.v1.RegionNetworkFirewallPolicies",
       "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionNotificationEndpoints",
+      "method" : "AggregatedList"
     }, {
       "service" : "google.cloud.compute.v1.RegionNotificationEndpoints",
       "method" : "Get"
@@ -704,6 +737,12 @@
       "method" : "GetIamPolicy"
     }, {
       "service" : "google.cloud.compute.v1.ReservationBlocks",
+      "method" : "List"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSlots",
+      "method" : "Get"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSlots",
       "method" : "List"
     }, {
       "service" : "google.cloud.compute.v1.ReservationSubBlocks",
@@ -1969,6 +2008,18 @@
       "service" : "google.cloud.compute.v1.RegionCommitments",
       "method" : "Update"
     }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionCompositeHealthChecks",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1.RegionDisks",
       "method" : "AddResourcePolicies"
     }, {
@@ -2011,6 +2062,18 @@
       "service" : "google.cloud.compute.v1.RegionDisks",
       "method" : "Update"
     }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthAggregationPolicies",
+      "method" : "TestIamPermissions"
+    }, {
       "service" : "google.cloud.compute.v1.RegionHealthCheckServices",
       "method" : "Delete"
     }, {
@@ -2019,6 +2082,9 @@
     }, {
       "service" : "google.cloud.compute.v1.RegionHealthCheckServices",
       "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthCheckServices",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1.RegionHealthChecks",
       "method" : "Delete"
@@ -2034,6 +2100,18 @@
     }, {
       "service" : "google.cloud.compute.v1.RegionHealthChecks",
       "method" : "Update"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "Delete"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "Insert"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "Patch"
+    }, {
+      "service" : "google.cloud.compute.v1.RegionHealthSources",
+      "method" : "TestIamPermissions"
     }, {
       "service" : "google.cloud.compute.v1.RegionInstanceGroupManagers",
       "method" : "AbandonInstances"
@@ -2280,6 +2358,15 @@
     }, {
       "service" : "google.cloud.compute.v1.ReservationBlocks",
       "method" : "TestIamPermissions"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSlots",
+      "method" : "GetVersion"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSlots",
+      "method" : "Update"
+    }, {
+      "service" : "google.cloud.compute.v1.ReservationSubBlocks",
+      "method" : "GetVersion"
     }, {
       "service" : "google.cloud.compute.v1.ReservationSubBlocks",
       "method" : "PerformMaintenance"

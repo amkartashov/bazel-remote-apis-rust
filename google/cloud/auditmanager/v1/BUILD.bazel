@@ -123,7 +123,7 @@ load(
 
 go_grpc_library(
     name = "auditmanager_go_proto",
-    importpath = "cloud.google.com/go/auditmanager/apiv1main/auditmanagerpb",
+    importpath = "cloud.google.com/go/auditmanager/apiv1/auditmanagerpb",
     protos = [":auditmanager_proto"],
     deps = [
         "//google/api:annotations_go_proto",
@@ -332,7 +332,6 @@ load(
 
 csharp_proto_library(
     name = "auditmanager_csharp_proto",
-    extra_opts = [],
     deps = [":auditmanager_proto"],
 )
 
