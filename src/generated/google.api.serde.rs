@@ -1,3 +1,474 @@
+impl serde::Serialize for BatchingConfigProto {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.thresholds.is_some() {
+            len += 1;
+        }
+        if self.batch_descriptor.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("google.api.BatchingConfigProto", len)?;
+        if let Some(v) = self.thresholds.as_ref() {
+            struct_ser.serialize_field("thresholds", v)?;
+        }
+        if let Some(v) = self.batch_descriptor.as_ref() {
+            struct_ser.serialize_field("batchDescriptor", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for BatchingConfigProto {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "thresholds",
+            "batch_descriptor",
+            "batchDescriptor",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Thresholds,
+            BatchDescriptor,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "thresholds" => Ok(GeneratedField::Thresholds),
+                            "batchDescriptor" | "batch_descriptor" => Ok(GeneratedField::BatchDescriptor),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = BatchingConfigProto;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct google.api.BatchingConfigProto")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BatchingConfigProto, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut thresholds__ = None;
+                let mut batch_descriptor__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Thresholds => {
+                            if thresholds__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("thresholds"));
+                            }
+                            thresholds__ = map_.next_value()?;
+                        }
+                        GeneratedField::BatchDescriptor => {
+                            if batch_descriptor__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("batchDescriptor"));
+                            }
+                            batch_descriptor__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(BatchingConfigProto {
+                    thresholds: thresholds__,
+                    batch_descriptor: batch_descriptor__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("google.api.BatchingConfigProto", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for BatchingDescriptorProto {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.batched_field.is_empty() {
+            len += 1;
+        }
+        if !self.discriminator_fields.is_empty() {
+            len += 1;
+        }
+        if !self.subresponse_field.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("google.api.BatchingDescriptorProto", len)?;
+        if !self.batched_field.is_empty() {
+            struct_ser.serialize_field("batchedField", &self.batched_field)?;
+        }
+        if !self.discriminator_fields.is_empty() {
+            struct_ser.serialize_field("discriminatorFields", &self.discriminator_fields)?;
+        }
+        if !self.subresponse_field.is_empty() {
+            struct_ser.serialize_field("subresponseField", &self.subresponse_field)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for BatchingDescriptorProto {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "batched_field",
+            "batchedField",
+            "discriminator_fields",
+            "discriminatorFields",
+            "subresponse_field",
+            "subresponseField",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            BatchedField,
+            DiscriminatorFields,
+            SubresponseField,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "batchedField" | "batched_field" => Ok(GeneratedField::BatchedField),
+                            "discriminatorFields" | "discriminator_fields" => Ok(GeneratedField::DiscriminatorFields),
+                            "subresponseField" | "subresponse_field" => Ok(GeneratedField::SubresponseField),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = BatchingDescriptorProto;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct google.api.BatchingDescriptorProto")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BatchingDescriptorProto, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut batched_field__ = None;
+                let mut discriminator_fields__ = None;
+                let mut subresponse_field__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::BatchedField => {
+                            if batched_field__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("batchedField"));
+                            }
+                            batched_field__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::DiscriminatorFields => {
+                            if discriminator_fields__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("discriminatorFields"));
+                            }
+                            discriminator_fields__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::SubresponseField => {
+                            if subresponse_field__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subresponseField"));
+                            }
+                            subresponse_field__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(BatchingDescriptorProto {
+                    batched_field: batched_field__.unwrap_or_default(),
+                    discriminator_fields: discriminator_fields__.unwrap_or_default(),
+                    subresponse_field: subresponse_field__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("google.api.BatchingDescriptorProto", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for BatchingSettingsProto {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.element_count_threshold != 0 {
+            len += 1;
+        }
+        if self.request_byte_threshold != 0 {
+            len += 1;
+        }
+        if self.delay_threshold.is_some() {
+            len += 1;
+        }
+        if self.element_count_limit != 0 {
+            len += 1;
+        }
+        if self.request_byte_limit != 0 {
+            len += 1;
+        }
+        if self.flow_control_element_limit != 0 {
+            len += 1;
+        }
+        if self.flow_control_byte_limit != 0 {
+            len += 1;
+        }
+        if self.flow_control_limit_exceeded_behavior != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("google.api.BatchingSettingsProto", len)?;
+        if self.element_count_threshold != 0 {
+            struct_ser.serialize_field("elementCountThreshold", &self.element_count_threshold)?;
+        }
+        if self.request_byte_threshold != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field("requestByteThreshold", ToString::to_string(&self.request_byte_threshold).as_str())?;
+        }
+        if let Some(v) = self.delay_threshold.as_ref() {
+            struct_ser.serialize_field("delayThreshold", v)?;
+        }
+        if self.element_count_limit != 0 {
+            struct_ser.serialize_field("elementCountLimit", &self.element_count_limit)?;
+        }
+        if self.request_byte_limit != 0 {
+            struct_ser.serialize_field("requestByteLimit", &self.request_byte_limit)?;
+        }
+        if self.flow_control_element_limit != 0 {
+            struct_ser.serialize_field("flowControlElementLimit", &self.flow_control_element_limit)?;
+        }
+        if self.flow_control_byte_limit != 0 {
+            struct_ser.serialize_field("flowControlByteLimit", &self.flow_control_byte_limit)?;
+        }
+        if self.flow_control_limit_exceeded_behavior != 0 {
+            let v = FlowControlLimitExceededBehaviorProto::try_from(self.flow_control_limit_exceeded_behavior)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.flow_control_limit_exceeded_behavior)))?;
+            struct_ser.serialize_field("flowControlLimitExceededBehavior", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for BatchingSettingsProto {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "element_count_threshold",
+            "elementCountThreshold",
+            "request_byte_threshold",
+            "requestByteThreshold",
+            "delay_threshold",
+            "delayThreshold",
+            "element_count_limit",
+            "elementCountLimit",
+            "request_byte_limit",
+            "requestByteLimit",
+            "flow_control_element_limit",
+            "flowControlElementLimit",
+            "flow_control_byte_limit",
+            "flowControlByteLimit",
+            "flow_control_limit_exceeded_behavior",
+            "flowControlLimitExceededBehavior",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ElementCountThreshold,
+            RequestByteThreshold,
+            DelayThreshold,
+            ElementCountLimit,
+            RequestByteLimit,
+            FlowControlElementLimit,
+            FlowControlByteLimit,
+            FlowControlLimitExceededBehavior,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "elementCountThreshold" | "element_count_threshold" => Ok(GeneratedField::ElementCountThreshold),
+                            "requestByteThreshold" | "request_byte_threshold" => Ok(GeneratedField::RequestByteThreshold),
+                            "delayThreshold" | "delay_threshold" => Ok(GeneratedField::DelayThreshold),
+                            "elementCountLimit" | "element_count_limit" => Ok(GeneratedField::ElementCountLimit),
+                            "requestByteLimit" | "request_byte_limit" => Ok(GeneratedField::RequestByteLimit),
+                            "flowControlElementLimit" | "flow_control_element_limit" => Ok(GeneratedField::FlowControlElementLimit),
+                            "flowControlByteLimit" | "flow_control_byte_limit" => Ok(GeneratedField::FlowControlByteLimit),
+                            "flowControlLimitExceededBehavior" | "flow_control_limit_exceeded_behavior" => Ok(GeneratedField::FlowControlLimitExceededBehavior),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = BatchingSettingsProto;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct google.api.BatchingSettingsProto")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BatchingSettingsProto, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut element_count_threshold__ = None;
+                let mut request_byte_threshold__ = None;
+                let mut delay_threshold__ = None;
+                let mut element_count_limit__ = None;
+                let mut request_byte_limit__ = None;
+                let mut flow_control_element_limit__ = None;
+                let mut flow_control_byte_limit__ = None;
+                let mut flow_control_limit_exceeded_behavior__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ElementCountThreshold => {
+                            if element_count_threshold__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("elementCountThreshold"));
+                            }
+                            element_count_threshold__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::RequestByteThreshold => {
+                            if request_byte_threshold__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("requestByteThreshold"));
+                            }
+                            request_byte_threshold__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::DelayThreshold => {
+                            if delay_threshold__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("delayThreshold"));
+                            }
+                            delay_threshold__ = map_.next_value()?;
+                        }
+                        GeneratedField::ElementCountLimit => {
+                            if element_count_limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("elementCountLimit"));
+                            }
+                            element_count_limit__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::RequestByteLimit => {
+                            if request_byte_limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("requestByteLimit"));
+                            }
+                            request_byte_limit__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::FlowControlElementLimit => {
+                            if flow_control_element_limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("flowControlElementLimit"));
+                            }
+                            flow_control_element_limit__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::FlowControlByteLimit => {
+                            if flow_control_byte_limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("flowControlByteLimit"));
+                            }
+                            flow_control_byte_limit__ = 
+                                Some(map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?.0)
+                            ;
+                        }
+                        GeneratedField::FlowControlLimitExceededBehavior => {
+                            if flow_control_limit_exceeded_behavior__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("flowControlLimitExceededBehavior"));
+                            }
+                            flow_control_limit_exceeded_behavior__ = Some(map_.next_value::<FlowControlLimitExceededBehaviorProto>()? as i32);
+                        }
+                    }
+                }
+                Ok(BatchingSettingsProto {
+                    element_count_threshold: element_count_threshold__.unwrap_or_default(),
+                    request_byte_threshold: request_byte_threshold__.unwrap_or_default(),
+                    delay_threshold: delay_threshold__,
+                    element_count_limit: element_count_limit__.unwrap_or_default(),
+                    request_byte_limit: request_byte_limit__.unwrap_or_default(),
+                    flow_control_element_limit: flow_control_element_limit__.unwrap_or_default(),
+                    flow_control_byte_limit: flow_control_byte_limit__.unwrap_or_default(),
+                    flow_control_limit_exceeded_behavior: flow_control_limit_exceeded_behavior__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("google.api.BatchingSettingsProto", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for ClientLibraryDestination {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1041,6 +1512,83 @@ impl<'de> serde::Deserialize<'de> for FieldBehavior {
         deserializer.deserialize_any(GeneratedVisitor)
     }
 }
+impl serde::Serialize for FlowControlLimitExceededBehaviorProto {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::UnsetBehavior => "UNSET_BEHAVIOR",
+            Self::ThrowException => "THROW_EXCEPTION",
+            Self::Block => "BLOCK",
+            Self::Ignore => "IGNORE",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+impl<'de> serde::Deserialize<'de> for FlowControlLimitExceededBehaviorProto {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "UNSET_BEHAVIOR",
+            "THROW_EXCEPTION",
+            "BLOCK",
+            "IGNORE",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = FlowControlLimitExceededBehaviorProto;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "UNSET_BEHAVIOR" => Ok(FlowControlLimitExceededBehaviorProto::UnsetBehavior),
+                    "THROW_EXCEPTION" => Ok(FlowControlLimitExceededBehaviorProto::ThrowException),
+                    "BLOCK" => Ok(FlowControlLimitExceededBehaviorProto::Block),
+                    "IGNORE" => Ok(FlowControlLimitExceededBehaviorProto::Ignore),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
+    }
+}
 impl serde::Serialize for GoSettings {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1722,6 +2270,9 @@ impl serde::Serialize for MethodSettings {
         if !self.auto_populated_fields.is_empty() {
             len += 1;
         }
+        if self.batching.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.api.MethodSettings", len)?;
         if !self.selector.is_empty() {
             struct_ser.serialize_field("selector", &self.selector)?;
@@ -1731,6 +2282,9 @@ impl serde::Serialize for MethodSettings {
         }
         if !self.auto_populated_fields.is_empty() {
             struct_ser.serialize_field("autoPopulatedFields", &self.auto_populated_fields)?;
+        }
+        if let Some(v) = self.batching.as_ref() {
+            struct_ser.serialize_field("batching", v)?;
         }
         struct_ser.end()
     }
@@ -1747,6 +2301,7 @@ impl<'de> serde::Deserialize<'de> for MethodSettings {
             "longRunning",
             "auto_populated_fields",
             "autoPopulatedFields",
+            "batching",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1754,6 +2309,7 @@ impl<'de> serde::Deserialize<'de> for MethodSettings {
             Selector,
             LongRunning,
             AutoPopulatedFields,
+            Batching,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1778,6 +2334,7 @@ impl<'de> serde::Deserialize<'de> for MethodSettings {
                             "selector" => Ok(GeneratedField::Selector),
                             "longRunning" | "long_running" => Ok(GeneratedField::LongRunning),
                             "autoPopulatedFields" | "auto_populated_fields" => Ok(GeneratedField::AutoPopulatedFields),
+                            "batching" => Ok(GeneratedField::Batching),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1800,6 +2357,7 @@ impl<'de> serde::Deserialize<'de> for MethodSettings {
                 let mut selector__ = None;
                 let mut long_running__ = None;
                 let mut auto_populated_fields__ = None;
+                let mut batching__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Selector => {
@@ -1820,12 +2378,19 @@ impl<'de> serde::Deserialize<'de> for MethodSettings {
                             }
                             auto_populated_fields__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Batching => {
+                            if batching__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("batching"));
+                            }
+                            batching__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(MethodSettings {
                     selector: selector__.unwrap_or_default(),
                     long_running: long_running__,
                     auto_populated_fields: auto_populated_fields__.unwrap_or_default(),
+                    batching: batching__,
                 })
             }
         }
@@ -2082,9 +2647,15 @@ impl serde::Serialize for PhpSettings {
         if self.common.is_some() {
             len += 1;
         }
+        if !self.library_package.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("google.api.PhpSettings", len)?;
         if let Some(v) = self.common.as_ref() {
             struct_ser.serialize_field("common", v)?;
+        }
+        if !self.library_package.is_empty() {
+            struct_ser.serialize_field("libraryPackage", &self.library_package)?;
         }
         struct_ser.end()
     }
@@ -2097,11 +2668,14 @@ impl<'de> serde::Deserialize<'de> for PhpSettings {
     {
         const FIELDS: &[&str] = &[
             "common",
+            "library_package",
+            "libraryPackage",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Common,
+            LibraryPackage,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -2124,6 +2698,7 @@ impl<'de> serde::Deserialize<'de> for PhpSettings {
                     {
                         match value {
                             "common" => Ok(GeneratedField::Common),
+                            "libraryPackage" | "library_package" => Ok(GeneratedField::LibraryPackage),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2144,6 +2719,7 @@ impl<'de> serde::Deserialize<'de> for PhpSettings {
                     V: serde::de::MapAccess<'de>,
             {
                 let mut common__ = None;
+                let mut library_package__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Common => {
@@ -2152,10 +2728,17 @@ impl<'de> serde::Deserialize<'de> for PhpSettings {
                             }
                             common__ = map_.next_value()?;
                         }
+                        GeneratedField::LibraryPackage => {
+                            if library_package__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("libraryPackage"));
+                            }
+                            library_package__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(PhpSettings {
                     common: common__,
+                    library_package: library_package__.unwrap_or_default(),
                 })
             }
         }
