@@ -103,6 +103,7 @@ apis:
 - name: google.ads.googleads.v23.services.RecommendationService
 - name: google.ads.googleads.v23.services.RecommendationSubscriptionService
 - name: google.ads.googleads.v23.services.RemarketingActionService
+- name: google.ads.googleads.v23.services.ReservationService
 - name: google.ads.googleads.v23.services.ShareablePreviewService
 - name: google.ads.googleads.v23.services.SharedCriterionService
 - name: google.ads.googleads.v23.services.SharedSetService
@@ -113,6 +114,7 @@ apis:
 - name: google.ads.googleads.v23.services.UserDataService
 - name: google.ads.googleads.v23.services.UserListCustomerTypeService
 - name: google.ads.googleads.v23.services.UserListService
+- name: google.ads.googleads.v23.services.YouTubeVideoUploadService
 
 types:
 - name: google.ads.googleads.v23.errors.GoogleAdsFailure
@@ -590,6 +592,14 @@ authentication:
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/adwords
+  - selector: google.ads.googleads.v23.services.ReservationService.BookCampaigns
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/adwords
+  - selector: google.ads.googleads.v23.services.ReservationService.QuoteCampaigns
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/adwords
   - selector: google.ads.googleads.v23.services.ShareablePreviewService.GenerateShareablePreviews
     oauth:
       canonical_scopes: |-
@@ -631,6 +641,10 @@ authentication:
       canonical_scopes: |-
         https://www.googleapis.com/auth/adwords
   - selector: google.ads.googleads.v23.services.UserListService.MutateUserLists
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/adwords
+  - selector: 'google.ads.googleads.v23.services.YouTubeVideoUploadService.*'
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/adwords
