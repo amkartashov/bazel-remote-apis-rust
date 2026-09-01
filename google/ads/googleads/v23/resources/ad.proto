@@ -19,6 +19,7 @@ package google.ads.googleads.v23.resources;
 import "google/ads/googleads/v23/common/ad_type_infos.proto";
 import "google/ads/googleads/v23/common/custom_parameter.proto";
 import "google/ads/googleads/v23/common/final_app_url.proto";
+import "google/ads/googleads/v23/common/synthetic_content_info.proto";
 import "google/ads/googleads/v23/common/url_collection.proto";
 import "google/ads/googleads/v23/enums/ad_type.proto";
 import "google/ads/googleads/v23/enums/device.proto";
@@ -119,13 +120,25 @@ message Ad {
       .SystemManagedResourceSource system_managed_resource_source = 27
       [(google.api.field_behavior) = OUTPUT_ONLY];
 
+  // Synthetic content info for the ad. Only ads with specific ad types are
+  // eligible for updates using the `synthetic_content_info` field.
+  //
+  // Allowed `AdType` values:
+  //
+  // * `HTML5_UPLOAD_AD`
+  // * `DYNAMIC_HTML5_AD`
+  // * `IMAGE_AD`
+  google.ads.googleads.v23.common.SyntheticContentInfo synthetic_content_info =
+      65;
+
   // Details pertinent to the ad type. Exactly one value must be set.
   oneof ad_data {
     // Immutable. Details pertaining to a text ad.
     google.ads.googleads.v23.common.TextAdInfo text_ad = 6
         [(google.api.field_behavior) = IMMUTABLE];
 
-    // Details pertaining to an expanded text ad.
+    // Details pertaining to an expanded text ad. Expanded text ads are
+    // deprecated. Use `ResponsiveSearchAd` instead.
     google.ads.googleads.v23.common.ExpandedTextAdInfo expanded_text_ad = 7;
 
     // Immutable. Details pertaining to an Expanded Dynamic Search Ad.

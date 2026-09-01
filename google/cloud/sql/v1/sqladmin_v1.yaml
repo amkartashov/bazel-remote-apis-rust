@@ -18,7 +18,7 @@ apis:
 - name: google.longrunning.Operations
 
 documentation:
-  summary: API for Cloud SQL database instance management
+  summary: Cloud SQL Admin API
   rules:
   - selector: google.cloud.location.Locations.GetLocation
     description: Gets information about a location.
@@ -26,13 +26,21 @@ documentation:
   - selector: google.cloud.location.Locations.ListLocations
     description: |-
       Lists information about the supported locations for this service.
-      This method can be called in two ways:
 
-      *   **List all public locations:** Use the path `GET /v1/locations`.
-      *   **List project-visible locations:** Use the path
-      `GET /v1/projects/{project_id}/locations`. This may include public
-      locations as well as private or other locations specifically visible
-      to the project.
+      This method lists locations based on the resource scope provided in
+      the [ListLocationsRequest.name][google.cloud.location.ListLocationsRequest.name] field: *
+      **Global locations**: If `name` is empty, the method lists the
+      public locations available to all projects. * **Project-specific
+      locations**: If `name` follows the format
+      `projects/{project}`, the method lists locations visible to that
+      specific project. This includes public, private, or other
+      project-specific locations enabled for the project.
+
+      For gRPC and client library implementations, the resource name is
+      passed as the `name` field. For direct service calls, the resource
+      name is
+      incorporated into the request path based on the specific service
+      implementation and version.
 
 authentication:
   rules:
@@ -54,12 +62,7 @@ authentication:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform,
         https://www.googleapis.com/auth/sqlservice.admin
-  - selector: google.cloud.sql.v1.SqlConnectService.GenerateEphemeralCert
-    oauth:
-      canonical_scopes: |-
-        https://www.googleapis.com/auth/cloud-platform,
-        https://www.googleapis.com/auth/sqlservice.admin
-  - selector: google.cloud.sql.v1.SqlConnectService.GetConnectSettings
+  - selector: 'google.cloud.sql.v1.SqlConnectService.*'
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform,
@@ -111,3 +114,54 @@ authentication:
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
+
+publishing:
+  new_issue_uri: https://issuetracker.google.com/issues/new?component=65246&template=1161103
+  documentation_uri: https://cloud.google.com/sql/docs/
+  api_short_name: sqladmin
+  github_label: 'api: sqladmin'
+  doc_tag_prefix: sqladmin
+  organization: CLOUD
+  library_settings:
+  - version: google.cloud.sql.v1
+    launch_stage: GA
+    java_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    cpp_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    php_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    python_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    node_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    dotnet_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    ruby_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB
+    go_settings:
+      common:
+        destinations:
+        - PACKAGE_MANAGER
+        - GITHUB

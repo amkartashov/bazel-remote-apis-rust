@@ -29,6 +29,8 @@ proto_library(
         "comment.proto",
         "comment_service.proto",
         "escalation.proto",
+        "support_event_subscription.proto",
+        "support_event_subscription_service.proto",
     ],
     deps = [
         "//google/api:annotations_proto",
@@ -36,6 +38,7 @@ proto_library(
         "//google/api:field_behavior_proto",
         "//google/api:resource_proto",
         "//google/longrunning:operations_proto",
+        "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:field_mask_proto",
         "@com_google_protobuf//:timestamp_proto",
     ],

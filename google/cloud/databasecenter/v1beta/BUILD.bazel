@@ -24,6 +24,7 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 proto_library(
     name = "databasecenter_proto",
     srcs = [
+        "affiliation.proto",
         "machine_config.proto",
         "maintenance.proto",
         "metric_data.proto",
@@ -37,6 +38,7 @@ proto_library(
         "//google/api:annotations_proto",
         "//google/api:client_proto",
         "//google/api:field_behavior_proto",
+        "//google/api:resource_proto",
         "//google/type:date_proto",
         "//google/type:dayofweek_proto",
         "//google/type:timeofday_proto",

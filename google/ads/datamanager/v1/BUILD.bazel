@@ -24,12 +24,14 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 proto_library(
     name = "datamanager_proto",
     srcs = [
+        "ad_event.proto",
         "age_range.proto",
         "audience.proto",
         "cart_data.proto",
         "consent.proto",
         "destination.proto",
         "device_info.proto",
+        "encrypted_user_id.proto",
         "encryption_info.proto",
         "error.proto",
         "event.proto",
@@ -56,11 +58,13 @@ proto_library(
         "user_list_license_status.proto",
         "user_list_service.proto",
         "user_properties.proto",
+        "viewability_info.proto",
     ],
     deps = [
         "//google/api:annotations_proto",
         "//google/api:client_proto",
         "//google/api:field_behavior_proto",
+        "//google/api:field_info_proto",
         "//google/api:resource_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:empty_proto",

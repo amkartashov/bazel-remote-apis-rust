@@ -5,17 +5,22 @@ title: Chronicle API
 
 apis:
 - name: google.cloud.chronicle.v1.DataAccessControlService
+- name: google.cloud.chronicle.v1.DataTableService
 - name: google.cloud.chronicle.v1.EntityService
+- name: google.cloud.chronicle.v1.FeaturedContentNativeDashboardService
+- name: google.cloud.chronicle.v1.FindingsRefinementService
 - name: google.cloud.chronicle.v1.InstanceService
+- name: google.cloud.chronicle.v1.NativeDashboardService
 - name: google.cloud.chronicle.v1.ReferenceListService
+- name: google.cloud.chronicle.v1.RuleExecutionErrorService
 - name: google.cloud.chronicle.v1.RuleService
 - name: google.longrunning.Operations
 
 documentation:
   summary: |-
-    The Google Cloud Security Operations API, popularly known as the Chronicle
-    API, serves endpoints that enable security analysts to analyze and
-    mitigate a security threat throughout its lifecycle
+    The Google Cloud Security Operations API (Chronicle API) provides endpoints
+    that help analysts investigate and mitigate security threats throughout
+    their lifecycle.
 
 http:
   rules:
@@ -31,21 +36,81 @@ http:
 
 authentication:
   rules:
+  - selector: google.cloud.chronicle.v1.DashboardChartService.BatchGetDashboardCharts
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: google.cloud.chronicle.v1.DashboardChartService.GetDashboardChart
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: google.cloud.chronicle.v1.DashboardQueryService.ExecuteDashboardQuery
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: google.cloud.chronicle.v1.DashboardQueryService.GetDashboardQuery
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: 'google.cloud.chronicle.v1.BigQueryExportService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
   - selector: 'google.cloud.chronicle.v1.DataAccessControlService.*'
     oauth:
       canonical_scopes: |-
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: 'google.cloud.chronicle.v1.DataTableService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
         https://www.googleapis.com/auth/cloud-platform
   - selector: 'google.cloud.chronicle.v1.EntityService.*'
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
+  - selector: 'google.cloud.chronicle.v1.FeaturedContentNativeDashboardService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: 'google.cloud.chronicle.v1.FindingsRefinementService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
   - selector: google.cloud.chronicle.v1.InstanceService.GetInstance
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
+  - selector: 'google.cloud.chronicle.v1.NativeDashboardService.*'
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
+        https://www.googleapis.com/auth/cloud-platform
   - selector: 'google.cloud.chronicle.v1.ReferenceListService.*'
     oauth:
       canonical_scopes: |-
+        https://www.googleapis.com/auth/cloud-platform
+  - selector: google.cloud.chronicle.v1.RuleExecutionErrorService.ListRuleExecutionErrors
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chronicle,
+        https://www.googleapis.com/auth/chronicle.readonly,
         https://www.googleapis.com/auth/cloud-platform
   - selector: 'google.cloud.chronicle.v1.RuleService.*'
     oauth:

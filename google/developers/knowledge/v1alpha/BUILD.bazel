@@ -31,6 +31,7 @@ proto_library(
         "//google/api:client_proto",
         "//google/api:field_behavior_proto",
         "//google/api:resource_proto",
+        "@com_google_protobuf//:timestamp_proto",
     ],
 )
 
@@ -95,6 +96,7 @@ java_gapic_test(
 # Open Source Packages
 java_gapic_assembly_gradle_pkg(
     name = "google-cloud-developers-knowledge-v1alpha-java",
+    include_samples = True,
     transport = "grpc+rest",
     deps = [
         ":knowledge_java_gapic",
@@ -102,7 +104,6 @@ java_gapic_assembly_gradle_pkg(
         ":knowledge_java_proto",
         ":knowledge_proto",
     ],
-    include_samples = True,
 )
 
 ##############################################################################
@@ -118,7 +119,7 @@ load(
 
 go_grpc_library(
     name = "knowledge_go_proto",
-    importpath = "google.golang.org/genproto/googleapis/developers/knowledge/v1alpha",
+    importpath = "cloud.google.com/go/developerknowledge/apiv1alpha/developerknowledgepb",
     protos = [":knowledge_proto"],
     deps = [
         "//google/api:annotations_go_proto",
@@ -129,7 +130,7 @@ go_gapic_library(
     name = "knowledge_go_gapic",
     srcs = [":knowledge_proto_with_info"],
     grpc_service_config = "developerknowledge_v1alpha_grpc_service_config.json",
-    importpath = "google.golang.org/google/developers/knowledge/v1alpha;knowledge",
+    importpath = "cloud.google.com/go/developerknowledge/apiv1alpha;developerknowledge",
     metadata = True,
     release_level = "beta",
     rest_numeric_enums = True,
@@ -145,9 +146,9 @@ go_gapic_assembly_pkg(
     name = "gapi-cloud-developers-knowledge-v1alpha-go",
     deps = [
         ":knowledge_go_gapic",
-        ":knowledge_go_gapic_srcjar-test.srcjar",
         ":knowledge_go_gapic_srcjar-metadata.srcjar",
         ":knowledge_go_gapic_srcjar-snippets.srcjar",
+        ":knowledge_go_gapic_srcjar-test.srcjar",
         ":knowledge_go_proto",
     ],
 )
@@ -212,8 +213,8 @@ php_gapic_library(
     name = "knowledge_php_gapic",
     srcs = [":knowledge_proto_with_info"],
     grpc_service_config = "developerknowledge_v1alpha_grpc_service_config.json",
-    rest_numeric_enums = True,
     migration_mode = "NEW_SURFACE_ONLY",
+    rest_numeric_enums = True,
     service_yaml = "developerknowledge_v1alpha.yaml",
     transport = "grpc+rest",
     deps = [
@@ -267,8 +268,8 @@ nodejs_gapic_assembly_pkg(
 # buildifier: disable=same-origin-load
 load(
     "@com_google_googleapis_imports//:imports.bzl",
-    "ruby_gapic_assembly_pkg",
     "ruby_cloud_gapic_library",
+    "ruby_gapic_assembly_pkg",
     "ruby_grpc_library",
     "ruby_proto_library",
 )
@@ -287,9 +288,7 @@ ruby_grpc_library(
 ruby_cloud_gapic_library(
     name = "knowledge_ruby_gapic",
     srcs = [":knowledge_proto_with_info"],
-    extra_protoc_parameters = [
-        "ruby-cloud-gem-name=google-cloud-developers-knowledge-v1alpha",
-    ],
+    extra_protoc_parameters = ["ruby-cloud-gem-name=google-cloud-developers-knowledge-v1alpha"],
     grpc_service_config = "developerknowledge_v1alpha_grpc_service_config.json",
     rest_numeric_enums = True,
     service_yaml = "developerknowledge_v1alpha.yaml",
@@ -324,6 +323,7 @@ load(
 
 csharp_proto_library(
     name = "knowledge_csharp_proto",
+    extra_opts = [],
     deps = [":knowledge_proto"],
 )
 

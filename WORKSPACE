@@ -84,15 +84,15 @@ rules_jvm_external_setup()
 
 # Python rules should go early in the dependencies list, otherwise a wrong
 # version of the library will be selected as a transitive dependency of gRPC.
-_rules_python_version = "0.26.0"
+_rules_python_version = "1.6.0"
 
-_rules_python_sha256 = "9d04041ac92a0985e344235f5d946f71ac543f1b1565f2cdbc9a2aaee8adf55b"
+_rules_python_sha256 = "fa7dd2c6b7d63b3585028dd8a90a6cf9db83c33b250959c2ee7b583a6c130e12"
 
 http_archive(
     name = "rules_python",
     sha256 = _rules_python_sha256,
     strip_prefix = "rules_python-{}".format(_rules_python_version),
-    url = "https://github.com/bazelbuild/rules_python/archive/{}.tar.gz".format(_rules_python_version),
+    url = "https://github.com/bazelbuild/rules_python/releases/download/{0}/rules_python-{0}.tar.gz".format(_rules_python_version),
 )
 
 http_archive(
@@ -178,9 +178,9 @@ http_archive(
 
 # Explicitly declaring Protobuf version, while Protobuf dependency is already
 # instantiated in grpc_deps().
-_protobuf_version = "31.0"
+_protobuf_version = "33.2"
 
-_protobuf_sha256 = "2b695cb1eaef8e173f884235ee6d55f57186e95d89ebb31361ee55cb5fd1b996"
+_protobuf_sha256 = "eb671d900b05d8e17f4cd6ca61bfcc60770d209af1a289cb1a200815d6b621ae"
 
 http_archive(
     name = "com_google_protobuf",
@@ -201,7 +201,7 @@ grpc_deps()
 # We map it to com_google_absl which is the name used by gRPC.
 # Defining it before protobuf_deps() ensures that Protobuf won't try to download its own.
 
-load("@com_google_protobuf//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 # This is actually already done within grpc_deps but calling this for Bazel convention.
 protobuf_deps()
@@ -318,19 +318,52 @@ _gapic_generator_java_version = generator_versions["java"]["version"]
 
 _gapic_generator_java_sha256 = generator_versions["java"]["sha"]
 
+# For Java only, use a newer protobuf version to avoid generator version conficts
+_protobuf_java_version = "33.6"
+
+_protobuf_java_sha256 = "e825cac584256f88840ab6cf37add69ba0c6145811329d75642698a622d13498"
+
 http_archive(
-    name = "gapic_generator_java",
-    sha256 = _gapic_generator_java_sha256,
-    strip_prefix = "sdk-platform-java-%s" % _gapic_generator_java_version if _gapic_generator_java_version else "sdk-platform-java-%s" % _gapic_generator_java_commit,
-    urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version if _gapic_generator_java_version else "https://github.com/googleapis/sdk-platform-java/archive/%s.zip" % _gapic_generator_java_commit],
+    name = "com_google_protobuf_java_only",
+    repo_mapping = {
+        "@abseil-cpp": "@com_google_absl",
+        "@protobuf_maven": "@maven",
+    },
+    sha256 = _protobuf_java_sha256,
+    strip_prefix = "protobuf-%s" % _protobuf_java_version,
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v%s.tar.gz" % _protobuf_java_version],
 )
 
-# gax-java is part of sdk-platform-java repository
+load("@com_google_protobuf_java_only//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", protobuf_deps_java = "protobuf_deps")
+
+protobuf_deps_java()
+
+_gapic_generator_java_prefix = (
+    "google-cloud-java-%s" % _gapic_generator_java_commit if _gapic_generator_java_commit else "google-cloud-java-gapic-generator-java-v%s" % _gapic_generator_java_version
+)
+
+_gapic_generator_java_urls = [
+    "https://github.com/googleapis/google-cloud-java/archive/%s.zip" % _gapic_generator_java_commit if _gapic_generator_java_commit else "https://github.com/googleapis/google-cloud-java/archive/gapic-generator-java/v%s.zip" % _gapic_generator_java_version,
+]
+
+http_archive(
+    name = "gapic_generator_java",
+    repo_mapping = {
+        "@com_google_protobuf": "@com_google_protobuf_java_only",
+    },
+    sha256 = _gapic_generator_java_sha256,
+    strip_prefix = _gapic_generator_java_prefix,
+    urls = _gapic_generator_java_urls,
+)
+
 http_archive(
     name = "com_google_api_gax_java",
+    repo_mapping = {
+        "@com_google_protobuf": "@com_google_protobuf_java_only",
+    },
     sha256 = _gapic_generator_java_sha256,
-    strip_prefix = "sdk-platform-java-%s/gax-java" % _gapic_generator_java_version if _gapic_generator_java_version else "sdk-platform-java-%s/gax-java" % _gapic_generator_java_commit,
-    urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version if _gapic_generator_java_version else "https://github.com/googleapis/sdk-platform-java/archive/%s.zip" % _gapic_generator_java_commit],
+    strip_prefix = "%s/sdk-platform-java/gax-java" % _gapic_generator_java_prefix,
+    urls = _gapic_generator_java_urls,
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
@@ -361,6 +394,10 @@ maven_install(
     #Update this False for local development
     fail_on_missing_checksum = True,
     generate_compat_repositories = True,
+    override_targets = {
+        "com.google.protobuf:protobuf-java": "@com_google_protobuf_java_only//:protobuf_java",
+        "com.google.protobuf:protobuf-java-util": "@com_google_protobuf_java_only//:protobuf_java_util",
+    },
     repositories = [
         "m2Local",
         "https://repo.maven.apache.org/maven2",
@@ -380,17 +417,17 @@ load("@rules_gapic//python:py_gapic_repositories.bzl", "py_gapic_repositories")
 
 py_gapic_repositories()
 
-_gapic_generator_python_commit = generator_versions["python"]["commit"]
+_google_cloud_python_commit = generator_versions["python"]["commit"]
 
-_gapic_generator_python_version = generator_versions["python"]["version"]
+_google_cloud_python_version = generator_versions["python"]["version"]
 
-_gapic_generator_python_sha256 = generator_versions["python"]["sha"]
+_google_cloud_python_sha256 = generator_versions["python"]["sha"]
 
 http_archive(
     name = "gapic_generator_python",
-    sha256 = _gapic_generator_python_sha256,
-    strip_prefix = "gapic-generator-python-%s" % _gapic_generator_python_version if _gapic_generator_python_version else "gapic-generator-python-%s" % _gapic_generator_python_commit,
-    urls = ["https://github.com/googleapis/gapic-generator-python/archive/v%s.zip" % _gapic_generator_python_version if _gapic_generator_python_version else "https://github.com/googleapis/gapic-generator-python/archive/%s.tar.gz" % _gapic_generator_python_commit],
+    sha256 = _google_cloud_python_sha256,
+    strip_prefix = "google-cloud-python-gapic-generator-v%s/packages/gapic-generator" % _google_cloud_python_version if _google_cloud_python_version else "google-cloud-python-%s/packages/gapic-generator" % _google_cloud_python_commit,
+    urls = ["https://github.com/googleapis/google-cloud-python/archive/gapic-generator-v%s.zip" % _google_cloud_python_version if _google_cloud_python_version else "https://github.com/googleapis/google-cloud-python/archive/%s.zip" % _google_cloud_python_commit],
 )
 
 load(
@@ -431,8 +468,8 @@ _gapic_generator_typescript_sha256 = generator_versions["typescript"]["sha"]
 http_archive(
     name = "gapic_generator_typescript",
     sha256 = _gapic_generator_typescript_sha256,
-    strip_prefix = "google-cloud-node-core-gapic-generator-v{version}/generator/gapic-generator-typescript".format(version = _gapic_generator_typescript_version),
-    urls = ["https://github.com/googleapis/google-cloud-node-core/archive/refs/tags/gapic-generator-v{version}.tar.gz".format(version = _gapic_generator_typescript_version)],
+    strip_prefix = "google-cloud-node-gapic-generator-v{version}/core/generator/gapic-generator-typescript".format(version = _gapic_generator_typescript_version),
+    urls = ["https://github.com/googleapis/google-cloud-node/archive/refs/tags/gapic-generator-v{version}.tar.gz".format(version = _gapic_generator_typescript_version)],
 )
 
 load("@gapic_generator_typescript//:repositories.bzl", "gapic_generator_typescript_repositories")

@@ -7,6 +7,7 @@ apis:
 - name: google.cloud.support.v2.CaseAttachmentService
 - name: google.cloud.support.v2.CaseService
 - name: google.cloud.support.v2.CommentService
+- name: google.cloud.support.v2.SupportEventSubscriptionService
 
 documentation:
   summary: |-
@@ -15,6 +16,10 @@ documentation:
 
 authentication:
   rules:
+  - selector: google.cloud.support.v2.CaseAttachmentService.GetAttachment
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/cloud-platform
   - selector: google.cloud.support.v2.CaseAttachmentService.ListAttachments
     oauth:
       canonical_scopes: |-
@@ -23,11 +28,11 @@ authentication:
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
-  - selector: google.cloud.support.v2.CommentService.CreateComment
+  - selector: 'google.cloud.support.v2.CommentService.*'
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform
-  - selector: google.cloud.support.v2.CommentService.ListComments
+  - selector: 'google.cloud.support.v2.SupportEventSubscriptionService.*'
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/cloud-platform

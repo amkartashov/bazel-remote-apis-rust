@@ -59,6 +59,8 @@ proto_library(
         "entity_type.proto",
         "env_var.proto",
         "evaluated_annotation.proto",
+        "evaluation_agent_data.proto",
+        "evaluation_rubric.proto",
         "evaluation_service.proto",
         "event.proto",
         "example.proto",
@@ -130,6 +132,8 @@ proto_library(
         "notebook_runtime_template_ref.proto",
         "notebook_service.proto",
         "notebook_software_config.proto",
+        "online_evaluator.proto",
+        "online_evaluator_service.proto",
         "openapi.proto",
         "operation.proto",
         "persistent_resource.proto",
@@ -142,6 +146,8 @@ proto_library(
         "publisher_model.proto",
         "reasoning_engine.proto",
         "reasoning_engine_execution_service.proto",
+        "reasoning_engine_runtime_revision.proto",
+        "reasoning_engine_runtime_revision_service.proto",
         "reasoning_engine_service.proto",
         "reservation_affinity.proto",
         "saved_query.proto",
@@ -373,6 +379,11 @@ py_gapic_library(
     transport = "grpc+rest",
     deps = [
         "//google/iam/v1:iam_policy_py_proto",
+    ],
+    opt_args = [
+        "resource-name-alias=automl.googleapis.com/Dataset:AutoMLDataset",
+        "resource-name-alias=automl.googleapis.com/Model:AutoMLModel",
+        "resource-name-alias=datalabeling.googleapis.com/Dataset:DataLabelingDataset",
     ],
 )
 
