@@ -32,6 +32,18 @@ enum NoneValue {
   NONE_VALUE_UNSPECIFIED = 0;
 }
 
+// An identifier of the slots which can hold keys on an account.
+enum KeySlot {
+  // The key slot is unspecified.
+  KEY_SLOT_UNSPECIFIED = 0;
+
+  // The primary key slot.
+  KEY_SLOT_PRIMARY = 1;
+
+  // The alternate key slot.
+  KEY_SLOT_ALTERNATE = 2;
+}
+
 // An entity in the Universal Ledger network. All accounts are attached to an
 // entity. The entity ID, also often referred to as the account ID, is unique
 // and immutable across the network.
@@ -57,34 +69,51 @@ message CurrencyValue {
   int64 value = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Represents a currency on the ledger, which is qualified by its Currency
+// Operator.
+message QualifiedCurrencyValue {
+  // Required. The Currency Operator ID administering the currency.
+  string operator_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Represents a denominated amount in a currency.
+message AmountValue {
+  // Required. The currency of the amount.
+  QualifiedCurrencyValue currency = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The number of minor units of the currency.
+  int64 amount_value = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
 // A list of strings.
 message StringList {
   // Optional. The string values.
-  repeated string value = 1 [(google.api.field_behavior) = OPTIONAL];
+  repeated string values = 1 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A list of int64s.
 message Int64List {
   // Optional. The int64 values.
-  repeated int64 value = 1 [(google.api.field_behavior) = OPTIONAL];
+  repeated int64 values = 1 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A list of account IDs.
 message AccountIdList {
   // Optional. The account ID values.
-  repeated string value = 1 [(google.api.field_behavior) = OPTIONAL];
+  repeated string values = 1 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A list of booleans.
 message BoolList {
   // Optional. The boolean values.
-  repeated bool value = 1 [(google.api.field_behavior) = OPTIONAL];
+  repeated bool values = 1 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A list of dictionaries.
 message DictList {
-  // Optional. The DictValue values.
-  repeated DictValue value = 1 [(google.api.field_behavior) = OPTIONAL];
+  // Optional. The DictValue values. All nested dicts must have the same
+  // concrete type.
+  repeated DictValue values = 1 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Indices map key to value. For example, `keys[0]` key maps to `values[0]`.
@@ -141,5 +170,12 @@ message Value {
 
     // Optional. A dictionary value.
     DictValue dict_value = 6 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. A qualified currency value.
+    QualifiedCurrencyValue qualified_currency_value = 9
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. An amount value.
+    AmountValue amount_value = 11 [(google.api.field_behavior) = OPTIONAL];
   }
 }

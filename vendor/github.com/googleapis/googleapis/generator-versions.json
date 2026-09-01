@@ -1,8 +1,8 @@
 {
   "csharp": {
-    "version": "1.4.36",
+    "version": "1.4.38",
     "commit": null,
-    "sha": "6d1d01a7f199cf5462696dd882acf0547125e99fb490020916ee5148ba0df832"
+    "sha": "3f7e120c4d7f56542b44d6008446720c8939841cf72af8df35d39b21e44821be"
   },
   "go": {
     "version": "0.54.0",
@@ -10,28 +10,28 @@
     "sha": null
   },
   "java": {
-    "version": "2.65.0",
+    "version": "2.75.0",
     "commit": null,
     "sha": null
   },
   "php": {
-    "version": "1.21.0",
+    "version": "1.25.0",
     "commit": null,
     "sha": null
   },
   "python": {
-    "version": "1.30.8",
+    "version": "1.37.0",
     "commit": null,
-    "sha": "498b9bb87e55c22f8250d12283af587b8502307732450107574b2abbce2c1203"
+    "sha": "905cfe69b7a991facc160b4cacfcdadd5187d8e349d178a028cc66e38c4fc5fc"
   },
   "ruby": {
-    "version": "0.48.1",
+    "version": "0.51.1",
     "commit": null,
-    "sha": "5c2075046da4f1afc3d88246cd0bbabcec5c0bb701e9321492e70e8734ba3360"
+    "sha": "7599e822a8b0b4c98e4d912c498e23d368eb1374fc5298e6364d9874b94ff2c5"
   },
   "typescript": {
-    "version": "4.11.12",
+    "version": "4.12.1",
     "commit": null,
-    "sha": "5545cd561569e5d144cc609173aafd2ea31b1ec8d478c5db5cefe2275fcef37b"
+    "sha": "477e4a9b3442457667846bd5c629d1c059e7caf2d5a3ebce95da626a2d42ea80"
   }
 }

@@ -27,16 +27,20 @@ proto_library(
         "action_status.proto",
         "annotation.proto",
         "attachment.proto",
+        "audience.proto",
+        "availability.proto",
         "chat_service.proto",
         "contextual_addon.proto",
         "deletion_metadata.proto",
         "event_payload.proto",
         "group.proto",
         "history_state.proto",
+        "markup_syntax.proto",
         "matched_url.proto",
         "membership.proto",
         "message.proto",
         "reaction.proto",
+        "section.proto",
         "slash_command.proto",
         "space.proto",
         "space_event.proto",
@@ -55,6 +59,7 @@ proto_library(
         "//google/api:resource_proto",
         "//google/apps/card/v1:card_proto",
         "//google/rpc:code_proto",
+        "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:field_mask_proto",
         "@com_google_protobuf//:timestamp_proto",
@@ -129,7 +134,7 @@ java_gapic_assembly_gradle_pkg(
         ":chat_java_grpc",
         ":chat_java_proto",
         ":chat_proto",
-        "//google/apps/card/v1:card_java_proto", # Added manually
+        "//google/apps/card/v1:card_java_proto",  # Added manually
     ],
 )
 
@@ -167,6 +172,7 @@ go_gapic_library(
     transport = "grpc+rest",
     deps = [
         ":chat_go_proto",
+        "@io_bazel_rules_go//proto/wkt:duration_go_proto",
     ],
 )
 
@@ -195,7 +201,7 @@ load(
 )
 
 py_import(
-    name="card",
+    name = "card",
     srcs = [
         "//google/apps/card/v1:card_py_gapic",
     ],

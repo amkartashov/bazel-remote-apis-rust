@@ -28,7 +28,6 @@ option java_package = "com.google.chromeos.moblab.v1beta1";
 option optimize_for = SPEED;
 
 // Resource that represents a build target.
-// -- NEXT_TAG: 2 --
 message BuildTarget {
   option (google.api.resource) = {
     type: "chromeosmoblab.googleapis.com/BuildTarget"
@@ -42,7 +41,6 @@ message BuildTarget {
 
 // Resource that represents a model. Each model belongs to a build target. For
 // non-unified build, the model name is the same as its build target name.
-// -- NEXT_TAG: 2 --
 message Model {
   option (google.api.resource) = {
     type: "chromeosmoblab.googleapis.com/Model"
@@ -69,7 +67,6 @@ message Milestone {
 
 // Resource that represents a build for the given build target, model, milestone
 // and build version.
-// -- NEXT_TAG: 9 --
 message Build {
   option (google.api.resource) = {
     type: "chromeosmoblab.googleapis.com/Build"
@@ -139,7 +136,6 @@ message Build {
 
 // Resource that represents a build artifact stored in Google Cloud Storage for
 // the given build target, model, build version and bucket.
-// -- NEXT_TAG: 6 --
 message BuildArtifact {
   option (google.api.resource) = {
     type: "chromeosmoblab.googleapis.com/BuildArtifact"
@@ -173,7 +169,6 @@ message BuildArtifact {
 // Cloud build message for staging a build artifact.
 // This message is partially copied from the source proto
 // devtools/cloudbuild/v1/cloudbuild.proto
-// -- NEXT_TAG: 6 --
 message CloudBuild {
   // The CloudBuild states.
   enum State {
@@ -231,7 +226,6 @@ message CloudBuild {
 }
 
 // A session to run on-demand tests.
-// -- NEXT_TAG: 7 --
 message Session {
   option (google.api.resource) = {
     type: "moblab.googleapis.com/Session"
@@ -239,6 +233,66 @@ message Session {
     plural: "sessions"
     singular: "session"
   };
+
+  // The possible lifecycle states of a session.
+  enum State {
+    // No state is specified.
+    STATE_UNSPECIFIED = 0;
+
+    // The session is new and not started.
+    NEW = 1;
+
+    // The session is assigned with a device but hasn't started running.
+    ASSIGNED = 2;
+
+    // The session is running.
+    RUNNING = 3;
+
+    // The session is finished.
+    DONE = 4;
+
+    // The session is suspended.
+    SUSPENDED = 5;
+  }
+
+  // The possible execution results of a session.
+  enum Result {
+    // No result is specified.
+    RESULT_UNSPECIFIED = 0;
+
+    // The session result is unknown or unfinished.
+    UNKNOWN = 1;
+
+    // The session passed.
+    PASSED = 2;
+
+    // The session finished but failed.
+    FAILED = 3;
+
+    // An error occurred during the session.
+    ERRORED = 4;
+
+    // The session timed out.
+    TIMED_OUT = 5;
+
+    // The session finished abnormally.
+    ABORTED = 6;
+
+    // The session was skipped.
+    SKIPPED = 7;
+  }
+
+  // The type of the test (e.g. suite, testplan).
+  enum Type {
+    // Default value.
+    TYPE_UNSPECIFIED = 0;
+
+    // The test is a suite.
+    SUITE = 1;
+
+    // The test is a testplan.
+    TESTPLAN = 2;
+  }
 
   // Identifier. The resource name of the session.
   // Format: sessions/{session}
@@ -270,10 +324,44 @@ message Session {
     // Input only. A Tradefed-based test.
     TradefedTest tradefed_test = 6 [(google.api.field_behavior) = INPUT_ONLY];
   }
+
+  // Output only. The state of the session.
+  State state = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The result of the session.
+  Result result = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. Time at which the session was created.
+  google.protobuf.Timestamp create_time = 9
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. Time at which execution of the session was started.
+  google.protobuf.Timestamp start_time = 10
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. Time at which execution of the session was finished.
+  google.protobuf.Timestamp finish_time = 11
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Optional. The ResultDB root invocation ID for the session.
+  string resultdb_root_invocation_id = 12
+      [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The ResultDB work unit ID for the session.
+  string resultdb_work_unit_id = 15 [(google.api.field_behavior) = OPTIONAL];
+
+  // Input only. The ResultDB work unit update token for the session.
+  string resultdb_work_unit_update_token = 16
+      [(google.api.field_behavior) = INPUT_ONLY];
+
+  // Optional. The type of the test.
+  Type type = 13 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The display name of the test (e.g. dummy_suite, dummy_testplan).
+  string display_name = 14 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Timeout settings for the test run.
-// -- NEXT_TAG: 4 --
 message Timeout {
   // Optional. Max execution time of a job.
   google.protobuf.Duration job_timeout = 1
@@ -290,10 +378,14 @@ message Timeout {
 }
 
 // Configuration for a Tradefed-based test.
-// -- NEXT_TAG: 2 --
 message TradefedTest {
   // Required. The command to run the Tradefed test.
   string command = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Map from shard index to extra arguments to append to the command.
+  // The key is the 0-based shard index (i.e. 0, 1, ..., shard_count - 1).
+  // If shard_count is 0 or 1, only key 0 is valid.
+  map<int32, string> shard_args = 2 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Summary information for an entire test effort
@@ -344,17 +436,22 @@ message TestEffort {
     // system
     string branch = 1 [(google.api.field_behavior) = REQUIRED];
 
-    // Required. Specifies the release configuration of the build target.
-    string release_config = 2 [(google.api.field_behavior) = REQUIRED];
+    // Optional. Specifies the release configuration of the build target.
+    string release_config = 2 [(google.api.field_behavior) = OPTIONAL];
 
-    // Required. Specifies the build variant for the target.
-    string build_variant = 3 [(google.api.field_behavior) = REQUIRED];
+    // Optional. Specifies the build variant for the target.
+    string build_variant = 3 [(google.api.field_behavior) = OPTIONAL];
 
     // Required. The build ID of the test effort.
     string build_id = 4 [(google.api.field_behavior) = REQUIRED];
 
     // Optional. Product name of the build target.
     string product = 5 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Directly specifies the build target name.
+    // When it is used, product, build_variant, and release_config are
+    // overridden.
+    string target = 6 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // The possible states of a test effort.
@@ -486,6 +583,10 @@ message TestEffort {
   oneof os {
     // Test against an Android build.
     AndroidBuildTarget android = 7;
+
+    // Deprecated: Use android.target instead.
+    // Directly specifies the build target name.
+    string build_target_override = 13 [deprecated = true];
   }
 
   // Output only. Overall result of the test effort.
@@ -501,4 +602,20 @@ message TestEffort {
   // Optional. The firmware configuration of the test effort.
   repeated FirmwareConfig firmware_configs = 11
       [(google.api.field_behavior) = OPTIONAL];
+
+  // Test target details if different from the main build target.
+  oneof test_source {
+    // Test against an Android build target.
+    AndroidBuildTarget android_test_target = 12;
+
+    // Deprecated: Use android_test_target.target instead.
+    // Directly specifies the test target name.
+    string test_target_override = 14 [deprecated = true];
+  }
+
+  // Optional. Option to make boot tests optional.
+  bool skip_boot_prerequisite = 15 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The number of static shards to use for this test effort.
+  int32 static_shard_count = 16 [(google.api.field_behavior) = OPTIONAL];
 }

@@ -19,6 +19,7 @@ package google.cloud.universalledger.v1;
 import "google/api/field_behavior.proto";
 import "google/cloud/universalledger/v1/common.proto";
 import "google/cloud/universalledger/v1/status_event.proto";
+import "google/cloud/universalledger/v1/transactions.proto";
 import "google/protobuf/any.proto";
 
 option csharp_namespace = "Google.Cloud.UniversalLedger.V1";
@@ -33,7 +34,8 @@ option ruby_package = "Google::Cloud::UniversalLedger::V1";
 message ClientTransaction {
   // The client transaction-specific message.
   oneof kind {
-    // Optional. A client transaction-specific message. Should be any one of:
+    // Optional. Deprecated: Use one of the message specific fields instead.
+    // A client transaction-specific message. Should be any one of:
     //
     // <!--
     // clang-format off
@@ -64,7 +66,8 @@ message ClientTransaction {
     // <!--
     // clang-format on
     // -->
-    google.protobuf.Any app = 5 [(google.api.field_behavior) = OPTIONAL];
+    google.protobuf.Any app = 5
+        [deprecated = true, (google.api.field_behavior) = OPTIONAL];
 
     // Optional. An operational transaction message. Note this can only be sent
     // by the platform operator. Should be any one of:
@@ -79,13 +82,121 @@ message ClientTransaction {
     google.protobuf.Any operational = 6
         [(google.api.field_behavior) = OPTIONAL];
 
+    // Optional. Message for transferring the platform operator role to a new
+    // account.
+    TransferPlatformOperator transfer_platform_operator_transaction = 13
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new currency operator.
+    CreateCurrencyOperator create_currency_operator_transaction = 14
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for transferring the currency operator role to a new
+    // account.
+    TransferCurrencyOperator transfer_currency_operator_transaction = 15
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new clearinghouse.
+    CreateClearinghouse create_clearinghouse_transaction = 16
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new account manager.
+    CreateAccountManager create_account_manager_transaction = 17
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new token manager associated to the
+    // currency of the operator sending the request.
+    CreateTokenManager create_token_manager_transaction = 18
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Notifies the network that the target account has deposited
+    // reserve funds and increases its token issuance limit.
+    IncreaseTokenIssuanceLimit increase_token_issuance_limit_transaction = 19
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Notifies the network that the target account wishes to withdraw
+    // reserve funds and decreases its token issuance limit.
+    DecreaseTokenIssuanceLimit decrease_token_issuance_limit_transaction = 20
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for initiating a settlement operation.
+    SettlementRequest settlement_request_transaction = 21
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for minting currency tokens and transferring them to an
+    // account.
+    Mint mint_transaction = 22 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for burning currency tokens from an account.
+    Burn burn_transaction = 23 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new user account.
+    CreateAccount create_account_transaction = 24
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for deactivating a user account.
+    DeactivateAccount deactivate_account_transaction = 25
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for activating a user account.
+    ActivateAccount activate_account_transaction = 26
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for adding roles to an account.
+    AddRoles add_roles_transaction = 27
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for removing roles from an account.
+    RemoveRoles remove_roles_transaction = 28
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for changing the account manager of an account.
+    ChangeAccountManager change_account_manager_transaction = 29
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for transferring tokens from one user account to
+    // another.
+    Transfer transfer_transaction = 30 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new contract on the ledger.
+    CreateContract create_contract_transaction = 31
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for granting permissions to a contract.
+    GrantContractPermissions grant_contract_permissions_transaction = 32
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for invoking the execution of a contract method.
+    InvokeContractMethod invoke_contract_method_transaction = 33
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for creating a new token manager associated to the
+    // currency of the operator sending the request.
+    CreateContractTokenManager create_contract_token_manager_transaction = 34
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for transferring the token manager role for a currency
+    // from one account to another.
+    TransferContractTokenManager transfer_contract_token_manager_transaction =
+        35 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for removing an account signing key.
+    RemoveSigningPublicKey remove_signing_public_key_transaction = 36
+        [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Message for replacing an account signing key.
+    ReplaceSigningPublicKey replace_signing_public_key_transaction = 37
+        [(google.api.field_behavior) = OPTIONAL];
+
     // Optional. Message for a transaction chain including multiple transaction
     // units to execute in sequence.
     TransactionChain chain = 8 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional. The transaction sender.
-  // Deprecated: use `sender_id` instead.
+  // Deprecated: Use
+  // [sender_id][google.cloud.universalledger.v1.ClientTransaction.sender_id]
+  // instead.
   Entity source = 1 [deprecated = true, (google.api.field_behavior) = OPTIONAL];
 
   // Optional. The ID of the account that is sending this transaction.
@@ -93,7 +204,9 @@ message ClientTransaction {
   string sender_id = 11 [(google.api.field_behavior) = OPTIONAL];
 
   // Optional. Accounts that, in addition to the sender, have signed this
-  // transaction. Deprecated: Use `other_signatory_ids` instead.
+  // transaction. Deprecated: Use
+  // [other_signatory_ids][google.cloud.universalledger.v1.ClientTransaction.other_signatory_ids]
+  // instead.
   repeated Entity signatories = 2
       [deprecated = true, (google.api.field_behavior) = OPTIONAL];
 
@@ -143,6 +256,10 @@ message SignedTransaction {
   // The digests are computed using SHA-256.
   bytes sender_signature = 3 [(google.api.field_behavior) = REQUIRED];
 
+  // Optional. The key slot of the sender used to sign the transaction. Uses the
+  // primary slot of the sender account if not specified.
+  KeySlot sender_signing_key_slot = 5 [(google.api.field_behavior) = OPTIONAL];
+
   // Optional. The signatures of accounts listed as additional transaction
   // signatories. The number and order of these signatures must match the
   // `signatories` field in the
@@ -156,6 +273,14 @@ message SignedTransaction {
   // account appearing either as the sender or as a signatory of a unit in the
   // chain.
   repeated bytes other_signatures = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The key slots of the accounts listed as additional transaction
+  // signatories. If set, the number and order of these key slots must match the
+  // `other_signatures` field in the
+  // [SignedTransaction][google.cloud.universalledger.v1.SignedTransaction].
+  // Defaults to the primary slot of each account if not specified.
+  repeated KeySlot other_signing_key_slots = 6
+      [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A transaction chain including multiple transaction units to execute in
@@ -176,8 +301,10 @@ message TransactionChain {
 
 // A Merkle tree with a cryptographic digest of the root node.
 message MerkleTree {
-  // Output only. Deprecated: Use `root_digest_hex`. The cryptographic digest of
-  // the root node.
+  // Output only. The cryptographic digest of the root node.
+  // Deprecated: Use
+  // [root_digest_hex][google.cloud.universalledger.v1.MerkleTree.root_digest_hex]
+  // instead.
   string root_hash_hex = 1
       [deprecated = true, (google.api.field_behavior) = OUTPUT_ONLY];
 
@@ -194,8 +321,8 @@ message RoundCertificate {
   // Output only. The ID of the round for which the certificate is for.
   int64 round_id = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // Output only. The human readable validator identifier. This is used to
-  // lookup the public key against which the `validator_signatures` is verified.
+  // Output only. The human readable validator identifier. This is used to look
+  // up the public key against which the `validator_signatures` is verified.
   string validator_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // Output only. The hex representation of the homomorphic digest over the
@@ -260,14 +387,16 @@ message TransactionStatus {
   bytes message = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-// Effects of the execution of a transaction in the world state.
+// Effects of the execution of a transaction.
 message TransactionEffects {
   // Output only. The resulting status of the transaction execution.
   TransactionStatus status = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // Output only. The effects of the transaction in the world state.
+  // Output only. Deprecated: Query the network state instead to determine any
+  // changes to the world state. The effects of the transaction in the world
+  // state.
   repeated TransactionEffect effects = 2
-      [(google.api.field_behavior) = OUTPUT_ONLY];
+      [deprecated = true, (google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // An event produced by a transaction.
@@ -293,14 +422,14 @@ message TransactionEvent {
 
 // Certificate of the execution of a specific transaction in a round.
 message TransactionCertificate {
-  // Output only. Digest of the transaction this certificate is for.
+  // Output only. The ID of the transaction this certificate is for.
   string transaction_digest_hex = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // Output only. The ID of the execution round at which this transaction was
   // executed in.
   int64 round_id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // Output only. The effects of the transaction in the world state.
+  // Output only. The effects from the transaction execution.
   TransactionEffects transaction_effects = 3
       [(google.api.field_behavior) = OUTPUT_ONLY];
 
@@ -324,13 +453,17 @@ message TransactionCertificate {
 message ProofOfInclusion {
   // Represents a node in a Merkle tree path.
   message MerkleTreeNode {
-    // Output only. Deprecated: Use `left_child_digest_hex`. The hex
-    // representation of the hash of the left child of a node.
+    // Output only. The hexadecimal representation of the digest of the left
+    // child of a node. Deprecated: Use
+    // [left_child_digest_hex][google.cloud.universalledger.v1.ProofOfInclusion.MerkleTreeNode.left_child_digest_hex]
+    // instead.
     string left_child_hash_hex = 1
         [deprecated = true, (google.api.field_behavior) = OUTPUT_ONLY];
 
-    // Output only. Deprecated: Use `right_child_digest_hex`. The hex
-    // representation of the hash of the right child of a node.
+    // Output only. The hexadecimal representation of the digest of the right
+    // child of a node. Deprecated: Use
+    // [right_child_digest_hex][google.cloud.universalledger.v1.ProofOfInclusion.MerkleTreeNode.right_child_digest_hex]
+    // instead.
     string right_child_hash_hex = 2
         [deprecated = true, (google.api.field_behavior) = OUTPUT_ONLY];
 
@@ -375,10 +508,10 @@ message ProofOfInclusion {
   // In here, `path_to_round_root` for `t0` will contain:
   // `[(t0, t1), (h10, h11), (h20, h21)]`.
   //
-  // One can consecutively compute SHA-256 hashes of each
-  // path node to verify that the path hashes to the same value as the
-  // `round_certificate.merkle_tree.root_digest_hex`. Thus, verifying that the
-  // leaf was included in the round's Merkle tree.
+  // One can consecutively compute SHA-256 digests of each
+  // path node to verify that the digest of the path produces the same value as
+  // the `round_certificate.merkle_tree.root_digest_hex`. Thus, verifying that
+  // the leaf was included in the round's Merkle tree.
   repeated MerkleTreeNode path_to_round_root = 3
       [(google.api.field_behavior) = OUTPUT_ONLY];
 }
@@ -410,4 +543,11 @@ message TransactionAttempt {
   // attempt.
   repeated StatusEvent status_events = 3
       [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// The state of a transaction.
+message TransactionState {
+  // One entry per each known submission of the transaction to the validator
+  // handling the request.
+  repeated TransactionAttempt transaction_attempts = 1;
 }

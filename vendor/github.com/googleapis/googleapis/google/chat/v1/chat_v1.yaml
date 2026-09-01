@@ -44,6 +44,10 @@ authentication:
         https://www.googleapis.com/auth/chat.messages,
         https://www.googleapis.com/auth/chat.messages.reactions,
         https://www.googleapis.com/auth/chat.messages.reactions.create
+  - selector: google.chat.v1.ChatService.CreateSection
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections
   - selector: google.chat.v1.ChatService.CreateSpace
     oauth:
       canonical_scopes: |-
@@ -76,6 +80,10 @@ authentication:
         https://www.googleapis.com/auth/chat.import,
         https://www.googleapis.com/auth/chat.messages,
         https://www.googleapis.com/auth/chat.messages.reactions
+  - selector: google.chat.v1.ChatService.DeleteSection
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections
   - selector: google.chat.v1.ChatService.DeleteSpace
     oauth:
       canonical_scopes: |-
@@ -89,10 +97,20 @@ authentication:
         https://www.googleapis.com/auth/chat.bot,
         https://www.googleapis.com/auth/chat.spaces,
         https://www.googleapis.com/auth/chat.spaces.readonly
+  - selector: google.chat.v1.ChatService.FindGroupChats
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.memberships,
+        https://www.googleapis.com/auth/chat.memberships.readonly
   - selector: google.chat.v1.ChatService.GetAttachment
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/chat.bot
+  - selector: google.chat.v1.ChatService.GetAvailability
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.availability,
+        https://www.googleapis.com/auth/chat.users.availability.readonly
   - selector: google.chat.v1.ChatService.GetCustomEmoji
     oauth:
       canonical_scopes: |-
@@ -126,9 +144,14 @@ authentication:
   - selector: google.chat.v1.ChatService.GetSpaceEvent
     oauth:
       canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.app.all.memberships.readonly,
+        https://www.googleapis.com/auth/chat.app.all.messages.readonly,
+        https://www.googleapis.com/auth/chat.app.all.spaces.readonly,
         https://www.googleapis.com/auth/chat.app.memberships,
+        https://www.googleapis.com/auth/chat.app.memberships.readonly,
         https://www.googleapis.com/auth/chat.app.messages.readonly,
         https://www.googleapis.com/auth/chat.app.spaces,
+        https://www.googleapis.com/auth/chat.app.spaces.readonly,
         https://www.googleapis.com/auth/chat.memberships,
         https://www.googleapis.com/auth/chat.memberships.readonly,
         https://www.googleapis.com/auth/chat.messages,
@@ -180,12 +203,27 @@ authentication:
         https://www.googleapis.com/auth/chat.messages.reactions,
         https://www.googleapis.com/auth/chat.messages.reactions.readonly,
         https://www.googleapis.com/auth/chat.messages.readonly
+  - selector: google.chat.v1.ChatService.ListSectionItems
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections,
+        https://www.googleapis.com/auth/chat.users.sections.readonly
+  - selector: google.chat.v1.ChatService.ListSections
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections,
+        https://www.googleapis.com/auth/chat.users.sections.readonly
   - selector: google.chat.v1.ChatService.ListSpaceEvents
     oauth:
       canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.app.all.memberships.readonly,
+        https://www.googleapis.com/auth/chat.app.all.messages.readonly,
+        https://www.googleapis.com/auth/chat.app.all.spaces.readonly,
         https://www.googleapis.com/auth/chat.app.memberships,
+        https://www.googleapis.com/auth/chat.app.memberships.readonly,
         https://www.googleapis.com/auth/chat.app.messages.readonly,
         https://www.googleapis.com/auth/chat.app.spaces,
+        https://www.googleapis.com/auth/chat.app.spaces.readonly,
         https://www.googleapis.com/auth/chat.memberships,
         https://www.googleapis.com/auth/chat.memberships.readonly,
         https://www.googleapis.com/auth/chat.messages,
@@ -200,16 +238,47 @@ authentication:
         https://www.googleapis.com/auth/chat.bot,
         https://www.googleapis.com/auth/chat.spaces,
         https://www.googleapis.com/auth/chat.spaces.readonly
+  - selector: google.chat.v1.ChatService.MarkAsActive
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.availability
+  - selector: google.chat.v1.ChatService.MarkAsAway
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.availability
+  - selector: google.chat.v1.ChatService.MarkAsDoNotDisturb
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.availability
+  - selector: google.chat.v1.ChatService.MoveSectionItem
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections
+  - selector: google.chat.v1.ChatService.PositionSection
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections
+  - selector: google.chat.v1.ChatService.SearchMessages
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.messages,
+        https://www.googleapis.com/auth/chat.messages.readonly
   - selector: google.chat.v1.ChatService.SearchSpaces
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/chat.admin.spaces,
-        https://www.googleapis.com/auth/chat.admin.spaces.readonly
+        https://www.googleapis.com/auth/chat.admin.spaces.readonly,
+        https://www.googleapis.com/auth/chat.spaces,
+        https://www.googleapis.com/auth/chat.spaces.readonly
   - selector: google.chat.v1.ChatService.SetUpSpace
     oauth:
       canonical_scopes: |-
         https://www.googleapis.com/auth/chat.spaces,
         https://www.googleapis.com/auth/chat.spaces.create
+  - selector: google.chat.v1.ChatService.UpdateAvailability
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.availability
   - selector: google.chat.v1.ChatService.UpdateMembership
     oauth:
       canonical_scopes: |-
@@ -223,6 +292,10 @@ authentication:
         https://www.googleapis.com/auth/chat.bot,
         https://www.googleapis.com/auth/chat.import,
         https://www.googleapis.com/auth/chat.messages
+  - selector: google.chat.v1.ChatService.UpdateSection
+    oauth:
+      canonical_scopes: |-
+        https://www.googleapis.com/auth/chat.users.sections
   - selector: google.chat.v1.ChatService.UpdateSpace
     oauth:
       canonical_scopes: |-
