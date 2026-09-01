@@ -2107,7 +2107,7 @@ pub struct CacheCapabilities {
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct FastCdc2020Params {
     /// The average (expected) chunk size for the FastCDC chunking algorithm.
-    /// The value MUST be between 1 KiB and 1 MiB. The recommended value is
+    /// The value MUST be between 1 KiB and 8 MiB. The recommended value is
     /// 524288 (512 KiB).
     #[prost(uint64, tag = "1")]
     pub avg_chunk_size_bytes: u64,
