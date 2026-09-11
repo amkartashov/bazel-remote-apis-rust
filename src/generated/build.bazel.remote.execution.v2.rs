@@ -1562,6 +1562,31 @@ pub struct SplitBlobResponse {
     #[prost(enumeration = "chunking_function::Value", tag = "2")]
     pub chunking_function: i32,
 }
+/// A response message for
+/// \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetChunkMappingResponse {
+    /// The ordered list of digests of the chunks into which the blob was split.
+    /// The original blob is assembled by concatenating the chunk data according to
+    /// the order of the digests in this field, across all responses in stream
+    /// order.
+    ///
+    /// Servers SHOULD limit the number of digests in each response to remain below
+    /// the maximum message size accepted by the client/server pair.
+    ///
+    /// An empty list is allowed in any response. It contributes no chunks to the
+    /// assembled chunk list; clients MUST continue reading until the stream closes.
+    ///
+    /// The server MUST use the same digest function as the one explicitly or
+    /// implicitly (through hash length) specified in the split request.
+    #[prost(message, repeated, tag = "1")]
+    pub chunk_digests: ::prost::alloc::vec::Vec<Digest>,
+    /// The chunking function used to split the blob. Clients MUST use the value
+    /// from the first response and ignore values sent on subsequent responses.
+    /// Servers SHOULD omit this field on subsequent responses.
+    #[prost(enumeration = "chunking_function::Value", tag = "2")]
+    pub chunking_function: i32,
+}
 /// A request message for
 /// \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\].
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1602,6 +1627,48 @@ pub struct SpliceBlobRequest {
     #[prost(enumeration = "digest_function::Value", tag = "4")]
     pub digest_function: i32,
     /// The chunking function that the client used to split the blob.
+    #[prost(enumeration = "chunking_function::Value", tag = "5")]
+    pub chunking_function: i32,
+}
+/// A request message for
+/// \[ContentAddressableStorage.RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RegisterChunkMappingRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted. Servers MUST use the value from the first request and ignore
+    /// values sent on subsequent requests.
+    #[prost(string, tag = "1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// Expected digest of the spliced blob. Clients MUST set this on the first
+    /// request. Servers MUST use the value from the first request and ignore values
+    /// sent on subsequent requests.
+    #[prost(message, optional, tag = "2")]
+    pub blob_digest: ::core::option::Option<Digest>,
+    /// The ordered list of digests of the chunks which need to be concatenated to
+    /// assemble the original blob. Chunk digests may be split across multiple
+    /// stream requests. The original blob is assembled by concatenating chunks in
+    /// the order of these digests across all requests in stream order.
+    ///
+    /// Clients SHOULD limit the number of digests in each request to remain below
+    /// the maximum message size accepted by the client/server pair.
+    ///
+    /// An empty list is allowed in any request. It contributes no chunks to the
+    /// assembled chunk list.
+    #[prost(message, repeated, tag = "3")]
+    pub chunk_digests: ::prost::alloc::vec::Vec<Digest>,
+    /// The digest function of all chunks to be concatenated and of the blob to be
+    /// spliced. The server MUST use the same digest function for both cases.
+    /// Clients MUST set this field to a value other than UNKNOWN on the first
+    /// request. Servers MUST use the value from the first request and ignore values
+    /// sent on subsequent requests.
+    #[prost(enumeration = "digest_function::Value", tag = "4")]
+    pub digest_function: i32,
+    /// The chunking function that the client used to split the blob. Servers MUST
+    /// use the value from the first request and ignore values sent on subsequent
+    /// requests.
     #[prost(enumeration = "chunking_function::Value", tag = "5")]
     pub chunking_function: i32,
 }
@@ -1804,8 +1871,8 @@ pub mod digest_function {
 /// For example, if fast_cdc_2020_params is set, the server supports FAST_CDC_2020.
 ///
 /// For optimal deduplication, clients SHOULD use an advertised chunking function.
-/// When clients use UNKNOWN, the server chooses an algorithm for SplitBlob and
-/// simply verifies chunk concatenation for SpliceBlob.
+/// When clients use UNKNOWN, the server chooses an algorithm for GetChunkMapping
+/// and simply verifies chunk concatenation for RegisterChunkMapping.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ChunkingFunction {}
 /// Nested message and enum types in `ChunkingFunction`.
@@ -1824,8 +1891,9 @@ pub mod chunking_function {
     #[repr(i32)]
     pub enum Value {
         /// No specific algorithm. Servers MUST always accept this value.
-        /// For SplitBlob, the server chooses the algorithm. For SpliceBlob, the
-        /// server only verifies that chunks concatenate to form the expected blob.
+        /// For GetChunkMapping, the server chooses the algorithm. For
+        /// RegisterChunkMapping, the server only verifies that chunks concatenate to
+        /// form the expected blob.
         Unknown = 0,
         /// The FastCDC chunking algorithm as described in the 2020 paper by
         /// Wen Xia, et al. See <https://ieeexplore.ieee.org/document/9055082>
@@ -2051,14 +2119,18 @@ pub struct CacheCapabilities {
     /// yes, the server/instance implements the specified behavior for blob
     /// splitting and a meaningful result can be expected from the
     /// \[ContentAddressableStorage.SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
-    /// operation.
+    /// operation for RE API v2.12 and from the
+    /// \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
+    /// operation for RE API v2.13 or higher.
     #[prost(bool, tag = "9")]
     pub split_blob_support: bool,
     /// Whether blob splicing is supported for the particular server/instance. If
     /// yes, the server/instance implements the specified behavior for blob
     /// splicing and a meaningful result can be expected from the
     /// \[ContentAddressableStorage.SpliceBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SpliceBlob\]
-    /// operation.
+    /// operation for RE API v2.12 and from the
+    /// \[ContentAddressableStorage.RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\]
+    /// operation for RE API v2.13 or higher.
     #[prost(bool, tag = "10")]
     pub splice_blob_support: bool,
     /// The parameters for the FastCDC 2020 chunking algorithm.
@@ -2246,6 +2318,41 @@ pub struct RequestMetadata {
     /// or equality across invocations, though some client tools may offer these guarantees.
     #[prost(string, tag = "7")]
     pub configuration_id: ::prost::alloc::string::String,
+}
+/// A request message for
+/// \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetChunkMappingRequest {
+    /// The instance of the execution system to operate against. A server may
+    /// support multiple instances of the execution system (with their own workers,
+    /// storage, caches, etc.). The server MAY require use of this field to select
+    /// between them in an implementation-defined fashion, otherwise it can be
+    /// omitted.
+    #[prost(string, tag = "1")]
+    pub instance_name: ::prost::alloc::string::String,
+    /// The digest of the blob to be split.
+    #[prost(message, optional, tag = "2")]
+    pub blob_digest: ::core::option::Option<Digest>,
+    /// The digest function of the blob to be split. Clients MUST set this field to
+    /// a value other than UNKNOWN.
+    #[prost(enumeration = "digest_function::Value", tag = "3")]
+    pub digest_function: i32,
+    /// The chunking function that the client prefers to use.
+    ///
+    /// The server MAY use a different chunking function.
+    #[prost(enumeration = "chunking_function::Value", tag = "4")]
+    pub chunking_function: i32,
+}
+/// A response message for
+/// \[ContentAddressableStorage.RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct RegisterChunkMappingResponse {
+    /// Computed digest of the spliced blob.
+    ///
+    /// The server MUST use the same digest function as the one explicitly or
+    /// implicitly (through hash length) specified in the splice request.
+    #[prost(message, optional, tag = "1")]
+    pub blob_digest: ::core::option::Option<Digest>,
 }
 /// Generated client implementations.
 pub mod execution_client {
@@ -3757,7 +3864,41 @@ pub mod content_addressable_storage_client {
                 );
             self.inner.server_streaming(req, path, codec).await
         }
-        /// SplitBlob retrieves information about how a blob is split into chunks.
+        /// SplitBlob is the deprecated unary version of
+        /// \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
+        /// See that RPC for details.
+        ///
+        /// New in v2.12 and removed in v2.13.
+        pub async fn split_blob(
+            &mut self,
+            request: impl tonic::IntoRequest<super::SplitBlobRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::SplitBlobResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.execution.v2.ContentAddressableStorage/SplitBlob",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "build.bazel.remote.execution.v2.ContentAddressableStorage",
+                        "SplitBlob",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// GetChunkMapping retrieves the ordered chunk-digest mapping for a blob.
         ///
         /// This call returns information about how a blob is split into chunks, and
         /// returns a list of the chunk digests. Using the returned list of chunk digests,
@@ -3789,12 +3930,27 @@ pub mod content_addressable_storage_client {
         /// Clients SHOULD verify that the digest of the blob assembled by the fetched
         /// chunks is equal to the requested blob digest.
         ///
+        /// The list of chunk digests is streamed across response messages
+        /// to avoid exceeding protocol message size limits. The complete list of
+        /// chunks is the concatenation of `chunk_digests` across all responses in
+        /// stream order. The server indicates that there are no more chunks by closing
+        /// the response stream.
+        ///
+        /// The maximum message size is not negotiated by this API. Servers SHOULD limit
+        /// the number of chunk digests in each response to remain below the maximum
+        /// message size accepted by the client/server pair.
+        ///
+        /// Starting in RE API v2.13, servers that set
+        /// \[CacheCapabilities.split_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.split_blob_support\]
+        /// MUST implement this RPC. Clients MUST check that the server supports this
+        /// capability and supports RE API v2.13 or newer before using this RPC.
+        ///
         /// The lifetimes of the generated chunk blobs MAY be independent of the
         /// lifetime of the original blob. In particular:
         ///
         /// * A blob and any chunk derived from it MAY be evicted from the CAS at
         ///  different times.
-        /// * A call to \[SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
+        /// * A call to \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
         ///  extends the lifetime of the original blob, and sets the lifetimes of
         ///  the resulting chunks (or extends the lifetimes of already-existing
         ///  chunks).
@@ -3815,11 +3971,11 @@ pub mod content_addressable_storage_client {
         ///  reconstruct the blob is missing from the CAS.
         /// * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob
         ///  chunks.
-        pub async fn split_blob(
+        pub async fn get_chunk_mapping(
             &mut self,
-            request: impl tonic::IntoRequest<super::SplitBlobRequest>,
+            request: impl tonic::IntoRequest<super::GetChunkMappingRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::SplitBlobResponse>,
+            tonic::Response<tonic::codec::Streaming<super::GetChunkMappingResponse>>,
             tonic::Status,
         > {
             self.inner
@@ -3832,73 +3988,23 @@ pub mod content_addressable_storage_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/build.bazel.remote.execution.v2.ContentAddressableStorage/SplitBlob",
+                "/build.bazel.remote.execution.v2.ContentAddressableStorage/GetChunkMapping",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
                         "build.bazel.remote.execution.v2.ContentAddressableStorage",
-                        "SplitBlob",
+                        "GetChunkMapping",
                     ),
                 );
-            self.inner.unary(req, path, codec).await
+            self.inner.server_streaming(req, path, codec).await
         }
-        /// SpliceBlob tells the CAS how chunks can compose a blob.
+        /// SpliceBlob is the deprecated unary version of
+        /// \[RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
+        /// See that RPC for details.
         ///
-        /// This is the complementary operation to the
-        /// \[ContentAddressableStorage.SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
-        /// function to handle the chunked upload of large blobs to save upload
-        /// traffic.
-        ///
-        /// When uploading a large blob using chunked upload, clients MUST first upload
-        /// all chunks to the CAS, then call this RPC to tell the server how those chunks
-        /// compose the original blob. The chunks referenced in the SpliceBlob call SHOULD be
-        /// available in the CAS before calling this RPC.
-        ///
-        /// If a client needs to upload a large blob and is able to split a blob into
-        /// chunks in such a way that reusable chunks are obtained, e.g., by means of
-        /// content-defined chunking, it can first determine which parts of the blob
-        /// are already available in the remote CAS and upload the missing chunks, and
-        /// then use this API to store information on how the chunks compose the
-        /// original blob.
-        ///
-        /// Servers which implement this functionality MUST declare that they support
-        /// it by setting the
-        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
-        /// field accordingly.
-        ///
-        /// Clients MUST check that the server supports this capability, before using
-        /// it.
-        ///
-        /// In order to ensure data consistency of the CAS, the server MUST only add
-        /// blobs to the CAS after verifying their digests. In particular, servers MUST NOT
-        /// trust digests provided by the client. The server MAY accept a request as no-op
-        /// if the client-specified blob is already in CAS or if information on how to
-        /// construct the blob from chunks is available. If the client-specified blob is
-        /// not already in the CAS, the server MUST verify that the digest of the newly
-        /// created blob assembled from chunks matches the digest specified by the
-        /// client, and reject the request if they differ. Servers MAY choose to allow
-        /// overwriting existing chunk mappings or to store multiple chunk mappings for
-        /// the same blob.
-        ///
-        /// When blob splitting and splicing is used at the same time, the clients and
-        /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
-        /// parties to benefit from each other's chunk data and avoid unnecessary data
-        /// duplication.
-        ///
-        /// Errors:
-        ///
-        /// * `NOT_FOUND`: At least one of the blob chunks is not present in the CAS.
-        /// * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the
-        ///  spliced blob.
-        /// * `INVALID_ARGUMENT`: The digest of the spliced blob is different from the
-        ///  provided expected digest.
-        /// * `ALREADY_EXISTS`: The blob already exists in CAS and the server did not
-        ///  extend the lifetime of the chunks specified in the request, e.g. because
-        ///  it prefers a different chunking and extended those instead. Clients can
-        ///  call \[SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
-        ///  to check what chunk mapping the server is using.
+        /// New in v2.12 and removed in v2.13.
         pub async fn splice_blob(
             &mut self,
             request: impl tonic::IntoRequest<super::SpliceBlobRequest>,
@@ -3927,6 +4033,126 @@ pub mod content_addressable_storage_client {
                     ),
                 );
             self.inner.unary(req, path, codec).await
+        }
+        /// RegisterChunkMapping registers an ordered chunk-digest mapping for a blob.
+        ///
+        /// This is the complementary operation to the
+        /// \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
+        /// function to handle the chunked upload of large blobs to save upload
+        /// traffic.
+        ///
+        /// When uploading a large blob using chunked upload, clients MUST first upload
+        /// all chunks to the CAS, then call this RPC to tell the server how those
+        /// chunks compose the original blob. The chunks referenced in the
+        /// RegisterChunkMapping call SHOULD be available in the CAS before calling this
+        /// RPC.
+        ///
+        /// One example upload workflow is:
+        ///
+        /// 1. If the full blob digest is already available, the client can call
+        ///   \[ContentAddressableStorage.FindMissingBlobs\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.FindMissingBlobs\]
+        ///   to determine whether the blob is already present in the CAS, or
+        ///   \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
+        ///   to determine whether a chunk mapping already exists. This preliminary
+        ///   lookup can be skipped, for example when computing the digest while
+        ///   chunking is faster than a separate hashing pass.
+        /// 1. If chunk upload is needed, compute the blob and chunk digests and call
+        ///   `FindMissingBlobs` either once with the complete list or in batches as
+        ///   digests become available, then upload the missing chunks. Clients SHOULD
+        ///   avoid making a separate `FindMissingBlobs` call for each chunk.
+        /// 1. After all chunks are available in the CAS, call this RPC and split the
+        ///   complete ordered chunk digest list across request messages that remain
+        ///   below the maximum message size accepted by the client/server pair.
+        ///
+        /// The list of chunk digests is streamed across request messages
+        /// to avoid exceeding protocol message size limits. Clients MUST set the
+        /// expected blob digest on the first request, then close the request stream to
+        /// commit the splice. The server MUST use `instance_name`, `blob_digest`,
+        /// `digest_function`, and `chunking_function` from the first request and ignore
+        /// values for those fields on subsequent requests. Clients SHOULD omit those
+        /// fields on subsequent requests.
+        ///
+        /// The maximum message size is not negotiated by this API. Clients SHOULD limit
+        /// the number of chunk digests in each request to remain below the maximum
+        /// message size accepted by the client/server pair.
+        ///
+        /// If a client needs to upload a large blob and is able to split a blob into
+        /// chunks in such a way that reusable chunks are obtained, e.g., by means of
+        /// content-defined chunking, it can first determine which parts of the blob
+        /// are already available in the remote CAS and upload the missing chunks, and
+        /// then use this API to store information on how the chunks compose the
+        /// original blob.
+        ///
+        /// Servers which implement this functionality MUST declare that they support
+        /// it by setting the
+        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
+        /// field accordingly.
+        ///
+        /// Clients MUST check that the server supports this capability, before using
+        /// it.
+        ///
+        /// Starting in RE API v2.13, servers that set
+        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
+        /// MUST implement this RPC. Clients MUST check that the server supports this
+        /// capability and supports RE API v2.13 or newer before using this RPC.
+        ///
+        /// In order to ensure data consistency of the CAS, the server MUST only add
+        /// blobs to the CAS after verifying their digests. In particular, servers MUST NOT
+        /// trust digests provided by the client. The server MAY accept a request as no-op
+        /// if the client-specified blob is already in CAS or if information on how to
+        /// construct the blob from chunks is available. If the client-specified blob is
+        /// not already in the CAS, the server MUST verify that the digest of the newly
+        /// created blob assembled from chunks matches the digest specified by the
+        /// client, and reject the request if they differ. Servers MAY choose to allow
+        /// overwriting existing chunk mappings or to store multiple chunk mappings for
+        /// the same blob.
+        ///
+        /// When blob splitting and splicing is used at the same time, the clients and
+        /// the server SHOULD agree out-of-band upon a chunking algorithm used by both
+        /// parties to benefit from each other's chunk data and avoid unnecessary data
+        /// duplication.
+        ///
+        /// Errors:
+        ///
+        /// * `NOT_FOUND`: At least one of the blob chunks is not present in the CAS.
+        /// * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the
+        ///  spliced blob.
+        /// * `INVALID_ARGUMENT`: The digest of the spliced blob is different from the
+        ///  provided expected digest, OR the stream contains an invalid sequence of
+        ///  splice requests.
+        /// * `ALREADY_EXISTS`: The blob already exists in CAS. Clients can
+        ///  call \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
+        ///  to check what chunk mapping the server is using.
+        pub async fn register_chunk_mapping(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<
+                Message = super::RegisterChunkMappingRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<super::RegisterChunkMappingResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/build.bazel.remote.execution.v2.ContentAddressableStorage/RegisterChunkMapping",
+            );
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "build.bazel.remote.execution.v2.ContentAddressableStorage",
+                        "RegisterChunkMapping",
+                    ),
+                );
+            self.inner.client_streaming(req, path, codec).await
         }
     }
 }
@@ -4050,7 +4276,25 @@ pub mod content_addressable_storage_server {
             &self,
             request: tonic::Request<super::GetTreeRequest>,
         ) -> std::result::Result<tonic::Response<Self::GetTreeStream>, tonic::Status>;
-        /// SplitBlob retrieves information about how a blob is split into chunks.
+        /// SplitBlob is the deprecated unary version of
+        /// \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
+        /// See that RPC for details.
+        ///
+        /// New in v2.12 and removed in v2.13.
+        async fn split_blob(
+            &self,
+            request: tonic::Request<super::SplitBlobRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::SplitBlobResponse>,
+            tonic::Status,
+        >;
+        /// Server streaming response type for the GetChunkMapping method.
+        type GetChunkMappingStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<super::GetChunkMappingResponse, tonic::Status>,
+            >
+            + std::marker::Send
+            + 'static;
+        /// GetChunkMapping retrieves the ordered chunk-digest mapping for a blob.
         ///
         /// This call returns information about how a blob is split into chunks, and
         /// returns a list of the chunk digests. Using the returned list of chunk digests,
@@ -4082,12 +4326,27 @@ pub mod content_addressable_storage_server {
         /// Clients SHOULD verify that the digest of the blob assembled by the fetched
         /// chunks is equal to the requested blob digest.
         ///
+        /// The list of chunk digests is streamed across response messages
+        /// to avoid exceeding protocol message size limits. The complete list of
+        /// chunks is the concatenation of `chunk_digests` across all responses in
+        /// stream order. The server indicates that there are no more chunks by closing
+        /// the response stream.
+        ///
+        /// The maximum message size is not negotiated by this API. Servers SHOULD limit
+        /// the number of chunk digests in each response to remain below the maximum
+        /// message size accepted by the client/server pair.
+        ///
+        /// Starting in RE API v2.13, servers that set
+        /// \[CacheCapabilities.split_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.split_blob_support\]
+        /// MUST implement this RPC. Clients MUST check that the server supports this
+        /// capability and supports RE API v2.13 or newer before using this RPC.
+        ///
         /// The lifetimes of the generated chunk blobs MAY be independent of the
         /// lifetime of the original blob. In particular:
         ///
         /// * A blob and any chunk derived from it MAY be evicted from the CAS at
         ///  different times.
-        /// * A call to \[SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
+        /// * A call to \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
         ///  extends the lifetime of the original blob, and sets the lifetimes of
         ///  the resulting chunks (or extends the lifetimes of already-existing
         ///  chunks).
@@ -4108,24 +4367,66 @@ pub mod content_addressable_storage_server {
         ///  reconstruct the blob is missing from the CAS.
         /// * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob
         ///  chunks.
-        async fn split_blob(
+        async fn get_chunk_mapping(
             &self,
-            request: tonic::Request<super::SplitBlobRequest>,
+            request: tonic::Request<super::GetChunkMappingRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::SplitBlobResponse>,
+            tonic::Response<Self::GetChunkMappingStream>,
             tonic::Status,
         >;
-        /// SpliceBlob tells the CAS how chunks can compose a blob.
+        /// SpliceBlob is the deprecated unary version of
+        /// \[RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
+        /// See that RPC for details.
+        ///
+        /// New in v2.12 and removed in v2.13.
+        async fn splice_blob(
+            &self,
+            request: tonic::Request<super::SpliceBlobRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::SpliceBlobResponse>,
+            tonic::Status,
+        >;
+        /// RegisterChunkMapping registers an ordered chunk-digest mapping for a blob.
         ///
         /// This is the complementary operation to the
-        /// \[ContentAddressableStorage.SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
+        /// \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
         /// function to handle the chunked upload of large blobs to save upload
         /// traffic.
         ///
         /// When uploading a large blob using chunked upload, clients MUST first upload
-        /// all chunks to the CAS, then call this RPC to tell the server how those chunks
-        /// compose the original blob. The chunks referenced in the SpliceBlob call SHOULD be
-        /// available in the CAS before calling this RPC.
+        /// all chunks to the CAS, then call this RPC to tell the server how those
+        /// chunks compose the original blob. The chunks referenced in the
+        /// RegisterChunkMapping call SHOULD be available in the CAS before calling this
+        /// RPC.
+        ///
+        /// One example upload workflow is:
+        ///
+        /// 1. If the full blob digest is already available, the client can call
+        ///   \[ContentAddressableStorage.FindMissingBlobs\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.FindMissingBlobs\]
+        ///   to determine whether the blob is already present in the CAS, or
+        ///   \[ContentAddressableStorage.GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
+        ///   to determine whether a chunk mapping already exists. This preliminary
+        ///   lookup can be skipped, for example when computing the digest while
+        ///   chunking is faster than a separate hashing pass.
+        /// 1. If chunk upload is needed, compute the blob and chunk digests and call
+        ///   `FindMissingBlobs` either once with the complete list or in batches as
+        ///   digests become available, then upload the missing chunks. Clients SHOULD
+        ///   avoid making a separate `FindMissingBlobs` call for each chunk.
+        /// 1. After all chunks are available in the CAS, call this RPC and split the
+        ///   complete ordered chunk digest list across request messages that remain
+        ///   below the maximum message size accepted by the client/server pair.
+        ///
+        /// The list of chunk digests is streamed across request messages
+        /// to avoid exceeding protocol message size limits. Clients MUST set the
+        /// expected blob digest on the first request, then close the request stream to
+        /// commit the splice. The server MUST use `instance_name`, `blob_digest`,
+        /// `digest_function`, and `chunking_function` from the first request and ignore
+        /// values for those fields on subsequent requests. Clients SHOULD omit those
+        /// fields on subsequent requests.
+        ///
+        /// The maximum message size is not negotiated by this API. Clients SHOULD limit
+        /// the number of chunk digests in each request to remain below the maximum
+        /// message size accepted by the client/server pair.
         ///
         /// If a client needs to upload a large blob and is able to split a blob into
         /// chunks in such a way that reusable chunks are obtained, e.g., by means of
@@ -4141,6 +4442,11 @@ pub mod content_addressable_storage_server {
         ///
         /// Clients MUST check that the server supports this capability, before using
         /// it.
+        ///
+        /// Starting in RE API v2.13, servers that set
+        /// \[CacheCapabilities.splice_blob_support\]\[build.bazel.remote.execution.v2.CacheCapabilities.splice_blob_support\]
+        /// MUST implement this RPC. Clients MUST check that the server supports this
+        /// capability and supports RE API v2.13 or newer before using this RPC.
         ///
         /// In order to ensure data consistency of the CAS, the server MUST only add
         /// blobs to the CAS after verifying their digests. In particular, servers MUST NOT
@@ -4164,17 +4470,16 @@ pub mod content_addressable_storage_server {
         /// * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the
         ///  spliced blob.
         /// * `INVALID_ARGUMENT`: The digest of the spliced blob is different from the
-        ///  provided expected digest.
-        /// * `ALREADY_EXISTS`: The blob already exists in CAS and the server did not
-        ///  extend the lifetime of the chunks specified in the request, e.g. because
-        ///  it prefers a different chunking and extended those instead. Clients can
-        ///  call \[SplitBlob\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.SplitBlob\]
+        ///  provided expected digest, OR the stream contains an invalid sequence of
+        ///  splice requests.
+        /// * `ALREADY_EXISTS`: The blob already exists in CAS. Clients can
+        ///  call \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\]
         ///  to check what chunk mapping the server is using.
-        async fn splice_blob(
+        async fn register_chunk_mapping(
             &self,
-            request: tonic::Request<super::SpliceBlobRequest>,
+            request: tonic::Request<tonic::Streaming<super::RegisterChunkMappingRequest>>,
         ) -> std::result::Result<
-            tonic::Response<super::SpliceBlobResponse>,
+            tonic::Response<super::RegisterChunkMappingResponse>,
             tonic::Status,
         >;
     }
@@ -4655,6 +4960,57 @@ pub mod content_addressable_storage_server {
                     };
                     Box::pin(fut)
                 }
+                "/build.bazel.remote.execution.v2.ContentAddressableStorage/GetChunkMapping" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetChunkMappingSvc<T: ContentAddressableStorage>(pub Arc<T>);
+                    impl<
+                        T: ContentAddressableStorage,
+                    > tonic::server::ServerStreamingService<
+                        super::GetChunkMappingRequest,
+                    > for GetChunkMappingSvc<T> {
+                        type Response = super::GetChunkMappingResponse;
+                        type ResponseStream = T::GetChunkMappingStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetChunkMappingRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as ContentAddressableStorage>::get_chunk_mapping(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = GetChunkMappingSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/build.bazel.remote.execution.v2.ContentAddressableStorage/SpliceBlob" => {
                     #[allow(non_camel_case_types)]
                     struct SpliceBlobSvc<T: ContentAddressableStorage>(pub Arc<T>);
@@ -4700,6 +5056,60 @@ pub mod content_addressable_storage_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/build.bazel.remote.execution.v2.ContentAddressableStorage/RegisterChunkMapping" => {
+                    #[allow(non_camel_case_types)]
+                    struct RegisterChunkMappingSvc<T: ContentAddressableStorage>(
+                        pub Arc<T>,
+                    );
+                    impl<
+                        T: ContentAddressableStorage,
+                    > tonic::server::ClientStreamingService<
+                        super::RegisterChunkMappingRequest,
+                    > for RegisterChunkMappingSvc<T> {
+                        type Response = super::RegisterChunkMappingResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::RegisterChunkMappingRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as ContentAddressableStorage>::register_chunk_mapping(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = RegisterChunkMappingSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.client_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

@@ -5006,6 +5006,268 @@ impl<'de> serde::Deserialize<'de> for GetCapabilitiesRequest {
         deserializer.deserialize_struct("build.bazel.remote.execution.v2.GetCapabilitiesRequest", FIELDS, GeneratedVisitor)
     }
 }
+impl serde::Serialize for GetChunkMappingRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.instance_name.is_empty() {
+            len += 1;
+        }
+        if self.blob_digest.is_some() {
+            len += 1;
+        }
+        if self.digest_function != 0 {
+            len += 1;
+        }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.GetChunkMappingRequest", len)?;
+        if !self.instance_name.is_empty() {
+            struct_ser.serialize_field("instanceName", &self.instance_name)?;
+        }
+        if let Some(v) = self.blob_digest.as_ref() {
+            struct_ser.serialize_field("blobDigest", v)?;
+        }
+        if self.digest_function != 0 {
+            let v = digest_function::Value::try_from(self.digest_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
+            struct_ser.serialize_field("digestFunction", &v)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for GetChunkMappingRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "instance_name",
+            "instanceName",
+            "blob_digest",
+            "blobDigest",
+            "digest_function",
+            "digestFunction",
+            "chunking_function",
+            "chunkingFunction",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            InstanceName,
+            BlobDigest,
+            DigestFunction,
+            ChunkingFunction,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "instanceName" | "instance_name" => Ok(GeneratedField::InstanceName),
+                            "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
+                            "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = GetChunkMappingRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.GetChunkMappingRequest")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GetChunkMappingRequest, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut instance_name__ = None;
+                let mut blob_digest__ = None;
+                let mut digest_function__ = None;
+                let mut chunking_function__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::InstanceName => {
+                            if instance_name__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("instanceName"));
+                            }
+                            instance_name__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::BlobDigest => {
+                            if blob_digest__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("blobDigest"));
+                            }
+                            blob_digest__ = map_.next_value()?;
+                        }
+                        GeneratedField::DigestFunction => {
+                            if digest_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("digestFunction"));
+                            }
+                            digest_function__ = Some(map_.next_value::<digest_function::Value>()? as i32);
+                        }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
+                    }
+                }
+                Ok(GetChunkMappingRequest {
+                    instance_name: instance_name__.unwrap_or_default(),
+                    blob_digest: blob_digest__,
+                    digest_function: digest_function__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.GetChunkMappingRequest", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for GetChunkMappingResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.chunk_digests.is_empty() {
+            len += 1;
+        }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.GetChunkMappingResponse", len)?;
+        if !self.chunk_digests.is_empty() {
+            struct_ser.serialize_field("chunkDigests", &self.chunk_digests)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for GetChunkMappingResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "chunk_digests",
+            "chunkDigests",
+            "chunking_function",
+            "chunkingFunction",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ChunkDigests,
+            ChunkingFunction,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "chunkDigests" | "chunk_digests" => Ok(GeneratedField::ChunkDigests),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = GetChunkMappingResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.GetChunkMappingResponse")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GetChunkMappingResponse, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut chunk_digests__ = None;
+                let mut chunking_function__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ChunkDigests => {
+                            if chunk_digests__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkDigests"));
+                            }
+                            chunk_digests__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
+                    }
+                }
+                Ok(GetChunkMappingResponse {
+                    chunk_digests: chunk_digests__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.GetChunkMappingResponse", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for GetTreeRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -6464,6 +6726,266 @@ impl<'de> serde::Deserialize<'de> for priority_capabilities::PriorityRange {
             }
         }
         deserializer.deserialize_struct("build.bazel.remote.execution.v2.PriorityCapabilities.PriorityRange", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for RegisterChunkMappingRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.instance_name.is_empty() {
+            len += 1;
+        }
+        if self.blob_digest.is_some() {
+            len += 1;
+        }
+        if !self.chunk_digests.is_empty() {
+            len += 1;
+        }
+        if self.digest_function != 0 {
+            len += 1;
+        }
+        if self.chunking_function != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.RegisterChunkMappingRequest", len)?;
+        if !self.instance_name.is_empty() {
+            struct_ser.serialize_field("instanceName", &self.instance_name)?;
+        }
+        if let Some(v) = self.blob_digest.as_ref() {
+            struct_ser.serialize_field("blobDigest", v)?;
+        }
+        if !self.chunk_digests.is_empty() {
+            struct_ser.serialize_field("chunkDigests", &self.chunk_digests)?;
+        }
+        if self.digest_function != 0 {
+            let v = digest_function::Value::try_from(self.digest_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
+            struct_ser.serialize_field("digestFunction", &v)?;
+        }
+        if self.chunking_function != 0 {
+            let v = chunking_function::Value::try_from(self.chunking_function)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.chunking_function)))?;
+            struct_ser.serialize_field("chunkingFunction", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for RegisterChunkMappingRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "instance_name",
+            "instanceName",
+            "blob_digest",
+            "blobDigest",
+            "chunk_digests",
+            "chunkDigests",
+            "digest_function",
+            "digestFunction",
+            "chunking_function",
+            "chunkingFunction",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            InstanceName,
+            BlobDigest,
+            ChunkDigests,
+            DigestFunction,
+            ChunkingFunction,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "instanceName" | "instance_name" => Ok(GeneratedField::InstanceName),
+                            "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
+                            "chunkDigests" | "chunk_digests" => Ok(GeneratedField::ChunkDigests),
+                            "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "chunkingFunction" | "chunking_function" => Ok(GeneratedField::ChunkingFunction),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = RegisterChunkMappingRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.RegisterChunkMappingRequest")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<RegisterChunkMappingRequest, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut instance_name__ = None;
+                let mut blob_digest__ = None;
+                let mut chunk_digests__ = None;
+                let mut digest_function__ = None;
+                let mut chunking_function__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::InstanceName => {
+                            if instance_name__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("instanceName"));
+                            }
+                            instance_name__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::BlobDigest => {
+                            if blob_digest__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("blobDigest"));
+                            }
+                            blob_digest__ = map_.next_value()?;
+                        }
+                        GeneratedField::ChunkDigests => {
+                            if chunk_digests__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkDigests"));
+                            }
+                            chunk_digests__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::DigestFunction => {
+                            if digest_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("digestFunction"));
+                            }
+                            digest_function__ = Some(map_.next_value::<digest_function::Value>()? as i32);
+                        }
+                        GeneratedField::ChunkingFunction => {
+                            if chunking_function__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("chunkingFunction"));
+                            }
+                            chunking_function__ = Some(map_.next_value::<chunking_function::Value>()? as i32);
+                        }
+                    }
+                }
+                Ok(RegisterChunkMappingRequest {
+                    instance_name: instance_name__.unwrap_or_default(),
+                    blob_digest: blob_digest__,
+                    chunk_digests: chunk_digests__.unwrap_or_default(),
+                    digest_function: digest_function__.unwrap_or_default(),
+                    chunking_function: chunking_function__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.RegisterChunkMappingRequest", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for RegisterChunkMappingResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.blob_digest.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("build.bazel.remote.execution.v2.RegisterChunkMappingResponse", len)?;
+        if let Some(v) = self.blob_digest.as_ref() {
+            struct_ser.serialize_field("blobDigest", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for RegisterChunkMappingResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "blob_digest",
+            "blobDigest",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            BlobDigest,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = RegisterChunkMappingResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct build.bazel.remote.execution.v2.RegisterChunkMappingResponse")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<RegisterChunkMappingResponse, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut blob_digest__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::BlobDigest => {
+                            if blob_digest__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("blobDigest"));
+                            }
+                            blob_digest__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(RegisterChunkMappingResponse {
+                    blob_digest: blob_digest__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("build.bazel.remote.execution.v2.RegisterChunkMappingResponse", FIELDS, GeneratedVisitor)
     }
 }
 impl serde::Serialize for RepMaxCdcParams {
