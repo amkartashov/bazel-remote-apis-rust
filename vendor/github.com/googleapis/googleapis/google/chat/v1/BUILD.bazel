@@ -26,6 +26,7 @@ proto_library(
     srcs = [
         "action_status.proto",
         "annotation.proto",
+        "app_command_metadata.proto",
         "attachment.proto",
         "audience.proto",
         "availability.proto",
@@ -39,6 +40,7 @@ proto_library(
         "matched_url.proto",
         "membership.proto",
         "message.proto",
+        "message_pin.proto",
         "reaction.proto",
         "section.proto",
         "slash_command.proto",
@@ -376,6 +378,7 @@ load(
 
 csharp_proto_library(
     name = "chat_csharp_proto",
+    extra_opts = [],
     deps = [":chat_proto"],
 )
 
