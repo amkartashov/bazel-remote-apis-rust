@@ -10,7 +10,7 @@
     "sha": null
   },
   "java": {
-    "version": "2.75.0",
+    "version": "2.79.0",
     "commit": null,
     "sha": null
   },
@@ -20,14 +20,14 @@
     "sha": null
   },
   "python": {
-    "version": "1.37.0",
-    "commit": null,
-    "sha": "905cfe69b7a991facc160b4cacfcdadd5187d8e349d178a028cc66e38c4fc5fc"
+    "version": null,
+    "commit": "c8926ab89d240239fee0c82be2373c752d3507c0",
+    "sha": "9089dff38fe700b3aa405cdcff2d46205f07104ee8a2f19a8d4bf8a0144668ea"
   },
   "ruby": {
-    "version": "0.51.1",
+    "version": "0.53.0",
     "commit": null,
-    "sha": "7599e822a8b0b4c98e4d912c498e23d368eb1374fc5298e6364d9874b94ff2c5"
+    "sha": "20f66b93c065e32454114d113b18d30d8aac37bc0e6fb8690ea24b0bc2b41d8c"
   },
   "typescript": {
     "version": "4.12.1",
