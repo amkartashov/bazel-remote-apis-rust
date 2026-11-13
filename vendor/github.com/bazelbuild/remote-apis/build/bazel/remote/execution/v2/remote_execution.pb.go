@@ -693,7 +693,7 @@ type Command struct {
 	// Directories leading up to the output files are created by the worker prior
 	// to execution, even if they are not explicitly part of the input root.
 	//
-	// DEPRECATED since v2.1: Use `output_paths` instead.
+	// DEPRECATED since v2.1, UNSUPPORTED since v2.13: Use `output_paths` instead.
 	//
 	// Deprecated: Marked as deprecated in build/bazel/remote/execution/v2/remote_execution.proto.
 	OutputFiles []string `protobuf:"bytes,3,rep,name=output_files,json=outputFiles,proto3" json:"output_files,omitempty"`
@@ -725,7 +725,7 @@ type Command struct {
 	// directories themselves) are created by the worker prior to execution, even
 	// if they are not explicitly part of the input root.
 	//
-	// DEPRECATED since 2.1: Use `output_paths` instead.
+	// DEPRECATED since 2.1, UNSUPPORTED since v2.13: Use `output_paths` instead.
 	//
 	// Deprecated: Marked as deprecated in build/bazel/remote/execution/v2/remote_execution.proto.
 	OutputDirectories []string `protobuf:"bytes,4,rep,name=output_directories,json=outputDirectories,proto3" json:"output_directories,omitempty"`
@@ -763,8 +763,8 @@ type Command struct {
 	// the client SHOULD ensure that running the action on any such worker will
 	// have the same result.  A detailed lexicon for this can be found in the
 	// accompanying platform.md.
-	// DEPRECATED as of v2.2: platform properties are now specified directly in
-	// the action. See documentation note in the
+	// DEPRECATED as of v2.2, UNSUPPORTED since v2.13: platform properties are now
+	// specified directly in the action. See documentation note in the
 	// [Action][build.bazel.remote.execution.v2.Action] for migration.
 	//
 	// Deprecated: Marked as deprecated in build/bazel/remote/execution/v2/remote_execution.proto.
@@ -1713,8 +1713,9 @@ type ActionResult struct {
 	// will be omitted from the list. The server is free to arrange the output
 	// list as desired; clients MUST NOT assume that the output list is sorted.
 	//
-	// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0 API
-	// should still populate this field in addition to `output_symlinks`.
+	// DEPRECATED as of v2.1, UNSUPPORTED since v2.13. Servers that wish to be
+	// compatible with v2.0 API should still populate this field in addition to
+	// `output_symlinks`.
 	//
 	// Deprecated: Marked as deprecated in build/bazel/remote/execution/v2/remote_execution.proto.
 	OutputFileSymlinks []*OutputSymlink `protobuf:"bytes,10,rep,name=output_file_symlinks,json=outputFileSymlinks,proto3" json:"output_file_symlinks,omitempty"`
@@ -1816,8 +1817,9 @@ type ActionResult struct {
 	// will be omitted from the list. The server is free to arrange the output
 	// list as desired; clients MUST NOT assume that the output list is sorted.
 	//
-	// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0 API
-	// should still populate this field in addition to `output_symlinks`.
+	// DEPRECATED as of v2.1, UNSUPPORTED since v2.13. Servers that wish to be
+	// compatible with v2.0 API should still populate this field in addition to
+	// `output_symlinks`.
 	//
 	// Deprecated: Marked as deprecated in build/bazel/remote/execution/v2/remote_execution.proto.
 	OutputDirectorySymlinks []*OutputSymlink `protobuf:"bytes,11,rep,name=output_directory_symlinks,json=outputDirectorySymlinks,proto3" json:"output_directory_symlinks,omitempty"`
@@ -2450,7 +2452,8 @@ type ExecuteRequest struct {
 	ResultsCachePolicy *ResultsCachePolicy `protobuf:"bytes,8,opt,name=results_cache_policy,json=resultsCachePolicy,proto3" json:"results_cache_policy,omitempty"`
 	// The digest function that was used to compute the action digest.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the action digest hash and the digest functions announced
@@ -2798,7 +2801,8 @@ type ExecuteOperationMetadata struct {
 	PartialExecutionMetadata *ExecutedActionMetadata `protobuf:"bytes,5,opt,name=partial_execution_metadata,json=partialExecutionMetadata,proto3" json:"partial_execution_metadata,omitempty"`
 	// The digest function that was used to compute the action digest.
 	//
-	// If the digest function used is one of BLAKE3, MD5, MURMUR3, SHA1,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of BLAKE3, MD5, MURMUR3, SHA1,
 	// SHA256, SHA256TREE, SHA384, SHA512, or VSO, the server MAY leave
 	// this field unset. In that case the client SHOULD infer the digest
 	// function using the length of the action digest hash and the digest
@@ -2954,7 +2958,8 @@ type GetActionResultRequest struct {
 	InlineOutputFiles []string `protobuf:"bytes,5,rep,name=inline_output_files,json=inlineOutputFiles,proto3" json:"inline_output_files,omitempty"`
 	// The digest function that was used to compute the action digest.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the action digest hash and the digest functions announced
@@ -3058,7 +3063,8 @@ type UpdateActionResultRequest struct {
 	ResultsCachePolicy *ResultsCachePolicy `protobuf:"bytes,4,opt,name=results_cache_policy,json=resultsCachePolicy,proto3" json:"results_cache_policy,omitempty"`
 	// The digest function that was used to compute the action digest.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the action digest hash and the digest functions announced
@@ -3148,7 +3154,8 @@ type FindMissingBlobsRequest struct {
 	BlobDigests []*Digest `protobuf:"bytes,2,rep,name=blob_digests,json=blobDigests,proto3" json:"blob_digests,omitempty"`
 	// The digest function of the blobs whose existence is checked.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the blob digest hashes and the digest functions announced
@@ -3271,7 +3278,8 @@ type BatchUpdateBlobsRequest struct {
 	// The digest function that was used to compute the digests of the
 	// blobs being uploaded.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the blob digest hashes and the digest functions announced
@@ -3397,7 +3405,8 @@ type BatchReadBlobsRequest struct {
 	AcceptableCompressors []Compressor_Value `protobuf:"varint,3,rep,packed,name=acceptable_compressors,json=acceptableCompressors,proto3,enum=build.bazel.remote.execution.v2.Compressor_Value" json:"acceptable_compressors,omitempty"`
 	// The digest function of the blobs being requested.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the blob digest hashes and the digest functions announced
@@ -3540,7 +3549,8 @@ type GetTreeRequest struct {
 	// The digest function that was used to compute the digest of the root
 	// directory.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the root digest hash and the digest functions announced
@@ -3688,7 +3698,8 @@ type SplitBlobRequest struct {
 	BlobDigest *Digest `protobuf:"bytes,2,opt,name=blob_digest,json=blobDigest,proto3" json:"blob_digest,omitempty"`
 	// The digest function of the blob to be split.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
 	// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
 	// that case the server SHOULD infer the digest function using the
 	// length of the blob digest hashes and the digest functions announced
@@ -3920,7 +3931,8 @@ type SpliceBlobRequest struct {
 	// The digest function of all chunks to be concatenated and of the blob to be
 	// spliced. The server MUST use the same digest function for both cases.
 	//
-	// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256, SHA384,
+	// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+	// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256, SHA384,
 	// SHA512, or VSO, the client MAY leave this field unset. In that case the
 	// server SHOULD infer the digest function using the length of the blob digest
 	// hashes and the digest functions announced in the server's capabilities.
