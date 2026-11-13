@@ -145,7 +145,7 @@ pub struct Command {
     /// Directories leading up to the output files are created by the worker prior
     /// to execution, even if they are not explicitly part of the input root.
     ///
-    /// DEPRECATED since v2.1: Use `output_paths` instead.
+    /// DEPRECATED since v2.1, UNSUPPORTED since v2.13: Use `output_paths` instead.
     #[deprecated]
     #[prost(string, repeated, tag = "3")]
     pub output_files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -177,7 +177,7 @@ pub struct Command {
     /// directories themselves) are created by the worker prior to execution, even
     /// if they are not explicitly part of the input root.
     ///
-    /// DEPRECATED since 2.1: Use `output_paths` instead.
+    /// DEPRECATED since 2.1, UNSUPPORTED since v2.13: Use `output_paths` instead.
     #[deprecated]
     #[prost(string, repeated, tag = "4")]
     pub output_directories: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -216,8 +216,8 @@ pub struct Command {
     /// the client SHOULD ensure that running the action on any such worker will
     /// have the same result.  A detailed lexicon for this can be found in the
     /// accompanying platform.md.
-    /// DEPRECATED as of v2.2: platform properties are now specified directly in
-    /// the action. See documentation note in the
+    /// DEPRECATED as of v2.2, UNSUPPORTED since v2.13: platform properties are now
+    /// specified directly in the action. See documentation note in the
     /// \[Action\]\[build.bazel.remote.execution.v2.Action\] for migration.
     #[deprecated]
     #[prost(message, optional, tag = "5")]
@@ -695,8 +695,9 @@ pub struct ActionResult {
     /// will be omitted from the list. The server is free to arrange the output
     /// list as desired; clients MUST NOT assume that the output list is sorted.
     ///
-    /// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0 API
-    /// should still populate this field in addition to `output_symlinks`.
+    /// DEPRECATED as of v2.1, UNSUPPORTED since v2.13. Servers that wish to be
+    /// compatible with v2.0 API should still populate this field in addition to
+    /// `output_symlinks`.
     #[deprecated]
     #[prost(message, repeated, tag = "10")]
     pub output_file_symlinks: ::prost::alloc::vec::Vec<OutputSymlink>,
@@ -797,8 +798,9 @@ pub struct ActionResult {
     /// will be omitted from the list. The server is free to arrange the output
     /// list as desired; clients MUST NOT assume that the output list is sorted.
     ///
-    /// DEPRECATED as of v2.1. Servers that wish to be compatible with v2.0 API
-    /// should still populate this field in addition to `output_symlinks`.
+    /// DEPRECATED as of v2.1, UNSUPPORTED since v2.13. Servers that wish to be
+    /// compatible with v2.0 API should still populate this field in addition to
+    /// `output_symlinks`.
     #[deprecated]
     #[prost(message, repeated, tag = "11")]
     pub output_directory_symlinks: ::prost::alloc::vec::Vec<OutputSymlink>,
@@ -1036,7 +1038,8 @@ pub struct ExecuteRequest {
     pub results_cache_policy: ::core::option::Option<ResultsCachePolicy>,
     /// The digest function that was used to compute the action digest.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the action digest hash and the digest functions announced
@@ -1213,7 +1216,8 @@ pub struct ExecuteOperationMetadata {
     pub partial_execution_metadata: ::core::option::Option<ExecutedActionMetadata>,
     /// The digest function that was used to compute the action digest.
     ///
-    /// If the digest function used is one of BLAKE3, MD5, MURMUR3, SHA1,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of BLAKE3, MD5, MURMUR3, SHA1,
     /// SHA256, SHA256TREE, SHA384, SHA512, or VSO, the server MAY leave
     /// this field unset. In that case the client SHOULD infer the digest
     /// function using the length of the action digest hash and the digest
@@ -1261,7 +1265,8 @@ pub struct GetActionResultRequest {
     pub inline_output_files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// The digest function that was used to compute the action digest.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the action digest hash and the digest functions announced
@@ -1295,7 +1300,8 @@ pub struct UpdateActionResultRequest {
     pub results_cache_policy: ::core::option::Option<ResultsCachePolicy>,
     /// The digest function that was used to compute the action digest.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the action digest hash and the digest functions announced
@@ -1320,7 +1326,8 @@ pub struct FindMissingBlobsRequest {
     pub blob_digests: ::prost::alloc::vec::Vec<Digest>,
     /// The digest function of the blobs whose existence is checked.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the blob digest hashes and the digest functions announced
@@ -1353,7 +1360,8 @@ pub struct BatchUpdateBlobsRequest {
     /// The digest function that was used to compute the digests of the
     /// blobs being uploaded.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the blob digest hashes and the digest functions announced
@@ -1425,7 +1433,8 @@ pub struct BatchReadBlobsRequest {
     pub acceptable_compressors: ::prost::alloc::vec::Vec<i32>,
     /// The digest function of the blobs being requested.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the blob digest hashes and the digest functions announced
@@ -1495,7 +1504,8 @@ pub struct GetTreeRequest {
     /// The digest function that was used to compute the digest of the root
     /// directory.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the root digest hash and the digest functions announced
@@ -1533,7 +1543,8 @@ pub struct SplitBlobRequest {
     pub blob_digest: ::core::option::Option<Digest>,
     /// The digest function of the blob to be split.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256,
     /// SHA384, SHA512, or VSO, the client MAY leave this field unset. In
     /// that case the server SHOULD infer the digest function using the
     /// length of the blob digest hashes and the digest functions announced
@@ -1620,7 +1631,8 @@ pub struct SpliceBlobRequest {
     /// The digest function of all chunks to be concatenated and of the blob to be
     /// spliced. The server MUST use the same digest function for both cases.
     ///
-    /// If the digest function used is one of MD5, MURMUR3, SHA1, SHA256, SHA384,
+    /// MUST be set to a value other than UNKNOWN since v2.13. Until v2.12,
+    /// if the digest function used is one of MD5, MURMUR3, SHA1, SHA256, SHA384,
     /// SHA512, or VSO, the client MAY leave this field unset. In that case the
     /// server SHOULD infer the digest function using the length of the blob digest
     /// hashes and the digest functions announced in the server's capabilities.
@@ -3868,7 +3880,7 @@ pub mod content_addressable_storage_client {
         /// \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
         /// See that RPC for details.
         ///
-        /// New in v2.12 and removed in v2.13.
+        /// New in v2.12 and UNSUPPORTED since v2.13.
         pub async fn split_blob(
             &mut self,
             request: impl tonic::IntoRequest<super::SplitBlobRequest>,
@@ -4004,7 +4016,7 @@ pub mod content_addressable_storage_client {
         /// \[RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
         /// See that RPC for details.
         ///
-        /// New in v2.12 and removed in v2.13.
+        /// New in v2.12 and UNSUPPORTED since v2.13.
         pub async fn splice_blob(
             &mut self,
             request: impl tonic::IntoRequest<super::SpliceBlobRequest>,
@@ -4280,7 +4292,7 @@ pub mod content_addressable_storage_server {
         /// \[GetChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.GetChunkMapping\].
         /// See that RPC for details.
         ///
-        /// New in v2.12 and removed in v2.13.
+        /// New in v2.12 and UNSUPPORTED since v2.13.
         async fn split_blob(
             &self,
             request: tonic::Request<super::SplitBlobRequest>,
@@ -4378,7 +4390,7 @@ pub mod content_addressable_storage_server {
         /// \[RegisterChunkMapping\]\[build.bazel.remote.execution.v2.ContentAddressableStorage.RegisterChunkMapping\].
         /// See that RPC for details.
         ///
-        /// New in v2.12 and removed in v2.13.
+        /// New in v2.12 and UNSUPPORTED since v2.13.
         async fn splice_blob(
             &self,
             request: tonic::Request<super::SpliceBlobRequest>,

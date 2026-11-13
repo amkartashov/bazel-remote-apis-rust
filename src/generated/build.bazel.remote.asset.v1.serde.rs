@@ -205,6 +205,12 @@ impl serde::Serialize for FetchBlobResponse {
         if self.digest_function != 0 {
             len += 1;
         }
+        if !self.references_blobs.is_empty() {
+            len += 1;
+        }
+        if !self.references_directories.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.asset.v1.FetchBlobResponse", len)?;
         if let Some(v) = self.status.as_ref() {
             struct_ser.serialize_field("status", v)?;
@@ -226,6 +232,12 @@ impl serde::Serialize for FetchBlobResponse {
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
             struct_ser.serialize_field("digestFunction", &v)?;
         }
+        if !self.references_blobs.is_empty() {
+            struct_ser.serialize_field("referencesBlobs", &self.references_blobs)?;
+        }
+        if !self.references_directories.is_empty() {
+            struct_ser.serialize_field("referencesDirectories", &self.references_directories)?;
+        }
         struct_ser.end()
     }
 }
@@ -245,6 +257,10 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
             "blobDigest",
             "digest_function",
             "digestFunction",
+            "references_blobs",
+            "referencesBlobs",
+            "references_directories",
+            "referencesDirectories",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -255,6 +271,8 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
             ExpiresAt,
             BlobDigest,
             DigestFunction,
+            ReferencesBlobs,
+            ReferencesDirectories,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -282,6 +300,8 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
                             "expiresAt" | "expires_at" => Ok(GeneratedField::ExpiresAt),
                             "blobDigest" | "blob_digest" => Ok(GeneratedField::BlobDigest),
                             "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "referencesBlobs" | "references_blobs" => Ok(GeneratedField::ReferencesBlobs),
+                            "referencesDirectories" | "references_directories" => Ok(GeneratedField::ReferencesDirectories),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -307,6 +327,8 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
                 let mut expires_at__ = None;
                 let mut blob_digest__ = None;
                 let mut digest_function__ = None;
+                let mut references_blobs__ = None;
+                let mut references_directories__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Status => {
@@ -345,6 +367,18 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
                             }
                             digest_function__ = Some(map_.next_value::<super::super::execution::v2::digest_function::Value>()? as i32);
                         }
+                        GeneratedField::ReferencesBlobs => {
+                            if references_blobs__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("referencesBlobs"));
+                            }
+                            references_blobs__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ReferencesDirectories => {
+                            if references_directories__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("referencesDirectories"));
+                            }
+                            references_directories__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(FetchBlobResponse {
@@ -354,6 +388,8 @@ impl<'de> serde::Deserialize<'de> for FetchBlobResponse {
                     expires_at: expires_at__,
                     blob_digest: blob_digest__,
                     digest_function: digest_function__.unwrap_or_default(),
+                    references_blobs: references_blobs__.unwrap_or_default(),
+                    references_directories: references_directories__.unwrap_or_default(),
                 })
             }
         }
@@ -567,6 +603,12 @@ impl serde::Serialize for FetchDirectoryResponse {
         if self.digest_function != 0 {
             len += 1;
         }
+        if !self.references_blobs.is_empty() {
+            len += 1;
+        }
+        if !self.references_directories.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("build.bazel.remote.asset.v1.FetchDirectoryResponse", len)?;
         if let Some(v) = self.status.as_ref() {
             struct_ser.serialize_field("status", v)?;
@@ -588,6 +630,12 @@ impl serde::Serialize for FetchDirectoryResponse {
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.digest_function)))?;
             struct_ser.serialize_field("digestFunction", &v)?;
         }
+        if !self.references_blobs.is_empty() {
+            struct_ser.serialize_field("referencesBlobs", &self.references_blobs)?;
+        }
+        if !self.references_directories.is_empty() {
+            struct_ser.serialize_field("referencesDirectories", &self.references_directories)?;
+        }
         struct_ser.end()
     }
 }
@@ -607,6 +655,10 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
             "rootDirectoryDigest",
             "digest_function",
             "digestFunction",
+            "references_blobs",
+            "referencesBlobs",
+            "references_directories",
+            "referencesDirectories",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -617,6 +669,8 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
             ExpiresAt,
             RootDirectoryDigest,
             DigestFunction,
+            ReferencesBlobs,
+            ReferencesDirectories,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -644,6 +698,8 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
                             "expiresAt" | "expires_at" => Ok(GeneratedField::ExpiresAt),
                             "rootDirectoryDigest" | "root_directory_digest" => Ok(GeneratedField::RootDirectoryDigest),
                             "digestFunction" | "digest_function" => Ok(GeneratedField::DigestFunction),
+                            "referencesBlobs" | "references_blobs" => Ok(GeneratedField::ReferencesBlobs),
+                            "referencesDirectories" | "references_directories" => Ok(GeneratedField::ReferencesDirectories),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -669,6 +725,8 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
                 let mut expires_at__ = None;
                 let mut root_directory_digest__ = None;
                 let mut digest_function__ = None;
+                let mut references_blobs__ = None;
+                let mut references_directories__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Status => {
@@ -707,6 +765,18 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
                             }
                             digest_function__ = Some(map_.next_value::<super::super::execution::v2::digest_function::Value>()? as i32);
                         }
+                        GeneratedField::ReferencesBlobs => {
+                            if references_blobs__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("referencesBlobs"));
+                            }
+                            references_blobs__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ReferencesDirectories => {
+                            if references_directories__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("referencesDirectories"));
+                            }
+                            references_directories__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(FetchDirectoryResponse {
@@ -716,6 +786,8 @@ impl<'de> serde::Deserialize<'de> for FetchDirectoryResponse {
                     expires_at: expires_at__,
                     root_directory_digest: root_directory_digest__,
                     digest_function: digest_function__.unwrap_or_default(),
+                    references_blobs: references_blobs__.unwrap_or_default(),
+                    references_directories: references_directories__.unwrap_or_default(),
                 })
             }
         }

@@ -142,6 +142,16 @@ pub struct FetchBlobResponse {
         tag = "6"
     )]
     pub digest_function: i32,
+    /// Referenced blobs or directories that need to not expire before expiration
+    /// of this association, in addition to `blob_digest` itself.
+    /// These fields are hints to allow a caching proxy to increase the lifetimes
+    /// of all referenced blobs.
+    #[prost(message, repeated, tag = "7")]
+    pub references_blobs: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+    #[prost(message, repeated, tag = "8")]
+    pub references_directories: ::prost::alloc::vec::Vec<
+        super::super::execution::v2::Digest,
+    >,
 }
 /// A request message for
 /// \[Fetch.FetchDirectory\]\[build.bazel.remote.asset.v1.Fetch.FetchDirectory\].
@@ -257,6 +267,16 @@ pub struct FetchDirectoryResponse {
         tag = "6"
     )]
     pub digest_function: i32,
+    /// Referenced blobs or directories that need to not expire before expiration
+    /// of this association, in addition to `root_directory_digest` itself.
+    /// These fields are hints to allow a caching proxy to increase the lifetimes
+    /// of all referenced blobs.
+    #[prost(message, repeated, tag = "7")]
+    pub references_blobs: ::prost::alloc::vec::Vec<super::super::execution::v2::Digest>,
+    #[prost(message, repeated, tag = "8")]
+    pub references_directories: ::prost::alloc::vec::Vec<
+        super::super::execution::v2::Digest,
+    >,
 }
 /// A request message for
 /// \[Push.PushBlob\]\[build.bazel.remote.asset.v1.Push.PushBlob\].
