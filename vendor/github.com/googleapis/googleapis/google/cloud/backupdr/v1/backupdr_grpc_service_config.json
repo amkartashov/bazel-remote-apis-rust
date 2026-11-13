@@ -53,6 +53,62 @@
         {
           "service": "google.cloud.backupdr.v1.BackupDrProtectionSummary",
           "method": "ListResourceBackupConfigs"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListAutoProtectionPolicies"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetAutoProtectionPolicy"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListAutoProtectionPolicyBindings"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetAutoProtectionPolicyBinding"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListAppliedAutoProtectionPolicies"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListBindingMatchingResources"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetRestoreVerificationPlan"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListRestoreVerificationPlans"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetRestoreVerificationPlanAssociation"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListRestoreVerificationPlanAssociations"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetRestoreTemplate"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListRestoreTemplates"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "GetRestoreTemplateExecution"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "ListRestoreTemplateExecutions"
         }
       ],
       "timeout": "60s",
@@ -93,6 +149,66 @@
         {
           "service": "google.cloud.backupdr.v1.BackupDR",
           "method": "RestoreBackup"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "CreateAutoProtectionPolicy"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "UpdateAutoProtectionPolicy"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "DeleteAutoProtectionPolicy"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "CreateAutoProtectionPolicyBinding"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "InitiateDeleteAutoProtectionPolicyBinding"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "CreateRestoreVerificationPlan"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "DeleteRestoreVerificationPlan"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "CreateRestoreVerificationPlanAssociation"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "DeleteRestoreVerificationPlanAssociation"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "TriggerRestoreVerification"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "CreateRestoreTemplate"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "UpdateRestoreTemplate"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "DeleteRestoreTemplate"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "RunRestoreTemplate"
+        },
+        {
+          "service": "google.cloud.backupdr.v1.BackupDR",
+          "method": "TriggerRestoreCleanup"
         }
       ],
       "timeout": "60s"
